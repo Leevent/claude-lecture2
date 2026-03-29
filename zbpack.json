@@ -1,1 +1,4 @@
-{"static": true}
+{
+  "output_dir": ".",
+  "build_command": ""
+}
