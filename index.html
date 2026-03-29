@@ -3,8 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>B 班｜Claude 應用講座 — Skill 與跨平台 MCP 實踐</title>
-  <meta name="description" content="用 Skill 封裝你的工作 SOP，用 MCP 讓 Claude 串接你的日常工具，打造個人 AI 工作系統。3 小時線上直播，不需要寫程式。">
+  <title>B 班｜Skill 與跨平台 MCP 實踐 — Claude 應用講座教學資源</title>
+  <meta name="description" content="Skill 設計工坊、5 級成熟度模型、MCP 串接指南、AI 工作系統畫布——B 班核心教學資源，互動式學習工具隨時可用。">
+  <meta name="keywords" content="Claude Skill, MCP, Model Context Protocol, AI 工作系統, Skill 設計, Claude 教學, AI 自動化, 工作流設計">
+  <meta name="author" content="Lee Vent">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="B 班｜Skill 與跨平台 MCP 實踐 — Claude 應用講座教學資源">
+  <meta property="og:description" content="Skill 設計工坊、5 級成熟度模型、MCP 串接指南——互動式學習 Claude 進階功能的最佳入口。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/">
+  <meta property="og:site_name" content="Claude 應用講座 B 班">
+  <meta property="og:locale" content="zh_TW">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="B 班｜Skill 與跨平台 MCP 實踐">
+  <meta name="twitter:description" content="Skill 設計工坊、5 級成熟度模型、MCP 串接指南——互動式學習工具隨時可用。">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Claude 應用講座 B 班 — Skill 與跨平台 MCP 實踐",
+    "description": "用 Skill 封裝工作 SOP，用 MCP 串接日常工具，打造個人 AI 工作系統。不需要寫程式。",
+    "provider": {
+      "@type": "Person",
+      "name": "Lee Vent",
+      "url": "https://leevent.xyz"
+    },
+    "educationalLevel": "Intermediate",
+    "inLanguage": "zh-TW",
+    "teaches": ["Claude Skill 設計", "MCP 跨平台串接", "AI 工作系統設計", "進階 Prompt 工程"],
+    "url": "https://bclass.leevent.xyz/"
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
@@ -71,11 +108,6 @@
       font-weight: 500;
     }
     .nav-links a:hover { background: var(--bg-alt); color: var(--accent); }
-    .nav-cta {
-      background: var(--accent); color: #fff !important; border-radius: 999px !important;
-      padding: 8px 20px !important; font-weight: 700 !important;
-    }
-    .nav-cta:hover { background: #C06A45 !important; transform: translateY(-1px); }
     .nav-mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text); }
 
     /* ── Container ── */
@@ -101,9 +133,9 @@
       background: radial-gradient(circle, rgba(74,127,187,0.06) 0%, transparent 70%);
     }
     .hero-inner {
-      max-width: 1080px; margin: 0 auto; padding: 0 24px;
+      max-width: 780px; margin: 0 auto; padding: 0 24px;
       position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: center;
+      text-align: center;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -114,36 +146,7 @@
     .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.3; margin-bottom: 16px; }
     .hero h1 .highlight { color: var(--accent); }
     .hero .subtitle { font-size: 1.15rem; color: var(--text-sec); margin-bottom: 32px; line-height: 1.8; }
-    .hero-meta {
-      display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 32px;
-    }
-    .hero-meta-item {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 0.95rem; color: var(--text-sec);
-    }
-    .hero-meta-item .icon { font-size: 1.2rem; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    /* Hero info card */
-    .hero-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 32px;
-      box-shadow: 0 8px 32px var(--shadow-lg);
-      border: 1px solid var(--border);
-    }
-    .hero-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
-    .hero-card-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
-    }
-    .hero-card-row:last-child { border-bottom: none; }
-    .hero-card-label { color: var(--text-muted); font-size: 0.9rem; }
-    .hero-card-value { font-weight: 700; font-size: 0.95rem; }
-    .hero-card-price {
-      text-align: center; margin-top: 20px; padding-top: 20px;
-      border-top: 2px solid var(--accent);
-    }
-    .hero-card-price .price { font-size: 2rem; font-weight: 900; color: var(--accent); }
-    .hero-card-price .note { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
     /* ── Buttons ── */
     .btn {
@@ -438,18 +441,6 @@
     }
     .faq-item.open .faq-answer { max-height: 300px; padding-top: 12px; }
 
-    /* ── Audience ── */
-    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 720px; margin: 0 auto; }
-    .audience-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
-      border: 1px solid var(--border);
-    }
-    .audience-card.yes { border-left: 4px solid var(--accent-green); }
-    .audience-card.no { border-left: 4px solid var(--text-muted); }
-    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .audience-card ul { list-style: none; }
-    .audience-card li { padding: 6px 0; font-size: 0.9rem; color: var(--text-sec); display: flex; gap: 8px; align-items: flex-start; }
-
     /* ── Instructor ── */
     .instructor-card {
       max-width: 720px; margin: 0 auto;
@@ -472,12 +463,6 @@
       font-size: 0.8rem; color: var(--text-sec);
     }
 
-    /* ── CTA ── */
-    .cta-section { text-align: center; padding: 80px 0; }
-    .cta-section h2 { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
-    .cta-section p { font-size: 1.05rem; color: var(--text-sec); margin-bottom: 32px; }
-    .section-dark .cta-section p { color: rgba(245,237,229,0.7); }
-
     /* ── Footer ── */
     .footer {
       padding: 32px 0; text-align: center;
@@ -498,13 +483,10 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; }
       .hero h1 { font-size: 1.8rem; }
-      .hero-card { order: -1; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .mcp-grid { grid-template-columns: 1fr; }
       .canvas-board { grid-template-columns: 1fr; }
-      .audience-grid { grid-template-columns: 1fr; }
       .instructor-card { grid-template-columns: 1fr; text-align: center; }
       .instructor-avatar { margin: 0 auto; }
       .nav-links { display: none; }
@@ -537,9 +519,9 @@
         <a href="#map">課程地圖</a>
         <a href="#workshop">Skill 工坊</a>
         <a href="#mcp">MCP 指南</a>
+        <a href="#maturity">成熟度模型</a>
         <a href="#canvas">系統畫布</a>
         <a href="#faq">FAQ</a>
-        <a href="https://www.accupass.com/go/claude-b-class" class="nav-cta" target="_blank" rel="noopener">立即報名</a>
       </div>
     </div>
   </nav>
@@ -547,55 +529,12 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-inner">
-      <div>
-        <div class="hero-badge">🔥 中高階 — 進階實戰</div>
-        <h1>用 <span class="highlight">Skill</span> 封裝你的工作 SOP<br>用 <span class="highlight">MCP</span> 串接你的世界</h1>
-        <p class="subtitle">從「一個人用 Claude」進化到「Claude 幫你管一整個工作系統」。<br>不需要寫程式，你需要的是設計思維和系統化的方法。</p>
-        <div class="hero-meta">
-          <div class="hero-meta-item"><span class="icon">📅</span> 2026/4/9（四）</div>
-          <div class="hero-meta-item"><span class="icon">🕖</span> 19:00-22:00</div>
-          <div class="hero-meta-item"><span class="icon">💻</span> 線上直播＋回放</div>
-          <div class="hero-meta-item"><span class="icon">🎓</span> 實戰工作坊</div>
-        </div>
-        <div class="hero-actions">
-          <a href="https://www.accupass.com/go/claude-b-class" class="btn btn-primary" target="_blank" rel="noopener">立即報名 →</a>
-          <a href="#map" class="btn btn-secondary">看課程大綱</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <h3>📋 課程資訊</h3>
-        <div class="hero-card-row">
-          <span class="hero-card-label">課程名稱</span>
-          <span class="hero-card-value">Skill 與跨平台 MCP 實踐</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="hero-card-label">時長</span>
-          <span class="hero-card-value">3 小時</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="hero-card-label">形式</span>
-          <span class="hero-card-value">線上直播（有回放）</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="hero-card-label">直播平台</span>
-          <span class="hero-card-value">Google Meet</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="hero-card-label">前置條件</span>
-          <span class="hero-card-value">熟悉 Projects & Artifacts</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="hero-card-label">MCP 串接</span>
-          <span class="hero-card-value">需 Claude 桌面版 App</span>
-        </div>
-        <div class="hero-card-price">
-          <div class="price">$500</div>
-          <div class="note">含課後錄影回放（保留 14 天）</div>
-          <div class="note" style="margin-top: 8px; color: var(--accent); font-weight: 500;">= 3 小時實戰 + Skill 模板 + MCP 設定指南 + 系統畫布</div>
-        </div>
-        <div style="margin-top: 16px; padding: 12px 16px; background: rgba(107,175,123,0.08); border-radius: var(--radius-xs); font-size: 0.82rem; color: var(--text-sec); line-height: 1.6;">
-          💡 A 班 25 位學員參與，課後好評回饋：「終於知道怎麼跟 Claude 溝通了」「回去馬上用在工作上」
-        </div>
+      <div class="hero-badge">🧩 B 班教學資源</div>
+      <h1>用 <span class="highlight">Skill</span> 封裝你的工作 SOP<br>用 <span class="highlight">MCP</span> 串接你的世界</h1>
+      <p class="subtitle">從「一個人用 Claude」進化到「Claude 幫你管一整個工作系統」。<br>Skill 設計工坊、MCP 串接指南、成熟度模型——互動式學習工具，隨時可用。</p>
+      <div class="hero-actions">
+        <a href="#workshop" class="btn btn-primary">開始設計你的 Skill →</a>
+        <a href="#mcp" class="btn btn-secondary">探索 MCP 串接</a>
       </div>
     </div>
   </section>
@@ -638,7 +577,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">Course Map</div>
-        <h2>3 小時課程地圖</h2>
+        <h2>課程地圖</h2>
         <p>點擊各 Part 展開詳細內容</p>
       </div>
       <div class="timeline fade-in">
@@ -646,7 +585,7 @@
           <div class="timeline-marker" style="background: var(--accent-gold);">P1</div>
           <div class="timeline-content" onclick="toggleTimeline(this)">
             <h3>從使用者到設計者 — 思維轉換</h3>
-            <div class="time">20 min</div>
+            <div class="time">Part 1</div>
             <span class="timeline-toggle">展開詳情 ▾</span>
             <div class="details">
               <ul>
@@ -664,7 +603,7 @@
           <div class="timeline-marker" style="background: var(--accent);">P2</div>
           <div class="timeline-content" onclick="toggleTimeline(this)">
             <h3>Skill 設計 — 把你的專業封裝起來</h3>
-            <div class="time">50 min ｜ 核心實戰</div>
+            <div class="time">Part 2 ｜ 核心實戰</div>
             <span class="timeline-toggle">展開詳情 ▾</span>
             <div class="details">
               <ul>
@@ -682,7 +621,7 @@
           <div class="timeline-marker" style="background: var(--accent-blue);">P3</div>
           <div class="timeline-content" onclick="toggleTimeline(this)">
             <h3>MCP 跨平台串接 — 讓 Claude 連上你的世界</h3>
-            <div class="time">50 min ｜ 核心實戰</div>
+            <div class="time">Part 3 ｜ 核心實戰</div>
             <span class="timeline-toggle">展開詳情 ▾</span>
             <div class="details">
               <ul>
@@ -702,7 +641,7 @@
           <div class="timeline-marker" style="background: var(--accent-green);">P4</div>
           <div class="timeline-content" onclick="toggleTimeline(this)">
             <h3>工作系統設計 — 串起來的力量</h3>
-            <div class="time">35 min</div>
+            <div class="time">Part 4</div>
             <span class="timeline-toggle">展開詳情 ▾</span>
             <div class="details">
               <ul>
@@ -719,7 +658,7 @@
           <div class="timeline-marker" style="background: var(--accent-purple);">P5</div>
           <div class="timeline-content" onclick="toggleTimeline(this)">
             <h3>Prompt 進階 + Q&A</h3>
-            <div class="time">25 min</div>
+            <div class="time">Part 5</div>
             <span class="timeline-toggle">展開詳情 ▾</span>
             <div class="details">
               <ul>
@@ -879,7 +818,7 @@
       <div class="section-header fade-in">
         <div class="overline">MCP Connection Guide</div>
         <h2>🔗 MCP 串接指南</h2>
-        <p>課堂上會帶你實戰串接這三個工具，點擊卡片預覽步驟</p>
+        <p>點擊卡片查看串接步驟，跟著操作就能讓 Claude 連上你的工具</p>
       </div>
       <div class="mcp-grid fade-in">
         <div class="mcp-card" onclick="toggleMcp(this)">
@@ -917,11 +856,11 @@
           <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
           <div class="mcp-steps">
             <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>此工具需透過第三方 MCP Server 串接（非官方一鍵整合）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>課堂上會一步步帶你設定 config.json（不需要寫程式）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>需設定 config.json（不需要寫程式，照步驟即可完成）</div></div>
             <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Google 帳號授權（選擇要分享的試算表）</div></div>
             <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「幫我分析這張表的銷售趨勢」</div></div>
             <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：自動產生月報表、資料視覺化</div></div>
-            <div style="margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); padding: 8px; background: rgba(212,118,78,0.06); border-radius: 6px;">⚙️ 與 Calendar/Notion 不同，Sheets 需要額外設定 MCP Server，課堂上完整示範</div>
+            <div style="margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); padding: 8px; background: rgba(212,118,78,0.06); border-radius: 6px;">⚙️ 與 Calendar/Notion 不同，Sheets 需要額外設定 MCP Server</div>
           </div>
         </div>
       </div>
@@ -940,7 +879,7 @@
       <div class="section-header fade-in">
         <div class="overline">Skill Maturity Model</div>
         <h2>📈 5 級 Skill 成熟度</h2>
-        <p>你目前在哪個等級？這堂課帶你從 L1 走到 L3-L4</p>
+        <p>你目前在哪個等級？點擊查看每個層級的說明</p>
       </div>
       <div class="maturity fade-in">
         <div class="maturity-levels">
@@ -1045,37 +984,8 @@
     </div>
   </section>
 
-  <!-- Who is this for -->
-  <section class="section" id="audience">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Is This For You?</div>
-        <h2>這堂課適合你嗎？</h2>
-      </div>
-      <div class="audience-grid fade-in">
-        <div class="audience-card yes">
-          <h3>✅ 適合你，如果你是...</h3>
-          <ul>
-            <li>Claude Pro / Max 訂閱者，每天都在用 Claude 工作</li>
-            <li>已經熟悉 Projects 和 Artifacts，想進一步提升效率</li>
-            <li>想把 Claude 從「問答工具」升級成「工作系統」</li>
-            <li>對 MCP、Skill、Extended Thinking 好奇但不知道怎麼開始</li>
-          </ul>
-        </div>
-        <div class="audience-card no">
-          <h3>⏸️ 建議先緩緩，如果你...</h3>
-          <ul>
-            <li>還沒用過 Projects 或 Artifacts（建議先上 A 班）</li>
-            <li>想學純程式開發或 API 串接（請等隱藏班）</li>
-            <li>不確定？先做「<a href="../meetup-quiz/" style="color: var(--accent); text-decoration: underline;" target="_blank">Claude 使用力等級測驗</a>」，測驗結果在「中階」以上就能跟上</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Instructor -->
-  <section class="section section-alt" id="instructor">
+  <section class="section" id="instructor">
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">Instructor</div>
@@ -1085,19 +995,19 @@
         <div class="instructor-avatar">V</div>
         <div>
           <h3>Lee Vent</h3>
-          <div class="role">vent's talk 主理人 ｜ 放大數位行銷 行銷總監</div>
+          <div class="role">vent's talk 主理人 ｜ Claude 重度使用者</div>
           <p>
-            在職行銷總監，每天實際使用 Claude Code + Obsidian 打造個人工作系統。
-            帶領放大知識學院行銷團隊，導入 AI Agent 工作流實現內容自動化產線。
+            每天實際使用 Claude Code + Obsidian 打造個人及團隊工作系統。
+            從 Skill 設計、MCP 串接到 Sub-Agent 編排，累積超過 30 個生產環境 Skill、串接 10+ 個 MCP 工具。
             A 班 25 位學員參與，課後即時改用自建網站教學——網站本身就是 Claude 能力的最佳示範。
           </p>
           <p style="margin-top: 8px;">
             「我不是教你背指令，是帶你看我怎麼用 AI 建系統。」
           </p>
           <div class="instructor-tags">
-            <span class="instructor-tag">SEO 專家</span>
-            <span class="instructor-tag">HR 背景</span>
             <span class="instructor-tag">Claude Code 重度使用者</span>
+            <span class="instructor-tag">30+ 生產 Skill</span>
+            <span class="instructor-tag">SEO 專家</span>
             <span class="instructor-tag">台中在地</span>
           </div>
         </div>
@@ -1106,34 +1016,13 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
+  <section class="section section-alt" id="faq">
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">FAQ</div>
         <h2>常見問題</h2>
       </div>
       <div class="faq fade-in">
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-question">
-            <span>我沒上過 A 班，可以直接報 B 班嗎？</span>
-            <span class="faq-arrow">▾</span>
-          </div>
-          <div class="faq-answer">如果你已經熟悉 Claude 的 Projects、Artifacts 功能，可以直接報名。不確定的話，可以先做「Claude 使用力等級測驗」，看看自己在哪個階段。測驗結果在「中階」以上就能跟上。</div>
-        </div>
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-question">
-            <span>上課需要付費版 Claude 嗎？</span>
-            <span class="faq-arrow">▾</span>
-          </div>
-          <div class="faq-answer">建議使用 Claude Pro 以上方案。課程中的 MCP 串接和部分進階功能需要 Pro 版。課堂上會先完整示範，你可以之後再決定是否升級。</div>
-        </div>
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-question">
-            <span>MCP 串接需要寫程式嗎？</span>
-            <span class="faq-arrow">▾</span>
-          </div>
-          <div class="faq-answer">不需要！MCP 的設定是在 Claude 桌面版介面中完成的，課堂上會一步步帶你操作。你只需要有 Google 帳號和 Notion 帳號就好。</div>
-        </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <span>Skill 和 Projects 有什麼不同？</span>
@@ -1143,10 +1032,10 @@
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
-            <span>錯過直播怎麼辦？</span>
+            <span>MCP 串接需要寫程式嗎？</span>
             <span class="faq-arrow">▾</span>
           </div>
-          <div class="faq-answer">會提供課後錄影回放，保留 14 天。這個網站上的互動工具（Skill 設計工坊、MCP 指南、系統畫布）不受時間限制，隨時可以使用。</div>
+          <div class="faq-answer">不需要！Google Calendar 和 Notion 是官方整合，在 Claude 桌面版介面一鍵授權即可。Google Sheets 需透過第三方 MCP Server，但設定過程也只是複製貼上 config 檔，不需要寫任何程式碼。</div>
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
@@ -1157,49 +1046,32 @@
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
-            <span>我已經很熟 Claude 了，B 班對我還有幫助嗎？</span>
+            <span>使用 MCP 需要付費版 Claude 嗎？</span>
             <span class="faq-arrow">▾</span>
           </div>
-          <div class="faq-answer">如果你已經在用 Claude Code 或 API，B 班能幫你整理 Skill 設計框架、建立 MCP 架構思維，並作為隱藏班（Claude Code 進階班）的前置知識。課程包含 Anthropic 官方設計模式（Red Line Rules、Data Hierarchy），即使是重度使用者也能從系統化框架中獲益。</div>
-        </div>
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-question">
-            <span>「隱藏班」是什麼？</span>
-            <span class="faq-arrow">▾</span>
-          </div>
-          <div class="faq-answer">隱藏班是這個系列的進階班，專注 Claude Code 開發——讓 AI 直接幫你寫程式、建系統、跑自動化。B 班結業後會開放報名資訊。三堂課的升級路徑：A 班（學會溝通）→ B 班（設計工作流）→ 隱藏班（建造系統）。</div>
+          <div class="faq-answer">MCP 串接功能需要 Claude Pro 以上方案及 Claude 桌面版 App。Skill 設計本身在免費版也能使用，只是進階功能（Extended Thinking、更多對話量）需要 Pro 版。</div>
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <span>MCP 串接公司資料安全嗎？</span>
             <span class="faq-arrow">▾</span>
           </div>
-          <div class="faq-answer">MCP 的權限由你控制——Google Calendar 和 Notion 都是 OAuth 授權，你可以選擇分享哪些日曆或頁面。Claude 不會永久儲存你的資料。課堂上會說明哪些資料適合串接、哪些公司機密資料建議保留不連，以及權限管理的最佳做法。</div>
+          <div class="faq-answer">MCP 的權限由你控制——Google Calendar 和 Notion 都是 OAuth 授權，你可以選擇分享哪些日曆或頁面。Claude 不會永久儲存你的資料。建議先從個人資料開始練習，確認流程後再決定是否串接工作相關內容。</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section section-dark" id="register">
-    <div class="container">
-      <div class="cta-section">
-        <h2>準備好升級你的 Claude 工作流了嗎？</h2>
-        <p>4/9（四）19:00-22:00 ｜ 線上直播 ｜ $500 ｜ 含回放</p>
-        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-          <a href="https://www.accupass.com/go/claude-b-class" class="btn btn-primary" style="font-size: 1.15rem; padding: 18px 48px;" target="_blank" rel="noopener">立即報名 B 班 →</a>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>5 級 Skill 成熟度要多久才能從 L1 到 L5？</span>
+            <span class="faq-arrow">▾</span>
+          </div>
+          <div class="faq-answer">L1→L2 通常幾天內就能達成，關鍵是加入變數讓 Skill 更靈活。L2→L3 需要學會 MCP 串接（本站有完整指南）。L3→L4 需要設計多步驟工作流，通常需要 1-2 週實踐。L5 涉及 Sub-Agent 和 Multi-Agent 編排，屬於隱藏班的進階內容。</div>
         </div>
-        <p style="margin-top: 16px; font-size: 0.88rem; opacity: 0.8;">
-          每週重複 10 次的工作，上完這堂課讓 Claude 幫你自動跑。
-        </p>
-        <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.6;">
-          前置條件：已熟悉 Projects & Artifacts 基本操作（或已上過 A 班）<br>
-          MCP 串接功能需安裝 Claude 桌面版 App（課前會提供安裝指引）<br>
-          報名後如需退款，請於開課 3 天前聯繫主辦單位
-        </p>
-        <p style="margin-top: 16px; font-size: 0.82rem; opacity: 0.5;">
-          想帶團隊一起學？歡迎聯繫 <a href="mailto:vent@leevent.co" style="color: var(--accent-light);">vent@leevent.co</a> 洽詢企業方案
-        </p>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>「隱藏班」是什麼？</span>
+            <span class="faq-arrow">▾</span>
+          </div>
+          <div class="faq-answer">隱藏班是這個系列的進階班，專注 Claude Code 開發——讓 AI 直接幫你寫程式、建系統、跑自動化。三堂課的升級路徑：A 班（學會溝通）→ B 班（設計工作流）→ 隱藏班（建造系統）。</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1210,9 +1082,8 @@
       <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
       <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
       <p style="margin-top: 12px; font-size: 0.8rem;">
-        <a href="../meetup/" style="color: var(--accent); text-decoration: none;">台中小聚</a> ·
-        <a href="../meetup-quiz/" style="color: var(--accent); text-decoration: none;">段位測驗</a> ·
-        <a href="../members/" style="color: var(--accent); text-decoration: none;">核心圈</a>
+        <a href="https://claudetc.leevent.xyz" style="color: var(--accent); text-decoration: none;">台中小聚</a> ·
+        <a href="https://leevent.xyz" style="color: var(--accent); text-decoration: none;">Blog</a>
       </p>
     </div>
   </footer>
@@ -1291,7 +1162,7 @@
             1. 複製上方文字，貼到 Claude Project 的 Custom Instructions 中<br>
             2. 在對話中輸入觸發條件，測試 Skill 是否如預期運作<br>
             3. 根據產出品質調整紅線規則和輸出格式<br>
-            4. 課堂上會教你如何把這個 Skill 再進化到 L3（串接 MCP 工具）
+            4. 參考 <a href="#maturity" style="color: var(--accent);">5 級成熟度模型</a>，逐步升級你的 Skill
           </div>
         </div>`;
     }
@@ -1320,6 +1191,7 @@
       item.innerHTML = `${escapeHtml(val)} <button class="canvas-remove" onclick="removeItem(this)">×</button>`;
       list.appendChild(item);
       input.value = '';
+      saveCanvas();
     }
 
     function removeItem(btn) {
@@ -1369,20 +1241,6 @@
           });
         });
       } catch(e) {}
-    }
-
-    // Override addItem to also save
-    const _origAddItem = addItem;
-    function addItem(input, listId) {
-      const val = input.value.trim();
-      if (!val) return;
-      const list = document.getElementById(listId);
-      const item = document.createElement('div');
-      item.className = 'canvas-item';
-      item.innerHTML = `${escapeHtml(val)} <button class="canvas-remove" onclick="removeItem(this)">×</button>`;
-      list.appendChild(item);
-      input.value = '';
-      saveCanvas();
     }
 
     // Load saved canvas on page load
