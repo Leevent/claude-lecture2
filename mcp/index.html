@@ -3,264 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MCP 串接指南 — 10,000+ Server 生態系 × 真實工作流案例 — B 班教學資源</title>
-  <meta name="description" content="MCP 完整指南：真實案例拆解（Wyndo 9-Server 個人 OS、UX 自動化、a16z Cursor 分析）、GitHub 熱門 Server 星數排行、Anthropic 官方合作夥伴、Skill × 多 MCP 工作流設計模式。">
+  <title>MCP 串接指南 — 從一鍵授權到手動設定，帶你實際串起來 — B 班教學資源</title>
+  <meta name="description" content="MCP 實戰教學：一鍵授權官方整合 → 手動編輯 config.json 串接第三方 Server → 可搜尋資料庫查工具 → 真實案例拆解 → Skill × MCP 工作流設計模式。">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://bclass.leevent.xyz/mcp/">
-
   <meta property="og:type" content="article">
-  <meta property="og:title" content="MCP 串接指南 — 10,000+ Server 生態系 × 真實案例">
-  <meta property="og:description" content="真實案例拆解、GitHub 星數排行、Anthropic 官方合作夥伴、Skill × 多 MCP 工作流設計模式。">
+  <meta property="og:title" content="MCP 串接指南 — 從一鍵授權到手動設定">
+  <meta property="og:description" content="3 小時講座教學資源：帶你實際串起 MCP，不只看，還要動手做。">
   <meta property="og:url" content="https://bclass.leevent.xyz/mcp/">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shared.css">
   <style>
     /* ── Stat Bar ── */
-    .stat-bar {
-      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
-      padding: 32px 24px; background: var(--bg-card); border-bottom: 1px solid var(--border);
-    }
-    .stat-item { text-align: center; }
-    .stat-num { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
-    .stat-label { font-size: 0.82rem; color: var(--text-sec); margin-top: 4px; }
+    .stat-bar { display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:32px 24px;background:var(--bg-card);border-bottom:1px solid var(--border); }
+    .stat-item { text-align:center; }
+    .stat-num { font-size:1.8rem;font-weight:900;color:var(--accent); }
+    .stat-label { font-size:.82rem;color:var(--text-sec);margin-top:4px; }
 
     /* ── Concept ── */
-    .concept-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      max-width: 720px; margin: 0 auto;
-    }
-    .concept-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 24px;
-      border: 1px solid var(--border);
-    }
-    .concept-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .concept-card p { font-size: 0.9rem; color: var(--text-sec); line-height: 1.6; }
-    .concept-card .tag {
-      display: inline-block; margin-top: 8px; font-size: 0.78rem; font-weight: 600;
-      padding: 3px 10px; border-radius: 999px;
-    }
-    .tag.realtime { background: rgba(74,127,187,0.1); color: var(--accent-blue); }
-    .tag.scheduled { background: rgba(212,118,78,0.1); color: var(--accent); }
+    .concept-grid { display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:720px;margin:0 auto; }
+    .concept-card { background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border); }
+    .concept-card h3 { font-size:1rem;font-weight:700;margin-bottom:8px; }
+    .concept-card p { font-size:.9rem;color:var(--text-sec);line-height:1.6; }
+    .tag { display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px; }
+    .tag.realtime { background:rgba(74,127,187,.1);color:var(--accent-blue); }
+    .tag.scheduled { background:rgba(212,118,78,.1);color:var(--accent); }
+
+    /* ── Level Cards ── */
+    .level-grid { display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:800px;margin:0 auto; }
+    .level-card { background:var(--bg-card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);position:relative;overflow:hidden; }
+    .level-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px; }
+    .level-card.level-a::before { background:var(--accent-green); }
+    .level-card.level-b::before { background:var(--accent-blue); }
+    .level-badge { display:inline-block;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:12px; }
+    .level-a .level-badge { background:rgba(107,175,123,.12);color:var(--accent-green); }
+    .level-b .level-badge { background:rgba(74,127,187,.12);color:var(--accent-blue); }
+    .level-card h3 { font-size:1.15rem;font-weight:700;margin-bottom:8px; }
+    .level-card p { font-size:.9rem;color:var(--text-sec);line-height:1.6;margin-bottom:16px; }
+    .level-tools { display:flex;flex-wrap:wrap;gap:6px; }
+    .level-tool { font-size:.75rem;padding:4px 10px;border-radius:6px;background:var(--bg-alt);color:var(--text-sec);font-weight:500; }
+
+    /* ── One-Click Grid ── */
+    .oneclick-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+    .oneclick-card { background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border);cursor:pointer;transition:var(--transition);position:relative;overflow:hidden; }
+    .oneclick-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent-green);opacity:0;transition:var(--transition); }
+    .oneclick-card:hover::before { opacity:1; }
+    .oneclick-card:hover { transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow); }
+    .oneclick-icon { font-size:2rem;margin-bottom:10px; }
+    .oneclick-card h3 { font-size:1.05rem;font-weight:700;margin-bottom:6px; }
+    .oneclick-card > p { font-size:.88rem;color:var(--text-sec);margin-bottom:14px; }
+    .oneclick-steps { display:none;padding-top:14px;border-top:1px solid var(--border); }
+    .oneclick-card.expanded .oneclick-steps { display:block; }
+    .oc-step { display:flex;gap:10px;padding:8px 0;font-size:.85rem;color:var(--text-sec); }
+    .oc-num { width:22px;height:22px;border-radius:50%;background:var(--accent-green);color:#fff;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700; }
+    .oc-hint { font-size:.78rem;color:var(--accent-green);font-weight:600; }
+    .oc-note { margin-top:8px;font-size:.76rem;color:var(--text-muted);padding:8px;border-radius:6px;background:rgba(107,175,123,.05); }
+
+    /* ── Config Tutorial ── */
+    .config-tutorial { max-width:800px;margin:0 auto; }
+    .config-step { background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:16px; }
+    .config-step-header { display:flex;align-items:center;gap:12px;margin-bottom:12px; }
+    .config-step-num { width:32px;height:32px;border-radius:50%;background:var(--accent-blue);color:#fff;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0; }
+    .config-step h3 { font-size:1.05rem;font-weight:700; }
+    .config-step p { font-size:.9rem;color:var(--text-sec);line-height:1.6;margin-bottom:12px; }
+    .config-code { background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:16px 20px;font-family:'Cascadia Code','Fira Code',monospace;font-size:.82rem;line-height:1.6;overflow-x:auto;position:relative; }
+    .config-code .comment { color:#6c7086; }
+    .config-code .key { color:#89b4fa; }
+    .config-code .string { color:#a6e3a1; }
+    .config-code .copy-btn { position:absolute;top:8px;right:8px;background:rgba(255,255,255,.1);border:none;color:#cdd6f4;padding:4px 10px;border-radius:4px;font-size:.72rem;cursor:pointer; }
+    .config-code .copy-btn:hover { background:rgba(255,255,255,.2); }
+    .config-tip { display:flex;gap:10px;padding:12px;border-radius:8px;font-size:.85rem;color:var(--text-sec);margin-top:12px; }
+    .config-tip.warn { background:rgba(212,118,78,.06); }
+    .config-tip.info { background:rgba(74,127,187,.06); }
+    .config-tip-icon { flex-shrink:0; }
+    .path-table { width:100%;border-collapse:collapse;font-size:.85rem;margin-top:8px; }
+    .path-table th { text-align:left;padding:8px;border-bottom:2px solid var(--border);color:var(--text-sec);font-weight:600; }
+    .path-table td { padding:8px;border-bottom:1px solid var(--border); }
+    .path-table code { background:var(--bg-alt);padding:2px 6px;border-radius:4px;font-size:.8rem; }
+
+    /* ── Search UI ── */
+    .search-container { max-width:600px;margin:0 auto 24px; }
+    .search-input { width:100%;padding:14px 20px 14px 44px;border:2px solid var(--border);border-radius:999px;font-family:inherit;font-size:.95rem;background:var(--bg-card);transition:var(--transition);outline:none; }
+    .search-input:focus { border-color:var(--accent-blue);box-shadow:0 0 0 3px rgba(74,127,187,.1); }
+    .search-wrapper { position:relative; }
+    .search-icon { position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:1.1rem;color:var(--text-muted);pointer-events:none; }
+    .search-filters { display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px; }
+    .sf-btn { padding:6px 14px;border-radius:999px;border:1.5px solid var(--border);background:var(--bg-card);font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;transition:var(--transition);color:var(--text-sec); }
+    .sf-btn:hover { border-color:var(--accent);color:var(--accent); }
+    .sf-btn.active { background:var(--accent);color:#fff;border-color:var(--accent); }
+    .sf-btn.setup-filter.active { background:var(--accent-blue);border-color:var(--accent-blue); }
+    .search-results { display:grid;grid-template-columns:repeat(3,1fr);gap:14px; }
+    .sr-card { background:var(--bg-card);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);transition:var(--transition);cursor:default; }
+    .sr-card:hover { border-color:var(--accent-blue);box-shadow:0 2px 8px var(--shadow); }
+    .sr-card.hidden { display:none; }
+    .sr-top { display:flex;align-items:center;gap:8px;margin-bottom:8px; }
+    .sr-name { font-weight:700;font-size:.92rem; }
+    .sr-badge { font-size:.62rem;padding:2px 7px;border-radius:999px;font-weight:700; }
+    .sr-badge.official { background:rgba(74,127,187,.1);color:var(--accent-blue); }
+    .sr-badge.oneclick { background:rgba(107,175,123,.1);color:var(--accent-green); }
+    .sr-badge.community { background:rgba(212,118,78,.08);color:var(--accent); }
+    .sr-desc { font-size:.82rem;color:var(--text-sec);line-height:1.5;margin-bottom:8px; }
+    .sr-meta { display:flex;gap:8px;flex-wrap:wrap; }
+    .sr-tag { font-size:.68rem;padding:2px 7px;border-radius:4px;background:var(--bg-alt);color:var(--text-muted);font-weight:500; }
+    .sr-config { display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border); }
+    .sr-card.show-config .sr-config { display:block; }
+    .sr-config pre { background:#1e1e2e;color:#cdd6f4;border-radius:6px;padding:10px 14px;font-size:.75rem;line-height:1.5;overflow-x:auto; }
+    .sr-count { text-align:center;margin-top:16px;font-size:.85rem;color:var(--text-muted); }
 
     /* ── Case Study ── */
-    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .case-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
-      border: 1px solid var(--border); transition: var(--transition);
-    }
-    .case-card:hover { box-shadow: 0 6px 20px var(--shadow); }
-    .case-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .case-avatar {
-      width: 48px; height: 48px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; flex-shrink: 0;
-    }
-    .case-meta { font-size: 0.78rem; color: var(--text-muted); }
-    .case-card h3 { font-size: 1.05rem; font-weight: 700; }
-    .case-card .case-desc { font-size: 0.9rem; color: var(--text-sec); line-height: 1.7; margin-bottom: 14px; }
-    .case-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .case-result {
-      font-size: 0.85rem; padding: 10px 14px; border-radius: var(--radius-sm);
-      background: rgba(107,175,123,0.06); color: var(--text-sec); line-height: 1.5;
-    }
-    .case-result strong { color: var(--accent-green); }
-    .case-source {
-      display: inline-block; margin-top: 10px; font-size: 0.78rem;
-      color: var(--accent-blue); text-decoration: none; font-weight: 600;
-    }
-    .case-source:hover { text-decoration: underline; }
-
-    /* ── Official Partners ── */
-    .partner-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .partner-card {
-      background: var(--bg-card); border-radius: var(--radius-sm); padding: 18px;
-      border: 1px solid var(--border); text-align: center; transition: var(--transition);
-    }
-    .partner-card:hover { border-color: var(--accent-blue); box-shadow: 0 4px 12px var(--shadow); }
-    .partner-icon { font-size: 1.8rem; margin-bottom: 8px; }
-    .partner-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-    .partner-card p { font-size: 0.75rem; color: var(--text-muted); }
-    .partner-note {
-      text-align: center; margin-top: 20px; font-size: 0.82rem; color: var(--text-muted);
-      padding: 14px; background: rgba(74,127,187,0.04); border-radius: var(--radius-sm);
-    }
+    .case-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:24px; }
+    .case-card { background:var(--bg-card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);transition:var(--transition); }
+    .case-card:hover { box-shadow:0 6px 20px var(--shadow); }
+    .case-header { display:flex;align-items:center;gap:12px;margin-bottom:12px; }
+    .case-avatar { width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0; }
+    .case-meta { font-size:.78rem;color:var(--text-muted); }
+    .case-card h3 { font-size:1.05rem;font-weight:700; }
+    .case-desc { font-size:.9rem;color:var(--text-sec);line-height:1.7;margin-bottom:14px; }
+    .case-tools { display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px; }
+    .case-result { font-size:.85rem;padding:10px 14px;border-radius:var(--radius-sm);background:rgba(107,175,123,.06);color:var(--text-sec);line-height:1.5; }
+    .case-result strong { color:var(--accent-green); }
+    .case-source { display:inline-block;margin-top:10px;font-size:.78rem;color:var(--accent-blue);text-decoration:none;font-weight:600; }
+    .case-source:hover { text-decoration:underline; }
 
     /* ── Workflow Patterns ── */
-    .workflow-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .workflow-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
-      border: 1px solid var(--border); transition: var(--transition);
-    }
-    .workflow-card:hover { box-shadow: 0 6px 20px var(--shadow); }
-    .workflow-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .workflow-icon {
-      width: 48px; height: 48px; border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-    }
-    .workflow-card h3 { font-size: 1.1rem; font-weight: 700; }
-    .workflow-card .workflow-desc {
-      font-size: 0.9rem; color: var(--text-sec); margin-bottom: 16px; line-height: 1.6;
-    }
-    .workflow-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 16px; }
-    .flow-chip {
-      padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
-      white-space: nowrap;
-    }
-    .flow-chip.skill { background: rgba(212,118,78,0.1); color: var(--accent); }
-    .flow-chip.mcp { background: rgba(74,127,187,0.1); color: var(--accent-blue); }
-    .flow-arrow { color: var(--text-muted); font-size: 0.8rem; }
-    .workflow-tools {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      padding-top: 12px; border-top: 1px solid var(--border);
-    }
-    .tool-tag {
-      font-size: 0.72rem; padding: 3px 8px; border-radius: 6px;
-      background: var(--bg-alt); color: var(--text-sec); font-weight: 500;
-    }
-
-    /* ── MCP Guide Cards ── */
-    .mcp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .mcp-card {
-      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
-      border: 1px solid var(--border); transition: var(--transition);
-      cursor: pointer; position: relative; overflow: hidden;
-    }
-    .mcp-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: var(--accent-blue); opacity: 0; transition: var(--transition);
-    }
-    .mcp-card:hover::before { opacity: 1; }
-    .mcp-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow); }
-    .mcp-card-icon { font-size: 2rem; margin-bottom: 12px; }
-    .mcp-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-    .mcp-card p { font-size: 0.9rem; color: var(--text-sec); margin-bottom: 16px; }
-    .mcp-steps { display: none; padding-top: 16px; border-top: 1px solid var(--border); }
-    .mcp-card.expanded .mcp-steps { display: block; }
-    .mcp-step-item {
-      display: flex; gap: 12px; padding: 10px 0; font-size: 0.88rem; color: var(--text-sec);
-    }
-    .mcp-step-num {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--accent-blue); color: #fff; font-size: 0.75rem;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-weight: 700;
-    }
-    .mcp-expand-hint { font-size: 0.8rem; color: var(--accent-blue); font-weight: 500; }
-    .mcp-note {
-      margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); padding: 8px; border-radius: 6px;
-    }
-    .mcp-note.safe { background: rgba(107,175,123,0.06); }
-    .mcp-note.config { background: rgba(212,118,78,0.06); }
-
-    /* ── GitHub Top Servers ── */
-    .gh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .gh-card {
-      background: var(--bg-card); border-radius: var(--radius-sm); padding: 20px;
-      border: 1px solid var(--border); transition: var(--transition);
-      text-decoration: none; color: inherit; display: block;
-    }
-    .gh-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px var(--shadow); transform: translateY(-2px); }
-    .gh-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
-    .gh-card p { font-size: 0.82rem; color: var(--text-sec); line-height: 1.5; margin-bottom: 10px; }
-    .gh-meta { display: flex; gap: 12px; font-size: 0.75rem; color: var(--text-muted); }
-    .gh-meta span { display: flex; align-items: center; gap: 3px; }
-    .gh-rank {
-      display: inline-block; font-size: 0.68rem; font-weight: 800; padding: 2px 8px;
-      border-radius: 999px; margin-left: auto;
-    }
-    .gh-rank.gold { background: rgba(212,165,116,0.15); color: #B8860B; }
-    .gh-rank.silver { background: rgba(160,160,160,0.15); color: #666; }
-    .gh-rank.bronze { background: rgba(205,127,50,0.15); color: #8B4513; }
-
-    /* ── Creative ── */
-    .creative-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .creative-card {
-      background: var(--bg-card); border-radius: var(--radius-sm); padding: 20px;
-      border: 1px solid var(--border); transition: var(--transition); text-align: center;
-    }
-    .creative-card:hover { border-color: var(--accent); }
-    .creative-icon { font-size: 2rem; margin-bottom: 10px; }
-    .creative-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
-    .creative-card p { font-size: 0.8rem; color: var(--text-sec); line-height: 1.5; }
-    .creative-stars { font-size: 0.72rem; color: var(--text-muted); margin-top: 8px; }
-
-    /* ── Connector Catalog ── */
-    .catalog-filters {
-      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px;
-    }
-    .filter-btn {
-      padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--border);
-      background: var(--bg-card); font-family: inherit; font-size: 0.82rem;
-      font-weight: 600; cursor: pointer; transition: var(--transition); color: var(--text-sec);
-    }
-    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .connector-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .connector-item {
-      background: var(--bg-card); border-radius: var(--radius-xs); padding: 14px;
-      border: 1px solid var(--border); transition: var(--transition);
-      display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 500;
-    }
-    .connector-item:hover { border-color: var(--accent-blue); box-shadow: 0 2px 8px var(--shadow); }
-    .connector-item .ci-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .connector-item .ci-name { flex: 1; }
-    .connector-item .ci-badge {
-      font-size: 0.65rem; padding: 2px 6px; border-radius: 999px; font-weight: 700; flex-shrink: 0;
-    }
-    .ci-badge.official { background: rgba(74,127,187,0.1); color: var(--accent-blue); }
-    .ci-badge.popular { background: rgba(212,118,78,0.1); color: var(--accent); }
-    .ci-badge.trending { background: rgba(107,175,123,0.1); color: var(--accent-green); }
-    .connector-item.hidden { display: none; }
-    .catalog-count {
-      text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);
-    }
-
-    /* ── Directory ── */
-    .dir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .dir-card {
-      background: var(--bg-card); border-radius: var(--radius-sm); padding: 18px;
-      border: 1px solid var(--border); text-decoration: none; color: inherit;
-      display: block; transition: var(--transition);
-    }
-    .dir-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
-    .dir-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-    .dir-card p { font-size: 0.78rem; color: var(--text-sec); line-height: 1.4; }
+    .wf-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:24px; }
+    .wf-card { background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border);transition:var(--transition); }
+    .wf-card:hover { box-shadow:0 4px 16px var(--shadow); }
+    .wf-head { display:flex;align-items:center;gap:10px;margin-bottom:12px; }
+    .wf-icon { width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem; }
+    .wf-card h3 { font-size:1rem;font-weight:700; }
+    .wf-card .wf-desc { font-size:.85rem;color:var(--text-sec);margin-bottom:12px;line-height:1.5; }
+    .wf-flow { display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-bottom:12px; }
+    .wf-chip { padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:600;white-space:nowrap; }
+    .wf-chip.skill { background:rgba(212,118,78,.1);color:var(--accent); }
+    .wf-chip.mcp { background:rgba(74,127,187,.1);color:var(--accent-blue); }
+    .wf-arrow { color:var(--text-muted);font-size:.75rem; }
 
     /* ── Security ── */
-    .security-banner {
-      background: rgba(212,60,60,0.04); border: 1px solid rgba(212,60,60,0.15);
-      border-radius: var(--radius); padding: 24px; max-width: 720px; margin: 0 auto;
-    }
-    .security-banner h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #c0392b; }
-    .security-banner p { font-size: 0.88rem; color: var(--text-sec); line-height: 1.6; }
-    .security-banner ul { margin-top: 10px; padding-left: 20px; font-size: 0.85rem; color: var(--text-sec); }
-    .security-banner li { margin-bottom: 4px; }
+    .security-banner { background:rgba(212,60,60,.04);border:1px solid rgba(212,60,60,.15);border-radius:var(--radius);padding:24px;max-width:720px;margin:0 auto; }
+    .security-banner h3 { font-size:1rem;font-weight:700;margin-bottom:8px;color:#c0392b; }
+    .security-banner p { font-size:.88rem;color:var(--text-sec);line-height:1.6; }
+    .security-banner ul { margin-top:10px;padding-left:20px;font-size:.85rem;color:var(--text-sec); }
+    .security-banner li { margin-bottom:4px; }
+
+    /* ── Directory ── */
+    .dir-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:14px; }
+    .dir-card { background:var(--bg-card);border-radius:var(--radius-sm);padding:18px;border:1px solid var(--border);text-decoration:none;color:inherit;display:block;transition:var(--transition); }
+    .dir-card:hover { border-color:var(--accent-blue);transform:translateY(-2px); }
+    .dir-card h4 { font-size:.9rem;font-weight:700;margin-bottom:4px; }
+    .dir-card p { font-size:.78rem;color:var(--text-sec);line-height:1.4; }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .stat-bar { gap: 24px; }
-      .stat-num { font-size: 1.4rem; }
-      .concept-grid { grid-template-columns: 1fr; }
-      .case-grid { grid-template-columns: 1fr; }
-      .partner-grid { grid-template-columns: repeat(2, 1fr); }
-      .workflow-grid { grid-template-columns: 1fr; }
-      .mcp-grid { grid-template-columns: 1fr; }
-      .gh-grid { grid-template-columns: 1fr; }
-      .creative-grid { grid-template-columns: 1fr; }
-      .connector-grid { grid-template-columns: repeat(2, 1fr); }
-      .dir-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 480px) {
-      .connector-grid { grid-template-columns: 1fr; }
-      .partner-grid { grid-template-columns: 1fr; }
+    @media(max-width:768px) {
+      .stat-bar { gap:24px; } .stat-num { font-size:1.4rem; }
+      .concept-grid,.level-grid,.case-grid,.wf-grid { grid-template-columns:1fr; }
+      .oneclick-grid { grid-template-columns:1fr; }
+      .search-results { grid-template-columns:1fr; }
+      .dir-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
@@ -275,824 +180,514 @@
     </div>
   </nav>
 
-  <!-- Page Hero -->
   <section class="page-hero">
     <div class="page-hero-inner">
-      <div class="page-hero-badge">🔗 MCP Ecosystem</div>
+      <div class="page-hero-badge">🔗 MCP 實戰教學</div>
       <h1><span class="highlight">MCP</span> 串接指南</h1>
-      <p class="subtitle">真實案例拆解 × GitHub 星數排行 × 工作流設計模式<br>生態系已爆發——用 Skill 調度多個 MCP，讓整套流程一次到位。</p>
+      <p class="subtitle">不只看，還要動手做。<br>從一鍵授權 → 手動設定 config.json → 查工具資料庫 → 組合完整工作流。</p>
     </div>
   </section>
 
-  <!-- Ecosystem Stats (real data) -->
   <div class="stat-bar fade-in">
-    <div class="stat-item">
-      <div class="stat-num">97M+</div>
-      <div class="stat-label">SDK 月下載量</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">10,000+</div>
-      <div class="stat-label">公開 MCP Server</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">39</div>
-      <div class="stat-label">工具分類</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">11</div>
-      <div class="stat-label">Anthropic 官方合作夥伴</div>
-    </div>
+    <div class="stat-item"><div class="stat-num">97M+</div><div class="stat-label">SDK 月下載量</div></div>
+    <div class="stat-item"><div class="stat-num">10,000+</div><div class="stat-label">公開 MCP Server</div></div>
+    <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">Anthropic 官方合作夥伴</div></div>
+    <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">官方維護 Server</div></div>
   </div>
 
-  <div class="breadcrumb">
-    <a href="/">首頁</a> <span class="sep">›</span> <span>MCP 串接指南</span>
-  </div>
+  <div class="breadcrumb"><a href="/">首頁</a> <span class="sep">›</span> <span>MCP 串接指南</span></div>
 
-  <!-- MCP Concept -->
+  <!-- ═══ 0. Concept ═══ -->
   <section class="section">
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">Concept</div>
-        <h2>MCP 和自動化工具有什麼不同？</h2>
-        <p>不是替代關係，是互補：MCP 做即時決策，n8n 做重複排程</p>
+        <h2>MCP 是什麼？跟自動化工具差在哪？</h2>
+        <p>MCP = Claude 的手和眼。你說什麼，它馬上做。</p>
       </div>
       <div class="concept-grid fade-in">
         <div class="concept-card">
           <h3>🔗 MCP（Model Context Protocol）</h3>
-          <p>Claude 的「手和眼」——你下指令，Claude 當場幫你操作。像是有個助理坐在你旁邊，你說什麼他馬上做。</p>
+          <p>你下指令，Claude 當場操作外部工具。像是有個助理坐在你旁邊，你說什麼他馬上做。</p>
           <span class="tag realtime">即時互動</span>
         </div>
         <div class="concept-card">
           <h3>⚙️ n8n / Zapier</h3>
-          <p>排程型自動化——設定好後在背景自動觸發。像是預設好的流水線，固定時間固定動作。</p>
+          <p>排程型自動化——設定好後在背景自動觸發。像預設好的流水線，固定時間固定動作。</p>
           <span class="tag scheduled">排程自動化</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ REAL Case Studies ═══ -->
+  <!-- ═══ 1. Two Levels ═══ -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Today's Teaching Path</div>
+        <h2>🎯 今天你會學到兩個層級</h2>
+        <p>從零開始，兩個層級帶你從會用到會設定</p>
+      </div>
+      <div class="level-grid fade-in">
+        <div class="level-card level-a">
+          <span class="level-badge">Level A — 一鍵授權</span>
+          <h3>Claude Desktop 官方整合</h3>
+          <p>Settings → Integrations → Connect。三步完成，不需要碰任何設定檔。適合所有人。</p>
+          <div class="level-tools">
+            <span class="level-tool">Google Calendar</span>
+            <span class="level-tool">Notion</span>
+            <span class="level-tool">Slack</span>
+            <span class="level-tool">Asana</span>
+            <span class="level-tool">Canva</span>
+            <span class="level-tool">Figma</span>
+            <span class="level-tool">...共 11 個官方夥伴</span>
+          </div>
+        </div>
+        <div class="level-card level-b">
+          <span class="level-badge">Level B — 手動設定 config.json</span>
+          <h3>第三方 MCP Server 串接</h3>
+          <p>編輯 claude_desktop_config.json，解鎖 10,000+ 社群 Server。不需要寫程式，照步驟即可完成。</p>
+          <div class="level-tools">
+            <span class="level-tool">Filesystem</span>
+            <span class="level-tool">Brave Search</span>
+            <span class="level-tool">GitHub</span>
+            <span class="level-tool">Memory</span>
+            <span class="level-tool">markitdown</span>
+            <span class="level-tool">...10,000+ 可選</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 2. Level A: One-Click ═══ -->
+  <section class="section" id="level-a">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Level A — 一鍵授權</div>
+        <h2>🟢 官方整合：點一下就能用</h2>
+        <p>點擊卡片展開步驟，跟著做就好</p>
+      </div>
+      <div class="oneclick-grid fade-in">
+
+        <div class="oneclick-card" onclick="this.classList.toggle('expanded')">
+          <div class="oneclick-icon">📅</div>
+          <h3>Google Calendar</h3>
+          <p>讓 Claude 看你的行程、安排時間、提醒你重要會議</p>
+          <span class="oc-hint">點擊查看步驟 →</span>
+          <div class="oneclick-steps">
+            <div class="oc-step"><div class="oc-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
+            <div class="oc-step"><div class="oc-num">2</div><div>找到 Google Calendar，點擊 Connect</div></div>
+            <div class="oc-step"><div class="oc-num">3</div><div>Google 帳號授權（選擇要分享的日曆）</div></div>
+            <div class="oc-step"><div class="oc-num">4</div><div>測試：問 Claude「我明天有什麼行程？」</div></div>
+            <div class="oc-note">🔒 僅存取你授權的日曆，Claude 不儲存你的資料</div>
+          </div>
+        </div>
+
+        <div class="oneclick-card" onclick="this.classList.toggle('expanded')">
+          <div class="oneclick-icon">📝</div>
+          <h3>Notion</h3>
+          <p>讓 Claude 讀寫你的知識庫，直接建立頁面和資料庫</p>
+          <span class="oc-hint">點擊查看步驟 →</span>
+          <div class="oneclick-steps">
+            <div class="oc-step"><div class="oc-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
+            <div class="oc-step"><div class="oc-num">2</div><div>找到 Notion，點擊 Connect</div></div>
+            <div class="oc-step"><div class="oc-num">3</div><div>Notion 授權（選擇要分享的工作區和頁面）</div></div>
+            <div class="oc-step"><div class="oc-num">4</div><div>測試：問 Claude「幫我在 Notion 建一個會議紀錄」</div></div>
+            <div class="oc-note">🔒 僅存取你授權的頁面，不會碰其他工作區</div>
+          </div>
+        </div>
+
+        <div class="oneclick-card" onclick="this.classList.toggle('expanded')">
+          <div class="oneclick-icon">📊</div>
+          <h3>Google Sheets</h3>
+          <p>讓 Claude 操作試算表，分析資料、產生報表</p>
+          <span class="oc-hint">點擊查看步驟 →</span>
+          <div class="oneclick-steps">
+            <div class="oc-step"><div class="oc-num">1</div><div>Settings → Integrations → Google Sheets</div></div>
+            <div class="oc-step"><div class="oc-num">2</div><div>點擊 Connect，Google 帳號授權</div></div>
+            <div class="oc-step"><div class="oc-num">3</div><div>測試：問 Claude「幫我分析這張表的銷售趨勢」</div></div>
+            <div class="oc-note">⚙️ 若官方整合不支援你的需求，可改用 Level B 手動設定</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 3. Level B: Config.json Tutorial ═══ -->
+  <section class="section section-alt" id="level-b">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Level B — 手動設定</div>
+        <h2>🔵 編輯 config.json：解鎖所有 MCP Server</h2>
+        <p>跟著以下步驟操作，不需要寫程式</p>
+      </div>
+      <div class="config-tutorial fade-in">
+
+        <div class="config-step">
+          <div class="config-step-header">
+            <div class="config-step-num">1</div>
+            <h3>找到設定檔位置</h3>
+          </div>
+          <p>Claude Desktop 的 MCP 設定存在這個 JSON 檔案裡：</p>
+          <table class="path-table">
+            <tr><th>作業系統</th><th>檔案路徑</th></tr>
+            <tr><td>macOS</td><td><code>~/Library/Application Support/Claude/claude_desktop_config.json</code></td></tr>
+            <tr><td>Windows</td><td><code>%APPDATA%\Claude\claude_desktop_config.json</code></td></tr>
+          </table>
+          <div class="config-tip info">
+            <span class="config-tip-icon">💡</span>
+            <span>如果檔案不存在，自己新建一個空的就好。</span>
+          </div>
+        </div>
+
+        <div class="config-step">
+          <div class="config-step-header">
+            <div class="config-step-num">2</div>
+            <h3>範例：加入 Filesystem Server</h3>
+          </div>
+          <p>最基本的 MCP Server——讓 Claude 讀寫你指定的資料夾：</p>
+          <div class="config-code">
+            <button class="copy-btn" onclick="copyConfig(this)">複製</button>
+{<br>
+&nbsp;&nbsp;<span class="key">"mcpServers"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"filesystem"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"npx"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-filesystem"</span>, <span class="string">"/Users/你的名字/Documents"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}
+          </div>
+          <div class="config-tip warn">
+            <span class="config-tip-icon">⚠️</span>
+            <span>路徑請改成你自己的資料夾。只授權需要的目錄，不要給根目錄。</span>
+          </div>
+        </div>
+
+        <div class="config-step">
+          <div class="config-step-header">
+            <div class="config-step-num">3</div>
+            <h3>範例：同時加多個 Server</h3>
+          </div>
+          <p>一個 config.json 可以同時串接多個 MCP Server：</p>
+          <div class="config-code">
+            <button class="copy-btn" onclick="copyConfig(this)">複製</button>
+{<br>
+&nbsp;&nbsp;<span class="key">"mcpServers"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"filesystem"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"npx"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-filesystem"</span>, <span class="string">"/Users/你/Documents"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"memory"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"npx"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-memory"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"brave-search"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"npx"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@anthropic-ai/mcp-server-brave-search"</span>],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"env"</span>: { <span class="key">"BRAVE_API_KEY"</span>: <span class="string">"你的 API Key"</span> }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}
+          </div>
+        </div>
+
+        <div class="config-step">
+          <div class="config-step-header">
+            <div class="config-step-num">4</div>
+            <h3>儲存 → 重啟 → 測試</h3>
+          </div>
+          <p>儲存 config.json 後，完全關閉 Claude Desktop 再重新開啟。在對話框輸入：</p>
+          <div class="config-code">
+「請列出我 Documents 資料夾裡的所有檔案」<br>
+「搜尋最新的 MCP 相關新聞」<br>
+「記住：我偏好繁體中文回覆」
+          </div>
+          <div class="config-tip info">
+            <span class="config-tip-icon">💡</span>
+            <span>如果 Claude 說找不到工具，檢查 JSON 格式（逗號、大括號）是否正確。推薦用 <a href="https://jsonlint.com" target="_blank" style="color:var(--accent-blue)">jsonlint.com</a> 驗證。</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 4. Searchable Database ═══ -->
+  <section class="section" id="database">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Tool Database · 45 servers · powered by /data/mcp-servers.json</div>
+        <h2>🔍 MCP Server 資料庫</h2>
+        <p>搜尋、篩選、點擊查看設定範例。資料來源：GitHub + Anthropic 官方</p>
+      </div>
+
+      <div class="search-container fade-in">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="搜尋 Server 名稱、用途、分類..." oninput="filterServers()">
+        </div>
+      </div>
+
+      <div class="search-filters fade-in" id="catFilters">
+        <button class="sf-btn active" data-cat="all" onclick="setCatFilter('all',this)">全部</button>
+      </div>
+      <div class="search-filters fade-in" style="margin-top:8px" id="setupFilters">
+        <button class="sf-btn setup-filter active" data-setup="all" onclick="setSetupFilter('all',this)">所有難度</button>
+        <button class="sf-btn setup-filter" data-setup="one-click" onclick="setSetupFilter('one-click',this)">🟢 一鍵授權</button>
+        <button class="sf-btn setup-filter" data-setup="config" onclick="setSetupFilter('config',this)">🔵 編輯 config</button>
+      </div>
+
+      <div class="search-results fade-in" id="searchResults"></div>
+      <div class="sr-count" id="srCount"></div>
+    </div>
+  </section>
+
+  <!-- ═══ 5. Real Cases ═══ -->
   <section class="section section-alt" id="cases">
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">Real-World Cases</div>
         <h2>📖 真實案例：這些人怎麼用 MCP</h2>
-        <p>不是假設情境，是有名有姓、有文章記錄的真實工作流</p>
+        <p>有名有姓、有文章記錄的真實工作流</p>
       </div>
-      <div class="case-grid fade-in">
-
-        <!-- Case 1: Wyndo Personal OS -->
-        <div class="case-card">
-          <div class="case-header">
-            <div class="case-avatar" style="background: rgba(139,107,181,0.1);">🧠</div>
-            <div>
-              <h3>Wyndo — 9 個 MCP 的個人操作系統</h3>
-              <div class="case-meta">AI Maker Substack · 完整教學文</div>
-            </div>
-          </div>
-          <div class="case-desc">
-            分三階段建構：Phase 1（唯讀）Google Drive + Gmail + Calendar →
-            Phase 2（操作）Notion + Todoist + Asana + Zapier + Intercom →
-            Phase 3（進階）Firecrawl + Brave Search + Memory MCP。
-            形成 5 套核心工作流：會議智慧、競品研究、內容創作、社群筆記、記憶代理。
-          </div>
-          <div class="case-tools">
-            <span class="tool-tag">Google Drive</span>
-            <span class="tool-tag">Gmail</span>
-            <span class="tool-tag">Calendar</span>
-            <span class="tool-tag">Notion</span>
-            <span class="tool-tag">Todoist</span>
-            <span class="tool-tag">Asana</span>
-            <span class="tool-tag">Firecrawl</span>
-            <span class="tool-tag">Brave Search</span>
-            <span class="tool-tag">Memory MCP</span>
-          </div>
-          <div class="case-result">
-            <strong>實測成效：</strong>每通客戶電話省 30-45 分鐘後處理時間；競品研究從 2-3 小時壓縮到 5 分鐘內完成。
-          </div>
-          <a class="case-source" href="https://aimaker.substack.com/p/how-i-finally-turned-ai-into-managing-actual-personal-operating-system-workflow-mcp-model-context-protocol-guide-claude" target="_blank" rel="noopener">閱讀原文 →</a>
-        </div>
-
-        <!-- Case 2: Nuria UX -->
-        <div class="case-card">
-          <div class="case-header">
-            <div class="case-avatar" style="background: rgba(74,127,187,0.1);">🎨</div>
-            <div>
-              <h3>Nuria — UX 設計師的自動化工作流</h3>
-              <div class="case-meta">Medium 文章 · UX Workflow</div>
-            </div>
-          </div>
-          <div class="case-desc">
-            用 Claude MCP 自動填充 Confluence 結構化頁面、自動建立 JIRA ticket（含不同任務類型和 User Story），
-            將重複性的專案管理工作全部交給 AI 處理。
-          </div>
-          <div class="case-tools">
-            <span class="tool-tag">Atlassian Confluence</span>
-            <span class="tool-tag">JIRA</span>
-            <span class="tool-tag">Claude MCP</span>
-          </div>
-          <div class="case-result">
-            <strong>核心價值：</strong>UX 設計師不再花時間在文件搬運和 ticket 建立，專注在設計決策本身。
-          </div>
-          <a class="case-source" href="https://medium.com/@nuninu/how-claude-mcp-supercharged-my-ux-workflow-45061bb7ce1b" target="_blank" rel="noopener">閱讀原文 →</a>
-        </div>
-
-        <!-- Case 3: a16z Cursor -->
-        <div class="case-card">
-          <div class="case-header">
-            <div class="case-avatar" style="background: rgba(212,118,78,0.1);">💻</div>
-            <div>
-              <h3>a16z 分析：Cursor 變身多功能平台</h3>
-              <div class="case-meta">a16z Deep Dive · 產業分析</div>
-            </div>
-          </div>
-          <div class="case-desc">
-            開發者用 Cursor + MCP 把程式碼編輯器變成萬用工具：
-            Slack 客戶端（Slack MCP）、Email 工具（Resend MCP）、
-            圖片產生器（Replicate MCP）、資料庫管理器（Postgres MCP，被稱為 "game changer"）、
-            即時除錯器（Browsertools MCP）。
-          </div>
-          <div class="case-tools">
-            <span class="tool-tag">Slack MCP</span>
-            <span class="tool-tag">Resend MCP</span>
-            <span class="tool-tag">Replicate MCP</span>
-            <span class="tool-tag">Postgres MCP</span>
-            <span class="tool-tag">Upstash MCP</span>
-            <span class="tool-tag">Browsertools MCP</span>
-          </div>
-          <div class="case-result">
-            <strong>a16z 觀點：</strong>MCP 正在成為「AI 工具互動的標準化介面」，Cursor 是最佳示範。
-          </div>
-          <a class="case-source" href="https://a16z.com/a-deep-dive-into-mcp-and-the-future-of-ai-tooling/" target="_blank" rel="noopener">閱讀原文 →</a>
-        </div>
-
-        <!-- Case 4: Anthropic Blog -->
-        <div class="case-card">
-          <div class="case-header">
-            <div class="case-avatar" style="background: rgba(107,175,123,0.1);">📊</div>
-            <div>
-              <h3>Anthropic 官方：金融分析 × 會議智慧</h3>
-              <div class="case-meta">claude.com/blog · 官方案例</div>
-            </div>
-          </div>
-          <div class="case-desc">
-            金融分析師用 S&P Capital IQ + Daloopa + Morningstar MCP，
-            讓 Skill 自動識別數據來源、即時抓取財務指標、套用估值方法論、驗證法規要求。
-            PM 用 Notion MCP 自動產生會議前讀物和外部議程。
-          </div>
-          <div class="case-tools">
-            <span class="tool-tag">S&P Capital IQ</span>
-            <span class="tool-tag">Daloopa</span>
-            <span class="tool-tag">Morningstar</span>
-            <span class="tool-tag">Notion MCP</span>
-          </div>
-          <div class="case-result">
-            <strong>官方定位：</strong>Skill + MCP = Claude 能力延伸的標準模式，不是 hack，是官方推薦架構。
-          </div>
-          <a class="case-source" href="https://claude.com/blog/extending-claude-capabilities-with-skills-mcp-servers" target="_blank" rel="noopener">閱讀原文 →</a>
-        </div>
-
-      </div>
+      <div class="case-grid fade-in" id="caseGrid"></div>
     </div>
   </section>
 
-  <!-- ═══ Official Remote MCP Partners ═══ -->
-  <section class="section" id="partners">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Anthropic Official Partners · 2026.01.26 announced</div>
-        <h2>🏢 Anthropic 官方合作夥伴</h2>
-        <p>Claude 桌面版 Settings → Integrations，一鍵授權即可使用</p>
-      </div>
-      <div class="partner-grid fade-in">
-        <div class="partner-card">
-          <div class="partner-icon">📊</div>
-          <h4>Amplitude</h4>
-          <p>產品分析</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">📋</div>
-          <h4>Asana</h4>
-          <p>專案管理</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">🔵</div>
-          <h4>Atlassian</h4>
-          <p>Jira + Confluence</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">📦</div>
-          <h4>Box</h4>
-          <p>檔案儲存</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">🎨</div>
-          <h4>Canva</h4>
-          <p>設計工具</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">🧲</div>
-          <h4>Clay</h4>
-          <p>CRM & 資料擴充</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">🖌️</div>
-          <h4>Figma</h4>
-          <p>設計協作</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">🔮</div>
-          <h4>Hex</h4>
-          <p>資料分析</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">📊</div>
-          <h4>monday.com</h4>
-          <p>專案管理</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">☁️</div>
-          <h4>Salesforce</h4>
-          <p>CRM / Agentforce</p>
-        </div>
-        <div class="partner-card">
-          <div class="partner-icon">💬</div>
-          <h4>Slack</h4>
-          <p>團隊溝通</p>
-        </div>
-      </div>
-      <div class="partner-note">
-        📅 2025/12 Anthropic 將 MCP 捐贈給 Linux Foundation 旗下 Agentic AI Foundation (AAIF)，由 Block、OpenAI 共同創立。<br>
-        OpenAI 已於 2025/3 正式採用 MCP，整合進 ChatGPT Desktop。
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Skill × MCP Workflow Patterns ═══ -->
-  <section class="section section-alt" id="workflows">
+  <!-- ═══ 6. Workflow Patterns ═══ -->
+  <section class="section" id="workflows">
     <div class="container">
       <div class="section-header fade-in">
         <div class="overline">Workflow Design Patterns</div>
-        <h2>🚀 工作流設計模式：Skill 調度多個 MCP</h2>
-        <p>參考這些設計模式，組合你自己的自動化工作流</p>
+        <h2>🚀 工作流設計模式：Skill × 多個 MCP</h2>
+        <p>參考這些模式，組合你自己的自動化工作流</p>
       </div>
-      <div class="workflow-grid fade-in">
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(139,107,181,0.1);">🎬</div>
-            <div><h3>影音內容製作流</h3></div>
-          </div>
-          <div class="workflow-desc">從會議紀錄到影片企畫，一句話觸發完整製作前期。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 影音企畫器</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Granola 會議紀錄</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Notion 腳本撰寫</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Canva 縮圖設計</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Google Sheets 排程</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Granola</span><span class="tool-tag">Notion</span>
-            <span class="tool-tag">Canva</span><span class="tool-tag">Google Sheets</span>
+      <div class="wf-grid fade-in">
+        <div class="wf-card">
+          <div class="wf-head"><div class="wf-icon" style="background:rgba(139,107,181,.1)">🎬</div><h3>影音內容製作流</h3></div>
+          <div class="wf-desc">從會議紀錄到影片企畫，一句話觸發完整製作前期。</div>
+          <div class="wf-flow">
+            <span class="wf-chip skill">Skill: 影音企畫器</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Granola</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Notion</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Canva</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Sheets</span>
           </div>
         </div>
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(212,118,78,0.1);">📝</div>
-            <div><h3>文章撰寫 → 審定 → 上架</h3></div>
-          </div>
-          <div class="workflow-desc">關鍵字研究 → 撰稿 → 團隊審核 → 自動發布，全流程 AI 驅動。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 內容產製器</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Ahrefs SEO 分析</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Notion 撰稿</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Slack 審核通知</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">WordPress 發布</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Ahrefs</span><span class="tool-tag">Notion</span>
-            <span class="tool-tag">Slack</span><span class="tool-tag">WordPress</span>
+        <div class="wf-card">
+          <div class="wf-head"><div class="wf-icon" style="background:rgba(212,118,78,.1)">📝</div><h3>文章撰寫 → 審定 → 上架</h3></div>
+          <div class="wf-desc">關鍵字研究 → 撰稿 → 團隊審核 → 自動發布。</div>
+          <div class="wf-flow">
+            <span class="wf-chip skill">Skill: 內容產製器</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Ahrefs</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Notion</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Slack</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">WordPress</span>
           </div>
         </div>
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(74,127,187,0.1);">🎨</div>
-            <div><h3>素材設計 × 多平台輸出</h3></div>
-          </div>
-          <div class="workflow-desc">從設計稿到多平台素材，一個 Skill 搞定尺寸適配與素材管理。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 素材批量器</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Figma 設計稿</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Canva 多尺寸輸出</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Google Drive 素材庫</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Notion 素材紀錄</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Figma</span><span class="tool-tag">Canva</span>
-            <span class="tool-tag">Google Drive</span><span class="tool-tag">Notion</span>
+        <div class="wf-card">
+          <div class="wf-head"><div class="wf-icon" style="background:rgba(74,127,187,.1)">🎨</div><h3>素材設計 × 多平台輸出</h3></div>
+          <div class="wf-desc">從設計稿到多平台素材，一個 Skill 搞定。</div>
+          <div class="wf-flow">
+            <span class="wf-chip skill">Skill: 素材批量器</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Figma</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Canva</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Drive</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Notion</span>
           </div>
         </div>
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(107,175,123,0.1);">📈</div>
-            <div><h3>廣告成效分析 × 週報產出</h3></div>
-          </div>
-          <div class="workflow-desc">跨平台數據彙整 → 成效分析 → 自動產出週報 → 通知團隊。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 廣告分析師</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Google Sheets 數據源</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Supermetrics 跨平台</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">PostHog 網站行為</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Slack 週報推送</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Google Sheets</span><span class="tool-tag">Supermetrics</span>
-            <span class="tool-tag">PostHog</span><span class="tool-tag">Slack</span>
-          </div>
-        </div>
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(212,165,116,0.1);">🤝</div>
-            <div><h3>客戶拜訪 → CRM → Follow-up</h3></div>
-          </div>
-          <div class="workflow-desc">會議後自動更新 CRM、建立追蹤任務、寄出 Follow-up Email。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 客戶跟進器</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Granola 會議摘要</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">HubSpot CRM 更新</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Asana 建立任務</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Gmail 發送 Email</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Granola</span><span class="tool-tag">HubSpot</span>
-            <span class="tool-tag">Asana</span><span class="tool-tag">Gmail</span>
-          </div>
-        </div>
-
-        <div class="workflow-card">
-          <div class="workflow-header">
-            <div class="workflow-icon" style="background: rgba(212,60,60,0.08);">🏗️</div>
-            <div><h3>專案啟動 × 全自動環境建置</h3></div>
-          </div>
-          <div class="workflow-desc">一句話建立專案：文件夾、任務看板、Slack 頻道、日曆事件全部到位。</div>
-          <div class="workflow-flow">
-            <span class="flow-chip skill">Skill: 專案啟動器</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Notion 專案文件</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Asana / Linear 任務</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Slack 建立頻道</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-chip mcp">Calendar 排里程碑</span>
-          </div>
-          <div class="workflow-tools">
-            <span class="tool-tag">Notion</span><span class="tool-tag">Asana</span>
-            <span class="tool-tag">Linear</span><span class="tool-tag">Slack</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Starter 3 Tools ═══ -->
-  <section class="section" id="starter">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Start Here</div>
-        <h2>🔗 入門三件套：第一步從這裡開始</h2>
-        <p>Claude 桌面版官方整合，點擊卡片展開串接步驟</p>
-      </div>
-      <div class="mcp-grid fade-in">
-        <div class="mcp-card" onclick="toggleMcp(this)">
-          <div class="mcp-card-icon">📅</div>
-          <h3>Google Calendar</h3>
-          <p>讓 Claude 看你的行程、安排時間、提醒你重要會議</p>
-          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
-          <div class="mcp-steps">
-            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>找到 Google Calendar，點擊 Connect（官方整合，一鍵授權）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Google 帳號授權（選擇要分享的日曆）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「我明天有什麼行程？」</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：讓 Claude 幫你找空檔、建立新事件</div></div>
-            <div class="mcp-note safe">🔒 權限為授權範圍內的唯讀/讀寫，Claude 不儲存你的日曆資料</div>
-          </div>
-        </div>
-        <div class="mcp-card" onclick="toggleMcp(this)">
-          <div class="mcp-card-icon">📝</div>
-          <h3>Notion</h3>
-          <p>讓 Claude 讀寫你的知識庫，直接在 Notion 建立頁面和資料庫</p>
-          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
-          <div class="mcp-steps">
-            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>找到 Notion，點擊 Connect（官方整合，一鍵授權）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Notion 授權（選擇要分享的工作區和頁面）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「幫我在 Notion 建一個會議紀錄」</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：搭配 Skill 自動整理筆記到指定資料庫</div></div>
-            <div class="mcp-note safe">🔒 僅存取你授權的頁面，不會碰其他工作區內容</div>
-          </div>
-        </div>
-        <div class="mcp-card" onclick="toggleMcp(this)">
-          <div class="mcp-card-icon">📊</div>
-          <h3>Google Sheets</h3>
-          <p>讓 Claude 直接操作你的試算表，分析資料、生成報表</p>
-          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
-          <div class="mcp-steps">
-            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>此工具需透過第三方 MCP Server 串接（非官方一鍵整合）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>需設定 config.json（不需要寫程式，照步驟即可完成）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Google 帳號授權（選擇要分享的試算表）</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「幫我分析這張表的銷售趨勢」</div></div>
-            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：自動產生月報表、資料視覺化</div></div>
-            <div class="mcp-note config">⚙️ 與 Calendar/Notion 不同，Sheets 需要額外設定 MCP Server</div>
+        <div class="wf-card">
+          <div class="wf-head"><div class="wf-icon" style="background:rgba(107,175,123,.1)">📈</div><h3>廣告分析 × 週報自動產出</h3></div>
+          <div class="wf-desc">跨平台數據彙整 → 分析 → 自動產出週報。</div>
+          <div class="wf-flow">
+            <span class="wf-chip skill">Skill: 廣告分析師</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Sheets</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">PostHog</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Slack</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ GitHub Top MCP Servers ═══ -->
-  <section class="section section-alt" id="github">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">GitHub Stars Ranking · source: AwesomeClaude / MCP Directory</div>
-        <h2>⭐ GitHub 熱門 MCP Server 排行</h2>
-        <p>依實際 GitHub 星數排序，資料來源：AwesomeClaude、MCP Directory</p>
-      </div>
-      <div class="gh-grid fade-in">
-        <a href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener" class="gh-card">
-          <h3>microsoft/markitdown <span class="gh-rank gold">#1</span></h3>
-          <p>微軟出品，任何檔案轉 Markdown。支援 PDF、Word、Excel、PowerPoint、圖片 OCR。MCP Server 內建。</p>
-          <div class="gh-meta"><span>⭐ 90.8K</span><span>Python</span><span>Microsoft</span></div>
-        </a>
-        <a href="https://github.com/upstash/context7" target="_blank" rel="noopener" class="gh-card">
-          <h3>upstash/context7 <span class="gh-rank gold">#2</span></h3>
-          <p>即時程式碼文件查詢，讓 LLM 讀到最新版 API 文件而非過期訓練資料。</p>
-          <div class="gh-meta"><span>⭐ 49.2K</span><span>TypeScript</span><span>Dev Tool</span></div>
-        </a>
-        <a href="https://github.com/microsoft/playwright-mcp" target="_blank" rel="noopener" class="gh-card">
-          <h3>microsoft/playwright-mcp <span class="gh-rank silver">#3</span></h3>
-          <p>微軟 Playwright 團隊的 MCP Server，讓 AI 操作瀏覽器做自動化測試和爬取。</p>
-          <div class="gh-meta"><span>⭐ 29.0K</span><span>TypeScript</span><span>Microsoft</span></div>
-        </a>
-        <a href="https://github.com/github/github-mcp-server" target="_blank" rel="noopener" class="gh-card">
-          <h3>github/github-mcp-server <span class="gh-rank silver">#4</span></h3>
-          <p>GitHub 官方 MCP Server，管理 Repo、PR、Issue、Actions 全部用對話完成。</p>
-          <div class="gh-meta"><span>⭐ 27.9K</span><span>Go</span><span>GitHub Official</span></div>
-        </a>
-        <a href="https://github.com/eyaltoledano/claude-task-master" target="_blank" rel="noopener" class="gh-card">
-          <h3>claude-task-master <span class="gh-rank bronze">#5</span></h3>
-          <p>AI 任務管理系統，自動拆解複雜專案為可執行子任務，追蹤進度。</p>
-          <div class="gh-meta"><span>⭐ 25.9K</span><span>TypeScript</span><span>Productivity</span></div>
-        </a>
-        <a href="https://github.com/oraios/serena" target="_blank" rel="noopener" class="gh-card">
-          <h3>oraios/serena <span class="gh-rank bronze">#6</span></h3>
-          <p>符號級程式碼操作，讓 AI 像人類工程師一樣理解和修改程式碼結構。</p>
-          <div class="gh-meta"><span>⭐ 21.6K</span><span>Python</span><span>Code Intel</span></div>
-        </a>
-        <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener" class="gh-card">
-          <h3>modelcontextprotocol/servers</h3>
-          <p>Anthropic 官方維護的 MCP Server 參考實作集合。Filesystem、GitHub、Google Maps、Slack 等核心 server。</p>
-          <div class="gh-meta"><span>⭐ 16K+</span><span>TypeScript</span><span>Official Reference</span></div>
-        </a>
-        <a href="https://github.com/punkpeye/awesome-mcp-servers" target="_blank" rel="noopener" class="gh-card">
-          <h3>awesome-mcp-servers</h3>
-          <p>社群維護的 MCP Server 精選清單，分類齊全、持續更新。尋找新工具的第一站。</p>
-          <div class="gh-meta"><span>⭐ 12K+</span><span>Curated List</span><span>Community</span></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Creative & Unexpected ═══ -->
-  <section class="section" id="creative">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Beyond Productivity</div>
-        <h2>🎮 意想不到的 MCP 應用</h2>
-        <p>不只是工作工具——3D 建模、音樂製作、遊戲開發都能用</p>
-      </div>
-      <div class="creative-grid fade-in">
-        <div class="creative-card">
-          <div class="creative-icon">🧊</div>
-          <h4>Blender MCP</h4>
-          <p>用文字指令建 3D 場景：「建一個低多邊形地牢，龍守著黃金」→ 即時生成</p>
-          <div class="creative-stars">⭐ 9.9K stars</div>
-        </div>
-        <div class="creative-card">
-          <div class="creative-icon">🎵</div>
-          <h4>Ableton MCP</h4>
-          <p>用提示詞輔助音樂製作，操控 Ableton Live session 建立音軌</p>
-          <div class="creative-stars">Music Production</div>
-        </div>
-        <div class="creative-card">
-          <div class="creative-icon">🎮</div>
-          <h4>MCP-Unity</h4>
-          <p>14-17 歲高中生用文字指令建 3D 遊戲場景（SIGGRAPH 論文）</p>
-          <div class="creative-stars">SIGGRAPH Paper</div>
-        </div>
-        <div class="creative-card">
-          <div class="creative-icon">🔬</div>
-          <h4>Ghidra MCP</h4>
-          <p>讓 LLM 自動反編譯和分析二進制檔案，逆向工程自動化</p>
-          <div class="creative-stars">Reverse Engineering</div>
-        </div>
-        <div class="creative-card">
-          <div class="creative-icon">🎙️</div>
-          <h4>ElevenLabs MCP</h4>
-          <p>多聲線語音克隆，不需錄音棚就能製作多角色語音內容</p>
-          <div class="creative-stars">Voice Cloning & TTS</div>
-        </div>
-        <div class="creative-card">
-          <div class="creative-icon">🎬</div>
-          <h4>Unreal MCP</h4>
-          <p>用自然語言控制 Unreal Engine，建立 Blueprint、操作場景</p>
-          <div class="creative-stars">Game Engine</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Connector Catalog ═══ -->
-  <section class="section section-alt" id="catalog">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Claude Desktop Connectors</div>
-        <h2>📦 連結器總覽</h2>
-        <p>Claude 桌面版內建連結器精選。完整目錄請至 <a href="https://claude.ai/connectors" target="_blank" style="color: var(--accent-blue);">claude.ai/connectors</a></p>
-      </div>
-
-      <div class="catalog-filters fade-in">
-        <button class="filter-btn active" onclick="filterCatalog('all', this)">全部</button>
-        <button class="filter-btn" onclick="filterCatalog('productivity', this)">生產力 & 專案</button>
-        <button class="filter-btn" onclick="filterCatalog('crm', this)">CRM & 銷售</button>
-        <button class="filter-btn" onclick="filterCatalog('marketing', this)">行銷 & 社群</button>
-        <button class="filter-btn" onclick="filterCatalog('design', this)">設計 & 創意</button>
-        <button class="filter-btn" onclick="filterCatalog('dev', this)">開發 & 基礎設施</button>
-        <button class="filter-btn" onclick="filterCatalog('data', this)">資料 & 分析</button>
-        <button class="filter-btn" onclick="filterCatalog('finance', this)">財務 & 金融</button>
-        <button class="filter-btn" onclick="filterCatalog('comms', this)">溝通 & 會議</button>
-        <button class="filter-btn" onclick="filterCatalog('content', this)">內容 & CMS</button>
-        <button class="filter-btn" onclick="filterCatalog('local', this)">本地 & 系統</button>
-      </div>
-
-      <div class="connector-grid fade-in" id="connector-grid">
-        <!-- 生產力 & 專案管理 -->
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">📝</span><span class="ci-name">Notion</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">💬</span><span class="ci-name">Slack</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">📋</span><span class="ci-name">Asana</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">🔷</span><span class="ci-name">Linear</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">📊</span><span class="ci-name">monday.com</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">🟣</span><span class="ci-name">ClickUp</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">🔵</span><span class="ci-name">Atlassian</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">🟡</span><span class="ci-name">Miro</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">⬜</span><span class="ci-name">Airtable</span></div>
-        <div class="connector-item" data-cat="productivity"><span class="ci-icon">📐</span><span class="ci-name">Smartsheet</span></div>
-
-        <!-- CRM & 銷售 -->
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">☁️</span><span class="ci-name">Salesforce</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">🟠</span><span class="ci-name">HubSpot</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">🧲</span><span class="ci-name">Clay</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">🚀</span><span class="ci-name">Apollo.io</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">🔍</span><span class="ci-name">ZoomInfo</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">🎯</span><span class="ci-name">Close CRM</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">💎</span><span class="ci-name">Attio</span></div>
-        <div class="connector-item" data-cat="crm"><span class="ci-icon">📡</span><span class="ci-name">Outreach</span></div>
-
-        <!-- 行銷 & 社群 -->
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">🔎</span><span class="ci-name">Ahrefs</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">📧</span><span class="ci-name">MailerLite</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">⚡</span><span class="ci-name">ActiveCampaign</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">🎵</span><span class="ci-name">Klaviyo</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">📊</span><span class="ci-name">Supermetrics</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">📅</span><span class="ci-name">Calendly</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">🌍</span><span class="ci-name">Similarweb</span></div>
-        <div class="connector-item" data-cat="marketing"><span class="ci-icon">👤</span><span class="ci-name">Customer.io</span></div>
-
-        <!-- 設計 & 創意 -->
-        <div class="connector-item" data-cat="design"><span class="ci-icon">🎨</span><span class="ci-name">Canva</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">🖌️</span><span class="ci-name">Figma</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">✏️</span><span class="ci-name">Excalidraw</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">🖍️</span><span class="ci-name">tldraw</span><span class="ci-badge trending">Trending</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">✨</span><span class="ci-name">Gamma</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">🪄</span><span class="ci-name">Magic Patterns</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">📊</span><span class="ci-name">Mermaid Chart</span></div>
-        <div class="connector-item" data-cat="design"><span class="ci-icon">🧩</span><span class="ci-name">shadcn/ui</span></div>
-
-        <!-- 開發 & 基礎設施 -->
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">🐙</span><span class="ci-name">GitHub</span><span class="ci-badge popular">⭐ 27.9K</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">🎭</span><span class="ci-name">Playwright</span><span class="ci-badge popular">⭐ 29K</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">▲</span><span class="ci-name">Vercel</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">⚡</span><span class="ci-name">Supabase</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">☁️</span><span class="ci-name">Cloudflare</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">🐛</span><span class="ci-name">Sentry</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">📮</span><span class="ci-name">Postman</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">🔒</span><span class="ci-name">Stripe</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">☸️</span><span class="ci-name">Kubernetes</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">📊</span><span class="ci-name">Grafana</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">🔧</span><span class="ci-name">n8n</span></div>
-        <div class="connector-item" data-cat="dev"><span class="ci-icon">⚡</span><span class="ci-name">Zapier</span></div>
-
-        <!-- 資料 & 分析 -->
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📊</span><span class="ci-name">Google Sheets</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📈</span><span class="ci-name">Amplitude</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">🔮</span><span class="ci-name">Hex</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">❄️</span><span class="ci-name">Snowflake</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">🔷</span><span class="ci-name">BigQuery</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">🧱</span><span class="ci-name">Databricks</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📈</span><span class="ci-name">PostHog</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📉</span><span class="ci-name">Mixpanel</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📊</span><span class="ci-name">Tableau</span></div>
-        <div class="connector-item" data-cat="data"><span class="ci-icon">📋</span><span class="ci-name">Metabase</span></div>
-
-        <!-- 財務 & 金融 -->
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">💳</span><span class="ci-name">Stripe</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">💰</span><span class="ci-name">Brex</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">📊</span><span class="ci-name">S&P Global</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">⭐</span><span class="ci-name">Morningstar</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">📈</span><span class="ci-name">FactSet</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">📊</span><span class="ci-name">QuickBooks</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">🏦</span><span class="ci-name">Mercury</span></div>
-        <div class="connector-item" data-cat="finance"><span class="ci-icon">💵</span><span class="ci-name">Ramp</span></div>
-
-        <!-- 溝通 & 會議 -->
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">📧</span><span class="ci-name">Gmail</span><span class="ci-badge popular">社群 #1</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">📅</span><span class="ci-name">Google Calendar</span><span class="ci-badge popular">社群 #2</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">💬</span><span class="ci-name">Slack</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">🎙️</span><span class="ci-name">Granola</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">🔥</span><span class="ci-name">Fireflies</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">💬</span><span class="ci-name">Intercom</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">🔁</span><span class="ci-name">Circleback</span></div>
-        <div class="connector-item" data-cat="comms"><span class="ci-icon">🤝</span><span class="ci-name">Fellow.ai</span></div>
-
-        <!-- 內容 & CMS -->
-        <div class="connector-item" data-cat="content"><span class="ci-icon">🌐</span><span class="ci-name">WordPress</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">🎨</span><span class="ci-name">Webflow</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">📄</span><span class="ci-name">Google Drive</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">📦</span><span class="ci-name">Box</span><span class="ci-badge official">官方夥伴</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">🧠</span><span class="ci-name">Guru</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">🔍</span><span class="ci-name">Glean</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">📋</span><span class="ci-name">Sanity</span></div>
-        <div class="connector-item" data-cat="content"><span class="ci-icon">✍️</span><span class="ci-name">Craft</span></div>
-
-        <!-- 本地 & 系統 -->
-        <div class="connector-item" data-cat="local"><span class="ci-icon">📁</span><span class="ci-name">Filesystem</span><span class="ci-badge popular">社群 #3</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">🖥️</span><span class="ci-name">Desktop Commander</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">🌐</span><span class="ci-name">Browsertools</span><span class="ci-badge trending">Trending</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">🕷️</span><span class="ci-name">Firecrawl</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">💬</span><span class="ci-name">iMessages</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">📒</span><span class="ci-name">Apple Notes</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">🎵</span><span class="ci-name">Spotify</span></div>
-        <div class="connector-item" data-cat="local"><span class="ci-icon">🔊</span><span class="ci-name">ElevenLabs</span></div>
-      </div>
-      <div class="catalog-count" id="catalog-count">顯示 110 個連結器精選（全部）· 完整目錄 10,000+ 個</div>
-    </div>
-  </section>
-
-  <!-- ═══ Ecosystem Directories ═══ -->
-  <section class="section" id="directories">
-    <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Ecosystem Resources</div>
-        <h2>🗂️ MCP 生態系目錄</h2>
-        <p>找工具、找靈感、找社群——這些網站幫你探索整個生態系</p>
-      </div>
-      <div class="dir-grid fade-in">
-        <a href="https://claude.ai/connectors" target="_blank" rel="noopener" class="dir-card">
-          <h4>Claude Connectors</h4>
-          <p>Anthropic 官方連結器目錄，直接在 Claude 桌面版授權使用</p>
-        </a>
-        <a href="https://awesomeclaude.ai/top-mcp-servers" target="_blank" rel="noopener" class="dir-card">
-          <h4>AwesomeClaude</h4>
-          <p>追蹤 1,076 個 MCP Server，39 個分類，含星數排行</p>
-        </a>
-        <a href="https://mcp.so/" target="_blank" rel="noopener" class="dir-card">
-          <h4>mcp.so</h4>
-          <p>社群驅動的 MCP Server 目錄，搜尋和發現新工具</p>
-        </a>
-        <a href="https://mcpmarket.com/leaderboards" target="_blank" rel="noopener" class="dir-card">
-          <h4>MCP Market</h4>
-          <p>Top 100 排行榜，依 GitHub 星數即時更新</p>
-        </a>
-        <a href="https://mcp.directory/blog/most-popular-mcp-tools-2026" target="_blank" rel="noopener" class="dir-card">
-          <h4>MCP Directory</h4>
-          <p>開發者實際使用排行，含分類篩選和詳細說明</p>
-        </a>
-        <a href="https://dev.to/copilotkit/30-mcp-ideas-with-complete-source-code-d8e" target="_blank" rel="noopener" class="dir-card">
-          <h4>30 MCP Ideas + Source</h4>
-          <p>DEV Community 整理，30 個 MCP 專案含完整原始碼</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Security ═══ -->
+  <!-- ═══ 7. Security ═══ -->
   <section class="section section-alt">
     <div class="container">
-      <div class="section-header fade-in">
-        <div class="overline">Security Awareness</div>
-        <h2>🛡️ 安全提醒</h2>
-      </div>
+      <div class="section-header fade-in"><div class="overline">Security Awareness</div><h2>🛡️ 安全提醒</h2></div>
       <div class="security-banner fade-in">
-        <h3>⚠️ 43% 被測試的 MCP Server 存在 Command Injection 漏洞</h3>
-        <p>MCP 生態系仍在快速發展中，安裝第三方 Server 前請注意：</p>
+        <h3>⚠️ 43% 被測試的第三方 MCP Server 存在安全漏洞</h3>
+        <p>安裝前請注意：</p>
         <ul>
-          <li>優先使用 Anthropic 官方合作夥伴（上方 11 個），安全性有保障</li>
-          <li>第三方 Server 請檢查 GitHub 星數、最近更新時間、Issue 狀況</li>
-          <li>避免授予不必要的權限（如 Filesystem 只開放特定資料夾）</li>
-          <li>企業環境請經過 IT/Security 審核再部署</li>
+          <li>優先使用 Anthropic 官方合作夥伴（一鍵授權那 11 個最安全）</li>
+          <li>第三方 Server 檢查 GitHub 星數、最近更新、Issue 狀況</li>
+          <li>Filesystem 只開放特定資料夾，不要授權根目錄</li>
+          <li>需要 API Key 的 Server，Key 不要外洩或 commit 到 Git</li>
           <li>社群建議：從 1-2 個 Server 開始，逐步擴展</li>
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- ═══ 8. Directories ═══ -->
+  <section class="section" id="directories">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Ecosystem</div>
+        <h2>🗂️ 去哪裡找更多 MCP Server？</h2>
+      </div>
+      <div class="dir-grid fade-in" id="dirGrid"></div>
+    </div>
+  </section>
+
   <!-- ═══ CTA ═══ -->
-  <section class="section">
-    <div class="container" style="text-align: center;">
-      <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 16px;">Skill + MCP = 你的 AI 工作系統</h2>
-      <p style="color: var(--text-sec); margin-bottom: 24px;">用系統畫布把它們串起來，設計你的完整工作流</p>
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <a href="/skill/" class="btn btn-secondary btn-sm">設計 Skill →</a>
+  <section class="section section-alt">
+    <div class="container" style="text-align:center">
+      <h2 style="font-size:1.5rem;font-weight:900;margin-bottom:16px">Skill + MCP = 你的 AI 工作系統</h2>
+      <p style="color:var(--text-sec);margin-bottom:24px">用系統畫布把它們串起來，設計完整工作流</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="/skill/" class="btn btn-secondary btn-sm">← 設計 Skill</a>
         <a href="/canvas/" class="btn btn-primary btn-sm">前往系統設計畫布 →</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
-      <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
+      <p style="margin-top:8px">by Lee Vent · vent's talk · 2026</p>
       <div class="footer-links">
-        <a href="/">首頁</a>
-        <a href="/skill/">Skill 工坊</a>
-        <a href="/canvas/">系統畫布</a>
-        <a href="/resources/">延伸學習</a>
-        <a href="https://leevent.xyz">Blog</a>
+        <a href="/">首頁</a><a href="/skill/">Skill 工坊</a><a href="/canvas/">系統畫布</a><a href="/resources/">延伸學習</a><a href="https://leevent.xyz">Blog</a>
       </div>
     </div>
   </footer>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-    });
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+<script>
+// ── Load JSON Database ──
+let DB = null;
+let activeCat = 'all';
+let activeSetup = 'all';
 
-    function toggleMcp(el) { el.classList.toggle('expanded'); }
+fetch('/data/mcp-servers.json')
+  .then(r => r.json())
+  .then(data => { DB = data; initUI(); })
+  .catch(() => { document.getElementById('searchResults').innerHTML = '<p style="text-align:center;color:var(--text-muted)">資料庫載入失敗，請重新整理頁面。</p>'; });
 
-    function filterCatalog(cat, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+function initUI() {
+  renderCatFilters();
+  renderServers();
+  renderCases();
+  renderDirectories();
+}
 
-      const items = document.querySelectorAll('.connector-item');
-      let count = 0;
-      items.forEach(item => {
-        if (cat === 'all' || item.dataset.cat === cat) {
-          item.classList.remove('hidden');
-          count++;
-        } else {
-          item.classList.add('hidden');
-        }
-      });
+// ── Category Filter Buttons ──
+function renderCatFilters() {
+  const el = document.getElementById('catFilters');
+  const cats = DB.categories;
+  let html = '<button class="sf-btn active" data-cat="all" onclick="setCatFilter(\'all\',this)">全部</button>';
+  for (const [k, v] of Object.entries(cats)) {
+    html += `<button class="sf-btn" data-cat="${k}" onclick="setCatFilter('${k}',this)">${v.icon} ${v.name}</button>`;
+  }
+  el.innerHTML = html;
+}
 
-      const catNames = {
-        all: '全部', productivity: '生產力 & 專案', crm: 'CRM & 銷售',
-        marketing: '行銷 & 社群', design: '設計 & 創意', dev: '開發 & 基礎設施',
-        data: '資料 & 分析', finance: '財務 & 金融', comms: '溝通 & 會議',
-        content: '內容 & CMS', local: '本地 & 系統'
-      };
-      document.getElementById('catalog-count').textContent =
-        `顯示 ${count} 個連結器精選（${catNames[cat] || cat}）· 完整目錄 10,000+ 個`;
-    }
-  </script>
+function setCatFilter(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('#catFilters .sf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderServers();
+}
+
+function setSetupFilter(setup, btn) {
+  activeSetup = setup;
+  document.querySelectorAll('#setupFilters .sf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderServers();
+}
+
+function filterServers() { renderServers(); }
+
+function renderServers() {
+  const query = (document.getElementById('searchInput').value || '').toLowerCase();
+  const grid = document.getElementById('searchResults');
+  const servers = DB.servers.filter(s => {
+    const matchCat = activeCat === 'all' || s.category === activeCat;
+    const matchSetup = activeSetup === 'all' || s.setup === activeSetup;
+    const matchQuery = !query ||
+      s.name.toLowerCase().includes(query) ||
+      s.description.toLowerCase().includes(query) ||
+      (s.description_en || '').toLowerCase().includes(query) ||
+      (s.use_cases || []).join(' ').toLowerCase().includes(query) ||
+      s.category.toLowerCase().includes(query);
+    return matchCat && matchSetup && matchQuery;
+  });
+
+  grid.innerHTML = servers.map(s => {
+    const badgeClass = s.setup === 'one-click' ? 'oneclick' : s.type === 'official' || s.type === 'archived-official' ? 'official' : 'community';
+    const badgeText = s.setup === 'one-click' ? '一鍵授權' : s.type === 'official' ? '官方維護' : s.type === 'archived-official' ? '官方(封存)' : '社群';
+    const starsTag = s.stars ? `<span class="sr-tag">⭐ ${(s.stars/1000).toFixed(1)}K</span>` : '';
+    const configBlock = s.config_example ? `<div class="sr-config"><pre>${escHtml(s.config_example)}</pre></div>` : '';
+    const hasConfig = s.config_example ? 'onclick="this.classList.toggle(\'show-config\')"' : '';
+    const useCases = (s.use_cases || []).map(u => `<span class="sr-tag">${u}</span>`).join('');
+    const diffTag = s.difficulty !== undefined ? `<span class="sr-tag">難度 ${'⬤'.repeat(Math.max(1, s.difficulty))}${'○'.repeat(Math.max(0, 3-s.difficulty))}</span>` : '';
+
+    return `<div class="sr-card" ${hasConfig}>
+      <div class="sr-top">
+        <span class="sr-name">${s.name}</span>
+        <span class="sr-badge ${badgeClass}">${badgeText}</span>
+      </div>
+      <div class="sr-desc">${s.description}</div>
+      <div class="sr-meta">${starsTag}${diffTag}${useCases}</div>
+      ${configBlock}
+    </div>`;
+  }).join('');
+
+  document.getElementById('srCount').textContent = `顯示 ${servers.length} / ${DB.servers.length} 個 Server`;
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Cases ──
+function renderCases() {
+  const grid = document.getElementById('caseGrid');
+  const icons = ['🧠','🎨','💻','📊'];
+  const colors = ['rgba(139,107,181,.1)','rgba(74,127,187,.1)','rgba(212,118,78,.1)','rgba(107,175,123,.1)'];
+  grid.innerHTML = DB.real_cases.map((c, i) => {
+    const tools = (c.servers_used || []).map(t => `<span class="sr-tag">${t}</span>`).join('');
+    return `<div class="case-card">
+      <div class="case-header">
+        <div class="case-avatar" style="background:${colors[i%4]}">${icons[i%4]}</div>
+        <div><h3>${c.title}</h3><div class="case-meta">${c.source}</div></div>
+      </div>
+      <div class="case-desc">${c.phases || ''}</div>
+      <div class="case-tools">${tools}</div>
+      <div class="case-result"><strong>成效：</strong>${c.results}</div>
+      <a class="case-source" href="${c.url}" target="_blank" rel="noopener">閱讀原文 →</a>
+    </div>`;
+  }).join('');
+}
+
+// ── Directories ──
+function renderDirectories() {
+  const grid = document.getElementById('dirGrid');
+  grid.innerHTML = DB.ecosystem_directories.map(d =>
+    `<a href="${d.url}" target="_blank" rel="noopener" class="dir-card"><h4>${d.name}</h4><p>${d.description}</p></a>`
+  ).join('');
+}
+
+// ── Utilities ──
+function copyConfig(btn) {
+  const code = btn.parentElement.innerText.replace('複製','').trim();
+  navigator.clipboard.writeText(code).then(() => { btn.textContent = '已複製!'; setTimeout(() => btn.textContent = '複製', 1500); });
+}
+
+// ── Nav + Animations ──
+window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20); });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
