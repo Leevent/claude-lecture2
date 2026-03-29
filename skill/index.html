@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill 設計工坊 + 成熟度模型 — B 班教學資源</title>
+  <meta name="description" content="互動式 Skill 設計工坊：五步驟設計你的 AI 工作 SOP，搭配 5 級成熟度模型自我定位。含行銷範例一鍵載入。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/skill/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Skill 設計工坊 + 5 級成熟度模型">
+  <meta property="og:description" content="跟著五個步驟設計你的第一個 Claude Skill，搭配成熟度模型升級路徑。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/skill/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shared.css">
+  <style>
+    /* ── Workshop ── */
+    .workshop { max-width: 720px; margin: 0 auto; }
+    .workshop-steps {
+      display: flex; gap: 4px; margin-bottom: 32px;
+      background: var(--bg-alt); border-radius: var(--radius); padding: 4px;
+    }
+    .workshop-step-tab {
+      flex: 1; padding: 12px 8px; text-align: center; border-radius: var(--radius-sm);
+      font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+      cursor: pointer; transition: var(--transition); border: none; background: none;
+      font-family: inherit;
+    }
+    .workshop-step-tab.active {
+      background: var(--bg-card); color: var(--accent);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .workshop-step-tab .step-num { display: block; font-size: 1.1rem; margin-bottom: 2px; }
+    .workshop-panel {
+      background: var(--bg-card); border-radius: var(--radius); padding: 32px;
+      border: 1px solid var(--border); display: none; animation: fadeUp 0.3s ease;
+    }
+    .workshop-panel.active { display: block; }
+    .workshop-panel h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .workshop-panel .hint { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+    .workshop-panel label {
+      display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; color: var(--text-sec);
+    }
+    .workshop-panel textarea, .workshop-panel input[type="text"], .workshop-panel select {
+      width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-xs);
+      font-family: inherit; font-size: 0.95rem; color: var(--text);
+      background: var(--bg); transition: var(--transition); resize: vertical;
+    }
+    .workshop-panel textarea:focus, .workshop-panel input:focus, .workshop-panel select:focus {
+      outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(212,118,78,0.1);
+    }
+    .workshop-panel textarea { min-height: 80px; }
+    .field-group { margin-bottom: 16px; }
+    .field-example { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-style: italic; }
+    .workshop-nav { display: flex; justify-content: space-between; margin-top: 24px; }
+    .btn-step {
+      padding: 10px 24px; border-radius: 999px; font-family: inherit; font-weight: 700;
+      font-size: 0.9rem; cursor: pointer; transition: var(--transition); border: none;
+    }
+    .btn-step-next { background: var(--accent); color: #fff; }
+    .btn-step-next:hover { background: #C06A45; }
+    .btn-step-prev { background: var(--bg-alt); color: var(--text-sec); }
+    .btn-step-prev:hover { background: var(--border); }
+
+    /* Skill Preview */
+    .skill-preview {
+      background: var(--bg-dark); color: var(--text-on-dark);
+      border-radius: var(--radius); padding: 24px; margin-top: 20px;
+      font-family: 'Courier New', monospace; font-size: 0.85rem;
+      line-height: 1.8; white-space: pre-wrap; position: relative;
+    }
+    .skill-preview .copy-btn {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.1); color: var(--text-on-dark);
+      border: none; border-radius: 8px; padding: 6px 14px;
+      font-size: 0.8rem; cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+      transition: var(--transition);
+    }
+    .skill-preview .copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Maturity Model ── */
+    .maturity { max-width: 720px; margin: 0 auto; }
+    .maturity-levels { display: flex; flex-direction: column; gap: 12px; }
+    .maturity-level {
+      display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: center;
+      background: var(--bg-card); border-radius: var(--radius-sm); padding: 16px 20px;
+      border: 1px solid var(--border); cursor: pointer; transition: var(--transition);
+    }
+    .maturity-level:hover { border-color: var(--accent-gold); }
+    .maturity-level.active { border-color: var(--accent); box-shadow: 0 4px 16px var(--shadow); }
+    .maturity-badge {
+      width: 48px; height: 48px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-weight: 900;
+      font-size: 1.1rem; color: #fff;
+    }
+    .maturity-level:nth-child(1) .maturity-badge { background: #7EADD2; }
+    .maturity-level:nth-child(2) .maturity-badge { background: #6BAF7B; }
+    .maturity-level:nth-child(3) .maturity-badge { background: var(--accent-gold); }
+    .maturity-level:nth-child(4) .maturity-badge { background: var(--accent); }
+    .maturity-level:nth-child(5) .maturity-badge { background: var(--accent-purple); }
+    .maturity-title { font-weight: 700; font-size: 0.95rem; }
+    .maturity-desc {
+      font-size: 0.85rem; color: var(--text-sec);
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      grid-column: 1 / -1;
+    }
+    .maturity-level.active .maturity-desc { max-height: 200px; padding-top: 12px; }
+
+    .example-btn {
+      background: rgba(212,118,78,0.1); color: var(--accent);
+      border: 1px solid rgba(212,118,78,0.3); padding: 8px 20px;
+      border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: var(--transition);
+    }
+    .example-btn:hover { background: rgba(212,118,78,0.2); }
+
+    @media (max-width: 768px) {
+      .workshop-steps { overflow-x: auto; }
+      .workshop-step-tab { min-width: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <div class="nav-links">
+        <a href="/">首頁</a>
+        <a href="/skill/" class="active">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge">🧩 Interactive Workshop</div>
+      <h1><span class="highlight">Skill</span> 設計工坊 + 成熟度模型</h1>
+      <p class="subtitle">跟著五個步驟設計你的第一個 Skill，搭配成熟度模型找到你的升級路徑。</p>
+    </div>
+  </section>
+
+  <div class="breadcrumb">
+    <a href="/">首頁</a> <span class="sep">›</span> <span>Skill 設計工坊</span>
+  </div>
+
+  <!-- Skill Workshop -->
+  <section class="section" id="workshop">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Skill Design Workshop</div>
+        <h2>🧩 五步驟設計你的 Skill</h2>
+        <p>完成後可直接複製到 Claude Project 使用</p>
+        <div style="text-align: center; margin-top: 16px;">
+          <button class="example-btn" onclick="loadMarketingExample()">📋 一鍵載入行銷範例</button>
+        </div>
+      </div>
+      <div class="workshop fade-in">
+        <div class="workshop-steps">
+          <button class="workshop-step-tab active" onclick="switchStep(0)">
+            <span class="step-num">①</span>觸發
+          </button>
+          <button class="workshop-step-tab" onclick="switchStep(1)">
+            <span class="step-num">②</span>輸入
+          </button>
+          <button class="workshop-step-tab" onclick="switchStep(2)">
+            <span class="step-num">③</span>流程
+          </button>
+          <button class="workshop-step-tab" onclick="switchStep(3)">
+            <span class="step-num">④</span>輸出
+          </button>
+          <button class="workshop-step-tab" onclick="switchStep(4)">
+            <span class="step-num">⑤</span>護欄
+          </button>
+        </div>
+
+        <!-- Step 1: Trigger -->
+        <div class="workshop-panel active" id="step-0">
+          <h3>① 觸發條件 — 什麼時候啟動這個 Skill？</h3>
+          <p class="hint">想想你工作中哪件事「手動做第三次，就值得做成 Skill」</p>
+          <div class="field-group">
+            <label>Skill 名稱</label>
+            <input type="text" id="skill-name" placeholder="例：社群貼文產出器">
+          </div>
+          <div class="field-group">
+            <label>觸發場景</label>
+            <textarea id="skill-trigger" placeholder="例：當我需要為新產品/活動撰寫多平台社群文案時"></textarea>
+            <div class="field-example">提示：描述一個具體的工作場景，越具體越好</div>
+          </div>
+          <div class="field-group">
+            <label>使用頻率</label>
+            <select id="skill-freq">
+              <option value="">選擇使用頻率</option>
+              <option value="daily">每天</option>
+              <option value="weekly">每週 2-3 次</option>
+              <option value="biweekly">每兩週一次</option>
+              <option value="monthly">每月一次</option>
+            </select>
+          </div>
+          <div class="workshop-nav">
+            <div></div>
+            <button class="btn-step btn-step-next" onclick="switchStep(1)">下一步 →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Input -->
+        <div class="workshop-panel" id="step-1">
+          <h3>② 輸入規格 — Skill 需要你提供什麼？</h3>
+          <p class="hint">列出 Skill 啟動時需要的資料，越明確越不容易出錯</p>
+          <div class="field-group">
+            <label>必要輸入（每行一項）</label>
+            <textarea id="skill-input-required" placeholder="例：&#10;- 產品/活動名稱&#10;- 目標受眾描述&#10;- 核心賣點（3 個以內）"></textarea>
+          </div>
+          <div class="field-group">
+            <label>選填輸入（有的話更好）</label>
+            <textarea id="skill-input-optional" placeholder="例：&#10;- 品牌語氣參考文件&#10;- 過去的爆款貼文範例&#10;- 競品文案截圖"></textarea>
+          </div>
+          <div class="workshop-nav">
+            <button class="btn-step btn-step-prev" onclick="switchStep(0)">← 上一步</button>
+            <button class="btn-step btn-step-next" onclick="switchStep(2)">下一步 →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Process -->
+        <div class="workshop-panel" id="step-2">
+          <h3>③ 執行流程 — Step by step 怎麼做？</h3>
+          <p class="hint">把你腦中的工作流程寫下來，Claude 會照著這個順序執行</p>
+          <div class="field-group">
+            <label>執行步驟（每行一個步驟）</label>
+            <textarea id="skill-process" rows="6" placeholder="例：&#10;Step 1：分析目標受眾的痛點與需求&#10;Step 2：提煉 3 個核心訊息角度&#10;Step 3：撰寫 Threads 版本（300 字內，含 CTA）&#10;Step 4：改寫為 Facebook 版本（加入連結和 Hashtag）&#10;Step 5：產出 Instagram 圖文版本（重點條列）"></textarea>
+          </div>
+          <div class="field-group">
+            <label>角色設定（Claude 要扮演什麼角色？）</label>
+            <input type="text" id="skill-role" placeholder="例：資深社群行銷經理，擅長中文口語化文案">
+          </div>
+          <div class="workshop-nav">
+            <button class="btn-step btn-step-prev" onclick="switchStep(1)">← 上一步</button>
+            <button class="btn-step btn-step-next" onclick="switchStep(3)">下一步 →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Output -->
+        <div class="workshop-panel" id="step-3">
+          <h3>④ 輸出格式 — 最終交付什麼？</h3>
+          <p class="hint">明確定義產出的格式和結構，避免每次結果長得不一樣</p>
+          <div class="field-group">
+            <label>輸出格式描述</label>
+            <textarea id="skill-output" placeholder="例：&#10;## [平台名稱] 版本&#10;&#10;[文案內容]&#10;&#10;---&#10;每個版本獨立分段，包含：&#10;- 主文案&#10;- CTA（行動呼籲）&#10;- 建議發布時間&#10;- Hashtag（3-5 個）"></textarea>
+          </div>
+          <div class="field-group">
+            <label>範例（給 Claude 看的「我滿意的產出長這樣」）</label>
+            <textarea id="skill-example" placeholder="貼上一個你滿意的過去作品，Claude 會學習這個風格和格式"></textarea>
+            <div class="field-example">官方建議：給 3-5 個範例效果最好。這裡先放 1 個核心範例。</div>
+          </div>
+          <div class="workshop-nav">
+            <button class="btn-step btn-step-prev" onclick="switchStep(2)">← 上一步</button>
+            <button class="btn-step btn-step-next" onclick="switchStep(4)">下一步 →</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Quality -->
+        <div class="workshop-panel" id="step-4">
+          <h3>⑤ 品質護欄 — 怎麼確保產出品質？</h3>
+          <p class="hint">Red Line Rules（紅線規則）：告訴 Claude「不做什麼」比「做什麼」更重要</p>
+          <div class="field-group">
+            <label>品質標準（必須達到的條件）</label>
+            <textarea id="skill-quality" placeholder="例：&#10;- 每篇文案必須包含至少一個 CTA&#10;- 語氣親切口語化，不要文言文或公文體&#10;- 字數控制在平台建議範圍內"></textarea>
+          </div>
+          <div class="field-group">
+            <label>紅線規則（絕對不能做的事）</label>
+            <textarea id="skill-redline" placeholder="例：&#10;❌ 不要使用「親愛的」「您好」等制式開頭&#10;❌ 不要一次講超過 3 個賣點&#10;❌ 不要使用競品的品牌名稱&#10;❌ 不要出現未經驗證的數據"></textarea>
+          </div>
+          <div class="workshop-nav">
+            <button class="btn-step btn-step-prev" onclick="switchStep(3)">← 上一步</button>
+            <button class="btn-step btn-step-next" onclick="generateSkill()" style="background: var(--accent-green);">✨ 產出 Skill</button>
+          </div>
+          <div id="skill-result"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill Maturity Model -->
+  <section class="section section-alt" id="maturity">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Skill Maturity Model</div>
+        <h2>📈 5 級 Skill 成熟度</h2>
+        <p>你目前在哪個等級？點擊查看每個層級的說明</p>
+      </div>
+      <div class="maturity fade-in">
+        <div class="maturity-levels">
+          <div class="maturity-level active" onclick="toggleMaturity(this)">
+            <div class="maturity-badge">L1</div>
+            <div class="maturity-title">結構化提示 Structured Prompt</div>
+            <div class="maturity-desc">用五元素框架（R-T-C-F-Q）寫出清楚的指令。這是 A 班教的基礎功，大多數人停在這裡。每次都要重新寫 prompt，無法複用。</div>
+          </div>
+          <div class="maturity-level" onclick="toggleMaturity(this)">
+            <div class="maturity-badge">L2</div>
+            <div class="maturity-title">動態提示 Dynamic Prompt</div>
+            <div class="maturity-desc">加入變數和條件判斷，同一個 Skill 能適應不同情境。例如：根據「產品類型」自動切換不同的文案風格和平台格式。</div>
+          </div>
+          <div class="maturity-level" onclick="toggleMaturity(this)">
+            <div class="maturity-badge">L3</div>
+            <div class="maturity-title">工具調用 Tool Calling</div>
+            <div class="maturity-desc">Skill 能透過 MCP 呼叫外部工具：讀你的 Calendar、查 Notion、操作 Sheets。從「純文字產出」進化到「連接真實世界」。</div>
+          </div>
+          <div class="maturity-level" onclick="toggleMaturity(this)">
+            <div class="maturity-badge">L4</div>
+            <div class="maturity-title">多步驟 Multi-step</div>
+            <div class="maturity-desc">Skill 自動串起多個步驟：先蒐集資料 → 分析趨勢 → 撰寫報告 → 推送到指定位置。每一步的輸出成為下一步的輸入。</div>
+          </div>
+          <div class="maturity-level" onclick="toggleMaturity(this)">
+            <div class="maturity-badge">L5</div>
+            <div class="maturity-title">編排調度 Orchestration</div>
+            <div class="maturity-desc">多個 Skill 協作、SubAgent 並行處理。一個指令拆分給多個 Agent：一個做競品分析、一個寫文案、一個做 SEO 優化。這是隱藏班的領域。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 16px;">學會 Skill，接下來串接 MCP</h2>
+      <p style="color: var(--text-sec); margin-bottom: 24px;">Skill 搭配 MCP 才能真正連上你的工作工具</p>
+      <a href="/mcp/" class="btn btn-primary btn-sm">前往 MCP 串接指南 →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
+      <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
+      <div class="footer-links">
+        <a href="/">首頁</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+        <a href="https://leevent.xyz">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav scroll ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── Fade-in ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Workshop Steps ──
+    function switchStep(n) {
+      document.querySelectorAll('.workshop-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.workshop-step-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('step-' + n).classList.add('active');
+      document.querySelectorAll('.workshop-step-tab')[n].classList.add('active');
+    }
+
+    // ── Maturity toggle ──
+    function toggleMaturity(el) {
+      document.querySelectorAll('.maturity-level').forEach(l => l.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // ── Generate Skill ──
+    function generateSkill() {
+      const name = document.getElementById('skill-name').value || '未命名 Skill';
+      const trigger = document.getElementById('skill-trigger').value || '（未填寫）';
+      const freq = document.getElementById('skill-freq').value || '按需';
+      const inputReq = document.getElementById('skill-input-required').value || '（未填寫）';
+      const inputOpt = document.getElementById('skill-input-optional').value || '（無）';
+      const process = document.getElementById('skill-process').value || '（未填寫）';
+      const role = document.getElementById('skill-role').value || '專業助理';
+      const output = document.getElementById('skill-output').value || '（未填寫）';
+      const example = document.getElementById('skill-example').value;
+      const quality = document.getElementById('skill-quality').value || '（未填寫）';
+      const redline = document.getElementById('skill-redline').value || '（未填寫）';
+
+      const freqMap = { daily: '每天', weekly: '每週 2-3 次', biweekly: '每兩週一次', monthly: '每月一次' };
+
+      let skillText = `# ${name}\n\n`;
+      skillText += `## 觸發條件\n${trigger}\n使用頻率：${freqMap[freq] || freq}\n\n`;
+      skillText += `## 角色設定\n你是一位${role}。\n\n`;
+      skillText += `## 必要輸入\n${inputReq}\n\n`;
+      skillText += `## 選填輸入\n${inputOpt}\n\n`;
+      skillText += `## 執行流程\n${process}\n\n`;
+      skillText += `## 輸出格式\n${output}\n\n`;
+      if (example) skillText += `## 範例\n${example}\n\n`;
+      skillText += `## 品質標準\n${quality}\n\n`;
+      skillText += `## 紅線規則\n${redline}`;
+
+      document.getElementById('skill-result').innerHTML =
+        `<div class="skill-preview"><button class="copy-btn" onclick="copySkill(this)">📋 複製</button>${escapeHtml(skillText)}</div>` +
+        `<div style="margin-top: 16px; padding: 16px; background: rgba(107,175,123,0.08); border-radius: var(--radius-xs); border-left: 3px solid var(--accent-green);">
+          <div style="font-weight: 700; margin-bottom: 8px; font-size: 0.95rem;">✅ 你的 Skill 已產出！下一步：</div>
+          <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.7;">
+            1. 複製上方文字，貼到 Claude Project 的 Custom Instructions 中<br>
+            2. 在對話中輸入觸發條件，測試 Skill 是否如預期運作<br>
+            3. 根據產出品質調整紅線規則和輸出格式<br>
+            4. 參考下方 <a href="#maturity" style="color: var(--accent);">5 級成熟度模型</a>，逐步升級你的 Skill
+          </div>
+        </div>`;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function copySkill(btn) {
+      const text = btn.parentElement.textContent.replace('📋 複製', '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✅ 已複製！';
+        setTimeout(() => btn.textContent = '📋 複製', 2000);
+      });
+    }
+
+    // ── Load Marketing Example ──
+    function loadMarketingExample() {
+      document.getElementById('skill-name').value = '社群貼文產出器';
+      document.getElementById('skill-trigger').value = '當我需要為新產品或活動撰寫多平台社群文案時';
+      document.getElementById('skill-freq').value = 'weekly';
+      document.getElementById('skill-input-required').value = '- 產品/活動名稱\n- 目標受眾描述（年齡層、職業、痛點）\n- 核心賣點（3 個以內）';
+      document.getElementById('skill-input-optional').value = '- 品牌語氣參考文件\n- 過去的爆款貼文範例\n- 競品文案截圖';
+      document.getElementById('skill-process').value = 'Step 1：分析目標受眾的痛點與需求\nStep 2：提煉 3 個核心訊息角度\nStep 3：撰寫 Threads 版本（300 字內，含 CTA）\nStep 4：改寫為 Facebook 版本（加入連結和 Hashtag）\nStep 5：產出 Instagram 圖文版本（重點條列）';
+      document.getElementById('skill-role').value = '資深社群行銷經理，擅長中文口語化文案，了解台灣社群生態';
+      document.getElementById('skill-output').value = '## [平台名稱] 版本\n\n[文案內容]\n\n---\n每個版本包含：主文案、CTA、建議發布時間、Hashtag（3-5 個）';
+      document.getElementById('skill-example').value = '';
+      document.getElementById('skill-quality').value = '- 每篇文案必須包含至少一個 CTA\n- 語氣親切口語化，不要文言文或公文體\n- 字數控制在平台建議範圍內';
+      document.getElementById('skill-redline').value = '❌ 不要使用「親愛的」「您好」等制式開頭\n❌ 不要一次講超過 3 個賣點\n❌ 不要使用競品的品牌名稱\n❌ 不要出現未經驗證的數據';
+      switchStep(0);
+    }
+  </script>
+</body>
+</html>

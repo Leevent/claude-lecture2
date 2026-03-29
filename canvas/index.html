@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 工作系統設計畫布 — B 班教學資源</title>
+  <meta name="description" content="互動式設計畫布：盤點你的 Projects、Skills、MCP 連接，規劃你的 AI 工作系統。支援 localStorage 儲存。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/canvas/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI 工作系統設計畫布">
+  <meta property="og:description" content="盤點你的工作流，用 Projects × Skills × MCP 打造你的 AI 工作系統。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/canvas/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shared.css">
+  <style>
+    /* ── Canvas ── */
+    .canvas-container { max-width: 840px; margin: 0 auto; }
+    .canvas-board {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;
+    }
+    .canvas-col {
+      background: var(--bg-card); border-radius: var(--radius); padding: 20px;
+      border: 1px solid var(--border); min-height: 300px;
+    }
+    .canvas-col-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+      padding-bottom: 12px; border-bottom: 2px solid;
+    }
+    .canvas-col-header h3 { font-size: 0.95rem; font-weight: 700; }
+    .canvas-col-header .col-icon { font-size: 1.2rem; }
+    .canvas-col-header .col-count {
+      margin-left: auto; font-size: 0.75rem; color: var(--text-muted);
+      background: var(--bg-alt); padding: 2px 8px; border-radius: 999px;
+    }
+    .canvas-col[data-type="projects"] .canvas-col-header { border-color: var(--accent-gold); }
+    .canvas-col[data-type="skills"] .canvas-col-header { border-color: var(--accent); }
+    .canvas-col[data-type="mcp"] .canvas-col-header { border-color: var(--accent-blue); }
+    .canvas-item {
+      background: var(--bg-alt); border-radius: var(--radius-xs); padding: 10px 14px;
+      margin-bottom: 8px; font-size: 0.88rem; display: flex; align-items: center;
+      justify-content: space-between; transition: var(--transition);
+    }
+    .canvas-item:hover { background: var(--border); }
+    .canvas-remove {
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 1rem; padding: 0 4px;
+    }
+    .canvas-remove:hover { color: #D44; }
+    .canvas-add { display: flex; gap: 8px; margin-top: 12px; }
+    .canvas-add input {
+      flex: 1; padding: 8px 12px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-xs); font-family: inherit; font-size: 0.85rem;
+      background: var(--bg); color: var(--text);
+    }
+    .canvas-add input:focus { outline: none; border-color: var(--accent); }
+    .canvas-add-btn {
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius-xs); padding: 8px 14px; cursor: pointer;
+      font-size: 0.85rem; font-weight: 700; font-family: inherit;
+      transition: var(--transition);
+    }
+    .canvas-add-btn:hover { background: #C06A45; }
+
+    /* ── Connections ── */
+    .canvas-connections {
+      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
+      border: 1px solid var(--border); text-align: center;
+    }
+    .canvas-connections h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; }
+    .canvas-connections p { font-size: 0.9rem; color: var(--text-sec); }
+    .canvas-flow {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      margin-top: 16px; flex-wrap: wrap;
+    }
+    .canvas-flow-item {
+      background: var(--bg-alt); padding: 8px 16px; border-radius: 999px;
+      font-size: 0.85rem; font-weight: 500;
+    }
+    .canvas-flow-arrow { color: var(--accent); font-weight: 700; }
+
+    /* ── Actions ── */
+    .canvas-actions {
+      display: flex; justify-content: center; gap: 12px; margin-top: 24px;
+    }
+    .btn-canvas-action {
+      padding: 8px 20px; border-radius: 999px; font-family: inherit;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: var(--transition); border: 1.5px solid var(--border);
+      background: var(--bg-card); color: var(--text-sec);
+    }
+    .btn-canvas-action:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── How to use ── */
+    .howto { max-width: 720px; margin: 0 auto; }
+    .howto-step {
+      display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+      margin-bottom: 20px; align-items: start;
+    }
+    .howto-num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--accent); color: #fff; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .howto-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .howto-step p { font-size: 0.9rem; color: var(--text-sec); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .canvas-board { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <div class="nav-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/canvas/" class="active">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge">⚙️ System Design</div>
+      <h1>AI 工作系統設計<span class="highlight">畫布</span></h1>
+      <p class="subtitle">盤點你的工作流，找出可以用 Projects、Skills、MCP 優化的環節。<br>你的資料會自動儲存在瀏覽器中。</p>
+    </div>
+  </section>
+
+  <div class="breadcrumb">
+    <a href="/">首頁</a> <span class="sep">›</span> <span>系統設計畫布</span>
+  </div>
+
+  <!-- How to Use -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">How to Use</div>
+        <h2>使用方法</h2>
+      </div>
+      <div class="howto fade-in">
+        <div class="howto-step">
+          <div class="howto-num">1</div>
+          <div>
+            <h3>盤點 Projects</h3>
+            <p>列出你日常使用 Claude 的工作領域。例如：社群經營、客戶提案、會議記錄等。</p>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">2</div>
+          <div>
+            <h3>設計 Skills</h3>
+            <p>針對每個 Project 的高頻重複任務，設計對應的 Skill。用 <a href="/skill/" style="color: var(--accent);">Skill 工坊</a>完成設計。</p>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">3</div>
+          <div>
+            <h3>串接 MCP</h3>
+            <p>思考哪些 Skill 需要連接外部工具才能真正自動化。參考 <a href="/mcp/" style="color: var(--accent);">MCP 指南</a>完成串接。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Canvas -->
+  <section class="section section-alt" id="canvas">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Your Canvas</div>
+        <h2>⚙️ 開始設計你的系統</h2>
+        <p>在每一欄加入項目，形成你的 AI 工作系統架構</p>
+      </div>
+      <div class="canvas-container fade-in">
+        <div class="canvas-board">
+          <div class="canvas-col" data-type="projects">
+            <div class="canvas-col-header">
+              <span class="col-icon">📁</span>
+              <h3>Projects</h3>
+              <span class="col-count" id="projects-count">2</span>
+            </div>
+            <div id="projects-list">
+              <div class="canvas-item">社群小編 <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+              <div class="canvas-item">客戶提案 <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+            </div>
+            <div class="canvas-add">
+              <input type="text" placeholder="新增 Project..." onkeydown="if(event.key==='Enter')addItem(this,'projects-list')">
+              <button class="canvas-add-btn" onclick="addItem(this.previousElementSibling,'projects-list')">+</button>
+            </div>
+          </div>
+          <div class="canvas-col" data-type="skills">
+            <div class="canvas-col-header">
+              <span class="col-icon">🧩</span>
+              <h3>Skills</h3>
+              <span class="col-count" id="skills-count">2</span>
+            </div>
+            <div id="skills-list">
+              <div class="canvas-item">貼文產出器 <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+              <div class="canvas-item">會議紀錄整理 <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+            </div>
+            <div class="canvas-add">
+              <input type="text" placeholder="新增 Skill..." onkeydown="if(event.key==='Enter')addItem(this,'skills-list')">
+              <button class="canvas-add-btn" onclick="addItem(this.previousElementSibling,'skills-list')">+</button>
+            </div>
+          </div>
+          <div class="canvas-col" data-type="mcp">
+            <div class="canvas-col-header">
+              <span class="col-icon">🔗</span>
+              <h3>MCP 連接</h3>
+              <span class="col-count" id="mcp-count">2</span>
+            </div>
+            <div id="mcp-list">
+              <div class="canvas-item">Google Calendar <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+              <div class="canvas-item">Notion <button class="canvas-remove" onclick="removeItem(this)">×</button></div>
+            </div>
+            <div class="canvas-add">
+              <input type="text" placeholder="新增 MCP..." onkeydown="if(event.key==='Enter')addItem(this,'mcp-list')">
+              <button class="canvas-add-btn" onclick="addItem(this.previousElementSibling,'mcp-list')">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="canvas-connections">
+          <h3>🔄 你的工作流串接</h3>
+          <p>把三個欄位的項目串起來，形成你的 AI 工作系統</p>
+          <div class="canvas-flow">
+            <div class="canvas-flow-item" style="background: rgba(212,165,116,0.15);">Project 提供背景</div>
+            <div class="canvas-flow-arrow">→</div>
+            <div class="canvas-flow-item" style="background: rgba(212,118,78,0.15);">Skill 執行流程</div>
+            <div class="canvas-flow-arrow">→</div>
+            <div class="canvas-flow-item" style="background: rgba(74,127,187,0.15);">MCP 連接工具</div>
+          </div>
+          <p style="margin-top: 16px; font-size: 0.85rem;">
+            例：「社群小編」Project 記住品牌語氣 → 「貼文產出器」Skill 一鍵寫文案 → Google Sheets MCP 記錄發文排程
+          </p>
+        </div>
+
+        <div class="canvas-actions">
+          <button class="btn-canvas-action" onclick="resetCanvas()">🗑️ 清空重來</button>
+          <button class="btn-canvas-action" onclick="exportCanvas()">📋 複製文字版</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 16px;">想要更多靈感？</h2>
+      <p style="color: var(--text-sec); margin-bottom: 24px;">看看延伸學習資源，深入了解 AI 工作系統設計</p>
+      <a href="/resources/" class="btn btn-primary btn-sm">瀏覽延伸學習 →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
+      <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
+      <div class="footer-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/resources/">延伸學習</a>
+        <a href="https://leevent.xyz">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addItem(input, listId) {
+      const val = input.value.trim();
+      if (!val) return;
+      const list = document.getElementById(listId);
+      const item = document.createElement('div');
+      item.className = 'canvas-item';
+      item.innerHTML = `${escapeHtml(val)} <button class="canvas-remove" onclick="removeItem(this)">×</button>`;
+      list.appendChild(item);
+      input.value = '';
+      saveCanvas();
+      updateCounts();
+    }
+
+    function removeItem(btn) {
+      btn.parentElement.remove();
+      saveCanvas();
+      updateCounts();
+    }
+
+    function updateCounts() {
+      ['projects', 'skills', 'mcp'].forEach(type => {
+        const count = document.getElementById(type + '-list').querySelectorAll('.canvas-item').length;
+        document.getElementById(type + '-count').textContent = count;
+      });
+    }
+
+    function saveCanvas() {
+      const data = {};
+      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+        const items = document.getElementById(id).querySelectorAll('.canvas-item');
+        data[id] = Array.from(items).map(el => el.textContent.replace('×', '').trim());
+      });
+      localStorage.setItem('b-class-canvas', JSON.stringify(data));
+    }
+
+    function loadCanvas() {
+      try {
+        const data = JSON.parse(localStorage.getItem('b-class-canvas'));
+        if (!data) { updateCounts(); return; }
+        ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+          if (!data[id]) return;
+          const list = document.getElementById(id);
+          list.innerHTML = '';
+          data[id].forEach(val => {
+            const item = document.createElement('div');
+            item.className = 'canvas-item';
+            item.innerHTML = `${escapeHtml(val)} <button class="canvas-remove" onclick="removeItem(this)">×</button>`;
+            list.appendChild(item);
+          });
+        });
+        updateCounts();
+      } catch(e) { updateCounts(); }
+    }
+
+    function resetCanvas() {
+      if (!confirm('確定要清空所有項目嗎？')) return;
+      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+        document.getElementById(id).innerHTML = '';
+      });
+      localStorage.removeItem('b-class-canvas');
+      updateCounts();
+    }
+
+    function exportCanvas() {
+      let text = '# 我的 AI 工作系統設計\n\n';
+      const labels = { 'projects-list': 'Projects', 'skills-list': 'Skills', 'mcp-list': 'MCP 連接' };
+      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+        const items = document.getElementById(id).querySelectorAll('.canvas-item');
+        text += `## ${labels[id]}\n`;
+        if (items.length === 0) { text += '（尚未新增）\n'; }
+        else { Array.from(items).forEach(el => { text += `- ${el.textContent.replace('×', '').trim()}\n`; }); }
+        text += '\n';
+      });
+      text += '## 串接邏輯\nProject 提供背景 → Skill 執行流程 → MCP 連接工具\n';
+      navigator.clipboard.writeText(text).then(() => alert('已複製到剪貼簿！'));
+    }
+
+    loadCanvas();
+  </script>
+</body>
+</html>

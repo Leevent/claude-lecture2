@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>參考資料與延伸學習 — B 班教學資源</title>
+  <meta name="description" content="Claude Skill、MCP、AI 工作系統設計的延伸學習資源：官方文件、YouTube 教學、研究論文、推薦工具。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/resources/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="參考資料與延伸學習 — B 班教學資源">
+  <meta property="og:description" content="精選 AI 工作系統設計的學習資源：官方文件、YouTube、論文、工具推薦。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/resources/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shared.css">
+  <style>
+    /* ── Resource Cards ── */
+    .resource-section { margin-bottom: 48px; }
+    .resource-section-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.3rem; font-weight: 900; margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--border);
+    }
+    .resource-section-icon { font-size: 1.5rem; }
+    .resource-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .resource-card {
+      background: var(--bg-card); border-radius: var(--radius-sm); padding: 20px;
+      border: 1px solid var(--border); transition: var(--transition);
+      text-decoration: none; color: inherit; display: block;
+    }
+    .resource-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px var(--shadow); transform: translateY(-2px); }
+    .resource-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+    .resource-card p { font-size: 0.85rem; color: var(--text-sec); line-height: 1.6; }
+    .resource-card .source {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; color: var(--text-muted); margin-top: 8px;
+    }
+    .resource-card .tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      padding: 2px 8px; border-radius: 999px; margin-right: 6px;
+    }
+    .tag-official { background: rgba(107,175,123,0.1); color: var(--accent-green); }
+    .tag-youtube { background: rgba(212,60,60,0.1); color: #D43C3C; }
+    .tag-paper { background: rgba(139,107,181,0.1); color: var(--accent-purple); }
+    .tag-tool { background: rgba(74,127,187,0.1); color: var(--accent-blue); }
+    .tag-blog { background: rgba(212,118,78,0.1); color: var(--accent); }
+    .tag-course { background: rgba(212,165,116,0.1); color: var(--accent-gold); }
+
+    /* ── Bookmark tip ── */
+    .bookmark-tip {
+      max-width: 720px; margin: 0 auto;
+      background: rgba(212,118,78,0.05); border-radius: var(--radius);
+      padding: 24px; border: 1px solid rgba(212,118,78,0.15);
+      text-align: center;
+    }
+    .bookmark-tip h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .bookmark-tip p { font-size: 0.9rem; color: var(--text-sec); }
+
+    @media (max-width: 768px) {
+      .resource-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <div class="nav-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/" class="active">延伸學習</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge">📚 Resources</div>
+      <h1>參考資料與<span class="highlight">延伸學習</span></h1>
+      <p class="subtitle">精選學習資源：官方文件、YouTube 教學、研究論文、推薦工具。<br>持續更新中，歡迎收藏。</p>
+    </div>
+  </section>
+
+  <div class="breadcrumb">
+    <a href="/">首頁</a> <span class="sep">›</span> <span>延伸學習</span>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Official Docs -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">📄</span>
+          官方文件
+        </div>
+        <div class="resource-grid">
+          <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-official">Official</span>
+            <h3>Anthropic Prompt Engineering Guide</h3>
+            <p>Claude 官方的 Prompt 工程指南。包含 Chain-of-Thought、Few-shot、Role-based prompting 等核心技術。</p>
+            <span class="source">docs.anthropic.com</span>
+          </a>
+          <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-official">Official</span>
+            <h3>Model Context Protocol 官方文件</h3>
+            <p>MCP 的完整規格書。了解 MCP 的設計理念、架構和可用工具清單。</p>
+            <span class="source">modelcontextprotocol.io</span>
+          </a>
+          <a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-official">Official</span>
+            <h3>Claude Tool Use 指南</h3>
+            <p>Claude 如何呼叫外部工具的官方文件。MCP 的底層就是 Tool Use。</p>
+            <span class="source">docs.anthropic.com</span>
+          </a>
+          <a href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-official">Official</span>
+            <h3>Claude Code Best Practices</h3>
+            <p>Anthropic 官方推薦的 Claude Code 使用最佳實踐，包含 CLAUDE.md 設計、Skill 結構、Sub-Agent 模式。</p>
+            <span class="source">anthropic.com</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">🎬</span>
+          YouTube 教學
+        </div>
+        <div class="resource-grid">
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="resource-card" style="pointer-events: none; opacity: 0.7;">
+            <span class="tag tag-youtube">YouTube</span>
+            <h3>Claude Code 從 0 到 1 全攻略</h3>
+            <p>完整的 Claude Code 入門教學，適合想從 B 班跳到隱藏班的人。</p>
+            <span class="source">即將更新連結</span>
+          </a>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="resource-card" style="pointer-events: none; opacity: 0.7;">
+            <span class="tag tag-youtube">YouTube</span>
+            <h3>Claude Skills 設計實戰</h3>
+            <p>從零開始設計一個完整的 Skill，含 Red Line Rules 和品質護欄設計。</p>
+            <span class="source">即將更新連結</span>
+          </a>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="resource-card" style="pointer-events: none; opacity: 0.7;">
+            <span class="tag tag-youtube">YouTube</span>
+            <h3>MCP 串接 Demo：Calendar + Notion</h3>
+            <p>實際操作 MCP 串接 Google Calendar 和 Notion 的完整流程。</p>
+            <span class="source">即將更新連結</span>
+          </a>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="resource-card" style="pointer-events: none; opacity: 0.7;">
+            <span class="tag tag-youtube">YouTube</span>
+            <h3>AI 工作系統設計全紀錄</h3>
+            <p>我如何用 Claude Code + Obsidian + MCP 打造完整的 AI 工作系統。</p>
+            <span class="source">即將更新連結</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Research & Papers -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">📑</span>
+          研究與論文
+        </div>
+        <div class="resource-grid">
+          <a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-paper">Paper</span>
+            <h3>Chain-of-Thought Prompting</h3>
+            <p>Wei et al. (2022) — 最早提出 Chain-of-Thought 概念的經典論文。理解為什麼「讓 AI 逐步思考」能大幅提升品質。</p>
+            <span class="source">arxiv.org</span>
+          </a>
+          <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-paper">Paper</span>
+            <h3>GPT-3: Few-Shot Learners</h3>
+            <p>Brown et al. (2020) — Few-shot Learning 的里程碑。了解為什麼 Skill 裡放範例能這麼有效。</p>
+            <span class="source">arxiv.org</span>
+          </a>
+          <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-paper">Paper</span>
+            <h3>ReAct: Reasoning + Acting</h3>
+            <p>Yao et al. (2022) — 推理與行動交替的框架。MCP Tool Calling 的理論基礎。</p>
+            <span class="source">arxiv.org</span>
+          </a>
+          <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-paper">Paper</span>
+            <h3>Attention Is All You Need</h3>
+            <p>Vaswani et al. (2017) — Transformer 架構的原始論文。理解 Claude 背後的基礎架構。</p>
+            <span class="source">arxiv.org</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Tools & Platforms -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">🛠️</span>
+          工具與平台
+        </div>
+        <div class="resource-grid">
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-tool">Tool</span>
+            <h3>Claude.ai</h3>
+            <p>Anthropic 的 Claude AI 平台。Projects、Styles、Artifacts 都在這裡使用。Pro 版可使用 MCP。</p>
+            <span class="source">claude.ai</span>
+          </a>
+          <a href="https://obsidian.md" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-tool">Tool</span>
+            <h3>Obsidian</h3>
+            <p>本地優先的筆記工具，用 Markdown 管理知識。搭配 Claude Code 可打造 AI 驅動的知識系統。</p>
+            <span class="source">obsidian.md</span>
+          </a>
+          <a href="https://n8n.io" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-tool">Tool</span>
+            <h3>n8n</h3>
+            <p>開源的工作流自動化工具。與 MCP 互補——MCP 做即時操作，n8n 做排程自動化。</p>
+            <span class="source">n8n.io</span>
+          </a>
+          <a href="https://notebooklm.google.com" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-tool">Tool</span>
+            <h3>Google NotebookLM</h3>
+            <p>Google 的 AI 筆記工具。可將文件轉成 Podcast、生成摘要。適合搭配學習使用。</p>
+            <span class="source">notebooklm.google.com</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Blog & Articles -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">📝</span>
+          部落格與文章
+        </div>
+        <div class="resource-grid">
+          <a href="https://leevent.xyz" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-blog">Blog</span>
+            <h3>vent's talk — Lee Vent 的 Blog</h3>
+            <p>講師的個人部落格，分享 AI 工作系統建置經驗、Claude 使用心得、SEO 觀點。</p>
+            <span class="source">leevent.xyz</span>
+          </a>
+          <a href="https://www.anthropic.com/research" target="_blank" rel="noopener" class="resource-card">
+            <span class="tag tag-blog">Blog</span>
+            <h3>Anthropic Research Blog</h3>
+            <p>Anthropic 的研究部落格。了解 Claude 的最新能力、安全研究和技術突破。</p>
+            <span class="source">anthropic.com/research</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Course Series -->
+      <div class="resource-section fade-in">
+        <div class="resource-section-title">
+          <span class="resource-section-icon">🎓</span>
+          課程系列
+        </div>
+        <div class="resource-grid">
+          <div class="resource-card" style="border-left: 3px solid var(--accent-gold);">
+            <span class="tag tag-course">Course</span>
+            <h3>A 班 — Claude 溝通框架</h3>
+            <p>五元素框架 R-T-C-F-Q + E，學會和 Claude 有效溝通的基礎功。A 班是 B 班的前置基礎。</p>
+            <span class="source">已結束 · 25 位學員參與</span>
+          </div>
+          <div class="resource-card" style="border-left: 3px solid var(--accent);">
+            <span class="tag tag-course">Course</span>
+            <h3>B 班 — Skill 與跨平台 MCP 實踐</h3>
+            <p>Skill 設計工坊、MCP 串接指南、5 級成熟度模型。你現在正在這裡。</p>
+            <span class="source">教學資源站 · bclass.leevent.xyz</span>
+          </div>
+          <div class="resource-card" style="border-left: 3px solid var(--accent-purple);">
+            <span class="tag tag-course">Course</span>
+            <h3>隱藏班 — Claude Code 系統建造</h3>
+            <p>用 Claude Code 寫程式、建系統、跑自動化。Sub-Agent 編排、Multi-Agent 協作。</p>
+            <span class="source">規劃中</span>
+          </div>
+          <a href="https://claudetc.leevent.xyz" target="_blank" rel="noopener" class="resource-card" style="border-left: 3px solid var(--accent-blue);">
+            <span class="tag tag-course">Meetup</span>
+            <h3>Claude 台中小聚</h3>
+            <p>台中在地的 Claude 使用者社群。每月一場，主題涵蓋辦公室、個人、家庭、商業等場景。</p>
+            <span class="source">claudetc.leevent.xyz</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bookmark Tip -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="bookmark-tip fade-in">
+        <h3>📌 這頁會持續更新</h3>
+        <p>建議收藏此頁面。隨著 Claude 和 MCP 生態發展，我們會持續新增優質資源。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
+      <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
+      <div class="footer-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="https://leevent.xyz">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

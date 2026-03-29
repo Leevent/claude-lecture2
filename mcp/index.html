@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP 串接指南 — B 班教學資源</title>
+  <meta name="description" content="Google Calendar、Notion、Google Sheets 的 MCP 串接步驟教學。讓 Claude 連上你的日常工具，不需要寫程式。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/mcp/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MCP 串接指南 — Claude 連上你的工具">
+  <meta property="og:description" content="三大工具串接步驟教學：Google Calendar、Notion、Google Sheets。不需要寫程式。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/mcp/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shared.css">
+  <style>
+    /* ── MCP Guide ── */
+    .mcp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .mcp-card {
+      background: var(--bg-card); border-radius: var(--radius); padding: 28px;
+      border: 1px solid var(--border); transition: var(--transition);
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .mcp-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--accent-blue); opacity: 0; transition: var(--transition);
+    }
+    .mcp-card:hover::before { opacity: 1; }
+    .mcp-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow); }
+    .mcp-card-icon { font-size: 2rem; margin-bottom: 12px; }
+    .mcp-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .mcp-card p { font-size: 0.9rem; color: var(--text-sec); margin-bottom: 16px; }
+    .mcp-steps { display: none; padding-top: 16px; border-top: 1px solid var(--border); }
+    .mcp-card.expanded .mcp-steps { display: block; }
+    .mcp-step-item {
+      display: flex; gap: 12px; padding: 10px 0;
+      font-size: 0.88rem; color: var(--text-sec);
+    }
+    .mcp-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent-blue); color: #fff; font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-weight: 700;
+    }
+    .mcp-expand-hint { font-size: 0.8rem; color: var(--accent-blue); font-weight: 500; }
+    .mcp-note {
+      margin-top: 8px; font-size: 0.78rem; color: var(--text-muted);
+      padding: 8px; border-radius: 6px;
+    }
+    .mcp-note.safe { background: rgba(107,175,123,0.06); }
+    .mcp-note.config { background: rgba(212,118,78,0.06); }
+
+    /* ── Concept Section ── */
+    .concept-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      max-width: 720px; margin: 0 auto;
+    }
+    .concept-card {
+      background: var(--bg-card); border-radius: var(--radius); padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .concept-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .concept-card p { font-size: 0.9rem; color: var(--text-sec); line-height: 1.6; }
+    .concept-card .tag {
+      display: inline-block; margin-top: 8px; font-size: 0.78rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .concept-card .tag.realtime { background: rgba(74,127,187,0.1); color: var(--accent-blue); }
+    .concept-card .tag.scheduled { background: rgba(212,118,78,0.1); color: var(--accent); }
+
+    /* ── Scenarios ── */
+    .scenario-list { max-width: 720px; margin: 0 auto; }
+    .scenario-item {
+      background: var(--bg-card); border-radius: var(--radius-sm); padding: 20px 24px;
+      border: 1px solid var(--border); margin-bottom: 12px;
+      display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start;
+    }
+    .scenario-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; background: rgba(74,127,187,0.1);
+    }
+    .scenario-item h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .scenario-item p { font-size: 0.88rem; color: var(--text-sec); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .mcp-grid { grid-template-columns: 1fr; }
+      .concept-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <div class="nav-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/" class="active">MCP 指南</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge">🔗 Connection Guide</div>
+      <h1><span class="highlight">MCP</span> 串接指南</h1>
+      <p class="subtitle">讓 Claude 連上你的日常工具。點擊卡片查看串接步驟，跟著操作就能完成。</p>
+    </div>
+  </section>
+
+  <div class="breadcrumb">
+    <a href="/">首頁</a> <span class="sep">›</span> <span>MCP 串接指南</span>
+  </div>
+
+  <!-- MCP vs Automation -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Concept</div>
+        <h2>MCP 和自動化工具有什麼不同？</h2>
+        <p>不是替代關係，是互補：MCP 做臨時決策，n8n 做重複排程</p>
+      </div>
+      <div class="concept-grid fade-in">
+        <div class="concept-card">
+          <h3>🔗 MCP（Model Context Protocol）</h3>
+          <p>Claude 的「手和眼」——你下指令，Claude 當場幫你操作。像是有個助理坐在你旁邊，你說什麼他馬上做。</p>
+          <span class="tag realtime">即時互動</span>
+        </div>
+        <div class="concept-card">
+          <h3>⚙️ n8n / Zapier</h3>
+          <p>排程型自動化——設定好後在背景自動觸發。像是預設好的流水線，固定時間固定動作。</p>
+          <span class="tag scheduled">排程自動化</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MCP Cards -->
+  <section class="section section-alt" id="tools">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Step-by-Step Guide</div>
+        <h2>🔗 三大工具串接教學</h2>
+        <p>點擊卡片展開詳細步驟</p>
+      </div>
+      <div class="mcp-grid fade-in">
+        <div class="mcp-card" onclick="toggleMcp(this)">
+          <div class="mcp-card-icon">📅</div>
+          <h3>Google Calendar</h3>
+          <p>讓 Claude 看你的行程、安排時間、提醒你重要會議</p>
+          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
+          <div class="mcp-steps">
+            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>找到 Google Calendar，點擊 Connect（官方整合，一鍵授權）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Google 帳號授權（選擇要分享的日曆）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「我明天有什麼行程？」</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：讓 Claude 幫你找空檔、建立新事件</div></div>
+            <div class="mcp-note safe">🔒 權限為授權範圍內的唯讀/讀寫，Claude 不儲存你的日曆資料</div>
+          </div>
+        </div>
+        <div class="mcp-card" onclick="toggleMcp(this)">
+          <div class="mcp-card-icon">📝</div>
+          <h3>Notion</h3>
+          <p>讓 Claude 讀寫你的知識庫，直接在 Notion 建立頁面和資料庫</p>
+          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
+          <div class="mcp-steps">
+            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>找到 Notion，點擊 Connect（官方整合，一鍵授權）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Notion 授權（選擇要分享的工作區和頁面）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「幫我在 Notion 建一個會議紀錄」</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：搭配 Skill 自動整理筆記到指定資料庫</div></div>
+            <div class="mcp-note safe">🔒 僅存取你授權的頁面，不會碰其他工作區內容</div>
+          </div>
+        </div>
+        <div class="mcp-card" onclick="toggleMcp(this)">
+          <div class="mcp-card-icon">📊</div>
+          <h3>Google Sheets</h3>
+          <p>讓 Claude 直接操作你的試算表，分析資料、生成報表</p>
+          <span class="mcp-expand-hint">點擊查看串接步驟 →</span>
+          <div class="mcp-steps">
+            <div class="mcp-step-item"><div class="mcp-step-num">1</div><div>此工具需透過第三方 MCP Server 串接（非官方一鍵整合）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">2</div><div>需設定 config.json（不需要寫程式，照步驟即可完成）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">3</div><div>Google 帳號授權（選擇要分享的試算表）</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">4</div><div>測試：問 Claude「幫我分析這張表的銷售趨勢」</div></div>
+            <div class="mcp-step-item"><div class="mcp-step-num">5</div><div>進階：自動產生月報表、資料視覺化</div></div>
+            <div class="mcp-note config">⚙️ 與 Calendar/Notion 不同，Sheets 需要額外設定 MCP Server</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Scenarios -->
+  <section class="section" id="scenarios">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="overline">Use Cases</div>
+        <h2>MCP 使用場景</h2>
+        <p>串接完成後，你可以這樣用</p>
+      </div>
+      <div class="scenario-list fade-in">
+        <div class="scenario-item">
+          <div class="scenario-icon">🌅</div>
+          <div>
+            <h3>每日工作啟動流</h3>
+            <p>「幫我看今天的行程，整理出重點會議和待辦事項，寫一份今日計畫。」<br>Claude 讀取 Calendar → 整理到 Notion → 列出優先級</p>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📊</div>
+          <div>
+            <h3>資料分析流</h3>
+            <p>「分析這個月的銷售數據，找出趨勢和異常，寫一份月報。」<br>Claude 讀取 Sheets → 分析數據 → 產出視覺化報告</p>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📝</div>
+          <div>
+            <h3>內容發布流</h3>
+            <p>「用 Skill 產出社群文案，然後記錄到排程表。」<br>Skill 產出文案 → 寫入 Sheets 排程表 → 建立 Calendar 提醒</p>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🔍</div>
+          <div>
+            <h3>會議紀錄流</h3>
+            <p>「整理剛才的會議內容，建立到 Notion，標記行動項目和負責人。」<br>Claude 結構化 → 寫入 Notion → 建立 Calendar 追蹤提醒</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-alt">
+    <div class="container" style="text-align: center;">
+      <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 16px;">Skill + MCP = 你的 AI 工作系統</h2>
+      <p style="color: var(--text-sec); margin-bottom: 24px;">用系統畫布把它們串起來，設計你的完整工作流</p>
+      <a href="/canvas/" class="btn btn-primary btn-sm">前往系統設計畫布 →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Claude 應用講座系列 ｜ A 班（溝通框架）→ B 班（Skill & MCP）→ 隱藏班（Claude Code）</p>
+      <p style="margin-top: 8px;">by Lee Vent · vent's talk · 2026</p>
+      <div class="footer-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+        <a href="https://leevent.xyz">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function toggleMcp(el) { el.classList.toggle('expanded'); }
+  </script>
+</body>
+</html>
