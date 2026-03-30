@@ -404,6 +404,10 @@
             <span>路徑請改成你自己的資料夾。只授權需要的目錄，不要給根目錄。</span>
           </div>
           <div class="config-tip info">
+            <span class="config-tip-icon">📌</span>
+            <span>macOS 路徑：<code>/Users/你的名字/Documents</code><br>Windows 路徑：<code>C:\\Users\\你的名字\\Documents</code><br>不確定路徑？在資料夾上按右鍵 →「取得資訊」(Mac) 或「內容」(Windows) 就能看到完整路徑。</span>
+          </div>
+          <div class="config-tip info">
             <span class="config-tip-icon">💡</span>
             <span><code>npx</code> = 幫你自動下載並執行工具的小程式（大多數 Server 用這個）。<code>uvx</code> = 跟 npx 類似，給 Python 工具用的。<code>docker</code> = 把工具裝在隔離的小房間裡跑（最安全但需額外安裝）。<br>不確定用哪個？<strong>照 Server 官方文件的範例複製貼上就好</strong>，不需要理解原理。</span>
           </div>
@@ -429,11 +433,15 @@
 &nbsp;&nbsp;&nbsp;&nbsp;},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"brave-search"</span>: {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"npx"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@anthropic-ai/mcp-server-brave-search"</span>],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@modelcontextprotocol/server-brave-search"</span>],<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"env"</span>: { <span class="key">"BRAVE_API_KEY"</span>: <span class="string">"你的 API Key"</span> }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;}<br>
 }
+          </div>
+          <div class="config-tip warn">
+            <span class="config-tip-icon">🔑</span>
+            <span>API Key 是一組密碼，不要把含有 Key 的 config.json 分享給別人或上傳到雲端。如果外洩，到服務商後台重新產生一組即可。</span>
           </div>
         </div>
 
@@ -561,7 +569,7 @@
     <div class="container">
       <div class="section-header fade-in"><div class="overline">Security Awareness</div><h2>🛡️ 安全提醒</h2></div>
       <div class="security-banner fade-in">
-        <h3>⚠️ 43% 被測試的第三方 MCP Server 存在安全漏洞 <span style="font-weight:400;font-size:.75rem;color:var(--text-muted)">（來源：Invariant Labs, 2026）</span></h3>
+        <h3>⚠️ 43% 被測試的第三方 MCP Server 存在安全漏洞 <span style="font-weight:400;font-size:.75rem;color:var(--text-muted)">（來源：<a href="https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks" target="_blank" style="color:var(--text-muted);text-decoration:underline">Invariant Labs, 2026</a>）</span></h3>
         <p>安裝前請注意：</p>
         <ul>
           <li>優先使用 Anthropic 官方合作夥伴（一鍵授權那 11 個最安全）</li>

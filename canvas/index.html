@@ -20,7 +20,7 @@
     /* ── Canvas ── */
     .canvas-container { max-width: 840px; margin: 0 auto; }
     .canvas-board {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;
     }
     .canvas-col {
       background: var(--bg-card); border-radius: var(--radius); padding: 20px;
@@ -232,20 +232,34 @@
               <button class="canvas-add-btn" onclick="addItem(this.previousElementSibling,'mcp-list')">+</button>
             </div>
           </div>
+          <div class="canvas-col" data-type="cowork">
+            <div class="canvas-col-header">
+              <span class="col-icon">🤝</span>
+              <h3>Cowork Plugins</h3>
+              <span class="col-count" id="cowork-count">0</span>
+            </div>
+            <div id="cowork-list"></div>
+            <div class="canvas-add">
+              <input type="text" placeholder="新增 Plugin..." onkeydown="if(event.key==='Enter')addItem(this,'cowork-list')">
+              <button class="canvas-add-btn" onclick="addItem(this.previousElementSibling,'cowork-list')">+</button>
+            </div>
+          </div>
         </div>
 
         <div class="canvas-connections">
           <h3>🔄 你的工作流串接</h3>
-          <p>把三個欄位的項目串起來，形成你的 AI 工作系統</p>
+          <p>把四個欄位的項目串起來，形成你的 AI 工作系統</p>
           <div class="canvas-flow">
             <div class="canvas-flow-item" style="background: rgba(212,165,116,0.15);">Project 提供背景</div>
             <div class="canvas-flow-arrow">→</div>
             <div class="canvas-flow-item" style="background: rgba(212,118,78,0.15);">Skill 執行流程</div>
             <div class="canvas-flow-arrow">→</div>
             <div class="canvas-flow-item" style="background: rgba(74,127,187,0.15);">MCP 連接工具</div>
+            <div class="canvas-flow-arrow">→</div>
+            <div class="canvas-flow-item" style="background: rgba(139,107,181,0.15);">Cowork 協作場域</div>
           </div>
           <p style="margin-top: 16px; font-size: 0.85rem;">
-            例：「社群小編」Project 記住品牌語氣 → 「貼文產出器」Skill 一鍵寫文案 → Google Sheets MCP 記錄發文排程
+            例：「社群小編」Project → 「貼文產出器」Skill → Google Sheets MCP 記錄排程 → Marketing Plugin 一條龍
           </p>
         </div>
 
@@ -323,7 +337,7 @@
     }
 
     function updateCounts() {
-      ['projects', 'skills', 'mcp'].forEach(type => {
+      ['projects', 'skills', 'mcp', 'cowork'].forEach(type => {
         const count = document.getElementById(type + '-list').querySelectorAll('.canvas-item').length;
         document.getElementById(type + '-count').textContent = count;
       });
@@ -331,7 +345,7 @@
 
     function saveCanvas() {
       const data = {};
-      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+      ['projects-list', 'skills-list', 'mcp-list', 'cowork-list'].forEach(id => {
         const items = document.getElementById(id).querySelectorAll('.canvas-item');
         data[id] = Array.from(items).map(el => el.textContent.replace('×', '').trim());
       });
@@ -342,7 +356,7 @@
       try {
         const data = JSON.parse(localStorage.getItem('b-class-canvas'));
         if (!data) { updateCounts(); return; }
-        ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+        ['projects-list', 'skills-list', 'mcp-list', 'cowork-list'].forEach(id => {
           if (!data[id]) return;
           const list = document.getElementById(id);
           list.innerHTML = '';
@@ -359,7 +373,7 @@
 
     function resetCanvas() {
       if (!confirm('確定要清空所有項目嗎？')) return;
-      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+      ['projects-list', 'skills-list', 'mcp-list', 'cowork-list'].forEach(id => {
         document.getElementById(id).innerHTML = '';
       });
       localStorage.removeItem('b-class-canvas');
@@ -368,15 +382,15 @@
 
     function exportCanvas() {
       let text = '# 我的 AI 工作系統設計\n\n';
-      const labels = { 'projects-list': 'Projects', 'skills-list': 'Skills', 'mcp-list': 'MCP 連接' };
-      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+      const labels = { 'projects-list': 'Projects', 'skills-list': 'Skills', 'mcp-list': 'MCP 連接', 'cowork-list': 'Cowork Plugins' };
+      ['projects-list', 'skills-list', 'mcp-list', 'cowork-list'].forEach(id => {
         const items = document.getElementById(id).querySelectorAll('.canvas-item');
         text += `## ${labels[id]}\n`;
         if (items.length === 0) { text += '（尚未新增）\n'; }
         else { Array.from(items).forEach(el => { text += `- ${el.textContent.replace('×', '').trim()}\n`; }); }
         text += '\n';
       });
-      text += '## 串接邏輯\nProject 提供背景 → Skill 執行流程 → MCP 連接工具\n';
+      text += '## 串接邏輯\nProject 提供背景 → Skill 執行流程 → MCP 連接工具 → Cowork 協作場域\n';
       navigator.clipboard.writeText(text).then(() => alert('已複製到剪貼簿！'));
     }
 
@@ -385,9 +399,10 @@
       const example = {
         'projects-list': ['社群經營', '客戶提案', '會議管理', '內容行銷'],
         'skills-list': ['社群貼文產出器', '提案摘要生成', '會議紀錄整理', '週報自動撰寫', 'EDM 文案產出'],
-        'mcp-list': ['Google Calendar', 'Notion', 'Slack', 'Canva', 'Google Sheets']
+        'mcp-list': ['Google Calendar', 'Notion', 'Slack', 'Canva', 'Google Sheets'],
+        'cowork-list': ['Productivity Plugin', 'Marketing Plugin']
       };
-      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+      ['projects-list', 'skills-list', 'mcp-list', 'cowork-list'].forEach(id => {
         const list = document.getElementById(id);
         list.innerHTML = '';
         example[id].forEach(val => {

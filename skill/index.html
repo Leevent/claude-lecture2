@@ -161,8 +161,10 @@
         <div class="overline">Skill Design Workshop</div>
         <h2>🧩 五步驟設計你的 Skill</h2>
         <p>完成後可直接複製到 Claude Project 使用</p>
-        <div style="text-align: center; margin-top: 16px;">
-          <button class="example-btn" onclick="loadMarketingExample()">📋 一鍵載入行銷範例</button>
+        <div style="text-align: center; margin-top: 16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+          <button class="example-btn" onclick="loadMarketingExample()">📋 行銷範例</button>
+          <button class="example-btn" onclick="loadMeetingExample()" style="background:rgba(74,127,187,.08);color:var(--accent-blue)">📋 會議紀錄範例</button>
+          <button class="example-btn" onclick="loadClientExample()" style="background:rgba(107,175,123,.08);color:var(--accent-green)">📋 客服回覆範例</button>
         </div>
       </div>
       <div class="workshop fade-in">
@@ -442,6 +444,36 @@
         btn.textContent = '✅ 已複製！';
         setTimeout(() => btn.textContent = '📋 複製', 2000);
       });
+    }
+
+    // ── Load Meeting Notes Example ──
+    function loadMeetingExample() {
+      document.getElementById('skill-name').value = '會議紀錄整理師';
+      document.getElementById('skill-trigger').value = '當我貼上會議逐字稿或會議筆記，請幫我整理成結構化紀錄';
+      document.getElementById('skill-input-required').value = '- 會議逐字稿或筆記原文';
+      document.getElementById('skill-input-optional').value = '- 會議主題\n- 與會者名單\n- 前次會議的待辦追蹤';
+      document.getElementById('skill-process').value = 'Step 1：識別會議主題和與會者\nStep 2：摘要核心討論要點（3-5 條）\nStep 3：列出所有決議事項\nStep 4：列出所有待辦事項（含負責人和截止日）\nStep 5：標出需要追蹤的風險或未決議題';
+      document.getElementById('skill-role').value = '資深專案經理，擅長從冗長討論中提煉重點和行動項目';
+      document.getElementById('skill-output').value = '## 會議摘要\n[1-2 句核心結論]\n\n## 討論要點\n- 要點 1\n- 要點 2\n\n## 決議事項\n| 項目 | 決議 |\n\n## 待辦追蹤\n| 待辦 | 負責人 | 截止日 |\n\n## 風險與未決事項';
+      document.getElementById('skill-example').value = '';
+      document.getElementById('skill-quality').value = '- 待辦事項必須有明確的負責人\n- 每個待辦必須有截止日期\n- 摘要不超過 200 字';
+      document.getElementById('skill-redline').value = '❌ 不要遺漏任何決議事項\n❌ 不要自行推測未在會議中提到的內容\n❌ 不要改變與會者的原意';
+      switchStep(0);
+    }
+
+    // ── Load Client Reply Example ──
+    function loadClientExample() {
+      document.getElementById('skill-name').value = '客服回覆產出器';
+      document.getElementById('skill-trigger').value = '當我貼上客戶的問題或抱怨，請幫我起草專業的回覆';
+      document.getElementById('skill-input-required').value = '- 客戶訊息原文';
+      document.getElementById('skill-input-optional').value = '- 客戶類型（VIP / 一般 / 新客戶）\n- 過往互動紀錄\n- 公司退換貨政策';
+      document.getElementById('skill-process').value = 'Step 1：判斷客戶情緒（正面/中性/負面/憤怒）\nStep 2：識別核心問題（產品問題/物流問題/帳務問題/其他）\nStep 3：根據問題類型起草回覆\nStep 4：調整語氣符合客戶情緒（憤怒→更溫和同理，正面→輕鬆友善）';
+      document.getElementById('skill-role').value = '資深客服主管，處理過上千則客訴，擅長化解衝突並維護客戶關係';
+      document.getElementById('skill-output').value = '## 問題分析\n- 情緒：[正面/中性/負面/憤怒]\n- 類型：[產品/物流/帳務/其他]\n\n## 建議回覆\n[回覆內容]\n\n## 後續追蹤\n[建議的後續行動]';
+      document.getElementById('skill-example').value = '';
+      document.getElementById('skill-quality').value = '- 回覆語氣必須溫和有禮\n- 必須在前兩句表達同理心\n- 必須提供具體解決方案，不只說「會幫您處理」';
+      document.getElementById('skill-redline').value = '❌ 不要推卸責任或指責客戶\n❌ 不要承諾無法兌現的補償\n❌ 不要使用罐頭回覆\n❌ 不要洩漏內部流程細節';
+      switchStep(0);
     }
 
     // ── Load Marketing Example ──
