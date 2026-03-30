@@ -298,12 +298,12 @@
               <span class="map-toggle">展開 ▾</span>
               <div class="details">
                 <ul>
-                  <li>A 班回顧：五元素框架 R-T-C-F-Q + E 快速複習</li>
+                  <li>A 班回顧：五元素溝通框架快速複習</li>
                   <li>Project vs Skill 關鍵差異（從「記住」到「執行」）</li>
-                  <li>Connectors → MCP 概念橋接</li>
-                  <li>Extended Thinking：讓 Claude「想久一點」</li>
-                  <li>Styles：自訂回應風格</li>
-                  <li>模型選擇策略：Haiku / Sonnet / Opus</li>
+                  <li>從一鍵授權到 MCP 概念橋接</li>
+                  <li>Extended Thinking：讓 Claude「想久一點再回答」</li>
+                  <li>Styles：自訂 Claude 的回應風格</li>
+                  <li>模型選擇策略：快速版 / 標準版 / 旗艦版怎麼選</li>
                 </ul>
               </div>
             </div>
@@ -377,7 +377,7 @@
                   <li>從「使用者」到「AI 工作流設計師」</li>
                   <li>真實案例：我的 AI 工作系統</li>
                   <li>AI 工作系統設計畫布</li>
-                  <li>進階概念預告：SubAgent 與 Multi-Agent</li>
+                  <li>進階概念預告：讓多個 AI 助理分頭合作</li>
                 </ul>
               </div>
             </div>
@@ -391,10 +391,10 @@
               <span class="map-toggle">展開 ▾</span>
               <div class="details">
                 <ul>
-                  <li>Chain-of-Thought：讓 Claude「Show your work」</li>
-                  <li>Few-shot Learning：把範例寫進 Skill</li>
-                  <li>Meta-prompting：自我評估產出品質</li>
-                  <li>Extended Thinking 品質對比 Demo</li>
+                  <li>逐步推理：讓 Claude 一步步展示思考過程</li>
+                  <li>範例學習：用 3-5 個好範例教會 Claude 你要的風格</li>
+                  <li>自我檢查：讓 Claude 自己評估產出品質</li>
+                  <li>「想久一點」vs「快速回答」品質對比 Demo</li>
                   <li>開放 Q&A</li>
                   <li>隱藏班預告：Vibe Coding Live Demo</li>
                 </ul>
@@ -421,7 +421,7 @@
           <div class="role">vent's talk 主理人 ｜ Claude 重度使用者</div>
           <p>
             每天實際使用 Claude Code + Obsidian 打造個人及團隊工作系統。
-            從 Skill 設計、MCP 串接到 Sub-Agent 編排，累積超過 30 個生產環境 Skill、串接 10+ 個 MCP 工具。
+            從 Skill 設計、MCP 串接到多 AI 助理協作，累積超過 30 個實際在用的 Skill、串接 10+ 個外部工具。
             A 班 25 位學員參與，課後即時改用自建網站教學——網站本身就是 Claude 能力的最佳示範。
           </p>
           <p style="margin-top: 8px;">
@@ -467,7 +467,7 @@
             </div>
           </div>
           <div style="margin-top:16px;padding:12px;background:rgba(107,175,123,.06);border-radius:var(--radius-xs);font-size:.82rem;color:var(--text-sec);text-align:center">
-            Level A 一鍵授權只需要準備 1-3 項即可上手｜Level B 需要第 4 項
+            一鍵授權（點一下就連上）只需要準備 1-3 項｜手動設定（複製貼上設定檔）需要第 4 項
           </div>
         </div>
       </div>
@@ -494,7 +494,7 @@
             <span>MCP 串接需要寫程式嗎？</span>
             <span class="faq-arrow">▾</span>
           </div>
-          <div class="faq-answer">不需要！Google Calendar 和 Notion 是官方整合，在 Claude 桌面版介面一鍵授權即可。Google Sheets 需透過第三方 MCP Server，但設定過程也只是複製貼上 config 檔，不需要寫任何程式碼。</div>
+          <div class="faq-answer">不需要！Google Calendar 和 Notion 是官方整合，在 Claude 桌面版介面一鍵授權即可。Google Sheets 需透過第三方工具，但設定過程也只是複製貼上一份純文字設定檔，不需要寫任何程式碼。</div>
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
@@ -522,7 +522,7 @@
             <span>5 級 Skill 成熟度要多久才能從 L1 到 L5？</span>
             <span class="faq-arrow">▾</span>
           </div>
-          <div class="faq-answer">L1→L2 通常幾天內就能達成，關鍵是加入變數讓 Skill 更靈活。L2→L3 需要學會 MCP 串接（本站有完整指南）。L3→L4 需要設計多步驟工作流，通常需要 1-2 週實踐。L5 涉及 Sub-Agent 和 Multi-Agent 編排，屬於隱藏班的進階內容。</div>
+          <div class="faq-answer">L1→L2 通常幾天內就能達成，關鍵是加入變數讓 Skill 更靈活。L2→L3 需要學會 MCP 串接（本站有完整指南）。L3→L4 需要設計多步驟工作流，通常需要 1-2 週實踐。L5 涉及讓多個 AI 助理分工合作，屬於隱藏班的進階內容。</div>
         </div>
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
@@ -546,7 +546,6 @@
         <a href="/cowork/">Cowork</a>
         <a href="/canvas/">系統畫布</a>
         <a href="/resources/">延伸學習</a>
-        <a href="https://leevent.xyz">Blog</a>
         <a href="https://leevent.xyz">Blog</a>
       </div>
     </div>

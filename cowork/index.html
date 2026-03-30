@@ -229,7 +229,7 @@
           <div class="pillar-num">03</div>
           <div class="pillar-icon">📦</div>
           <h3>Plugins</h3>
-          <p>將 Skills + Connectors + Sub-agents 打包成一個「套件」。安裝即可用，不需逐一設定。像 App 一樣一鍵安裝。</p>
+          <p>將 Skills + Connectors 打包成一個「套件」，還能派出多個 AI 助理分頭做事。安裝即可用，不需逐一設定。像 App 一樣一鍵安裝。</p>
         </div>
       </div>
 
@@ -461,7 +461,7 @@
           「我每次寫完部落格文章，需要做 4 件事：取標題、寫 SEO 摘要、產生 URL slug、產生配圖提示詞。幫我建一個 Plugin 自動化這個流程。」
         </div>
         <div style="margin-top:12px;font-size:.85rem;color:var(--text-sec)">
-          ✨ Plugin Create 會引導你：定義步驟 → 選擇 Connectors → 建立 Orchestrator → 測試 → 完成
+          ✨ Plugin Create 會用問答方式引導你：定義步驟 → 選擇要連接的服務 → 自動產出流程檔 → 測試 → 完成
         </div>
       </div>
     </div>
@@ -485,25 +485,24 @@
           │   ├── <span class="file">seo-summary.md</span><br>
           │   ├── <span class="file">url-slug.md</span><br>
           │   └── <span class="file">image-prompt.md</span><br>
-          ├── <span class="file">orchestrator.md</span> <span class="desc">← 指揮檔（定義執行順序）</span><br>
-          └── <span class="file">plugin.json</span> <span class="desc">← 中繼資料（名稱、版本、描述）</span>
+          ├── <span class="file">orchestrator.md</span> <span class="desc">← 指揮檔（告訴 AI「先做 A → 再做 B → 最後做 C」）</span><br>
+          └── <span class="file">plugin.json</span> <span class="desc">← 名片檔（這個 Plugin 叫什麼、做什麼、版本號）</span>
         </div>
 
         <div style="margin-top:20px;padding:16px;background:rgba(139,107,181,.06);border-radius:var(--radius-xs);font-size:.88rem;line-height:1.7;border:1px solid rgba(139,107,181,.12)">
-          <div style="font-weight:700;margin-bottom:6px">💡 關鍵概念：Orchestrator</div>
+          <div style="font-weight:700;margin-bottom:6px">💡 關鍵概念：Orchestrator（指揮檔）</div>
           <div style="color:var(--text-sec)">
-            Orchestrator 是 Plugin 的「大腦」。它定義：<br>
-            ・每個步驟的執行順序<br>
-            ・步驟之間的資料傳遞<br>
-            ・是否需要使用者確認才繼續下一步<br>
-            ・類似 Chain of Thought — 一步一步執行，確認後再進下一步
+            Orchestrator 就像一份「工作流程 SOP」，告訴 AI：<br>
+            ・先做第一步 → 做完給你看 → 你說 OK → 再做第二步<br>
+            ・每一步的結果會自動傳給下一步使用<br>
+            ・你不需要手動寫這份檔案 — 用 Plugin Create 對話就能自動產出
           </div>
         </div>
 
         <div style="margin-top:14px;padding:16px;background:rgba(212,118,78,.06);border-radius:var(--radius-xs);font-size:.88rem;line-height:1.7;border:1px solid rgba(212,118,78,.12)">
-          <div style="font-weight:700;margin-bottom:6px">⚠️ 注意：Plugin 目前只能在 Cowork Tab 觸發</div>
+          <div style="font-weight:700;margin-bottom:6px">⚠️ 小提醒</div>
           <div style="color:var(--text-sec)">
-            Skills 可以在一般 Chat 和 Cowork 中使用，但 Plugin（多 Skill 串聯）只能在 Cowork 中執行。
+            單一 Skill 在 Chat 和 Cowork 都能用，但 Plugin（多個 Skill 自動串聯）目前只能在 Cowork 分頁中執行。上面的檔案結構是給想深入了解的人看的 — 初學者用 Plugin Create 對話產出就好，不需要手動建這些檔案。
           </div>
         </div>
       </div>
@@ -638,7 +637,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <p>Claude 應用講座系列 | <a href="https://leevent.xyz" style="color:var(--accent);text-decoration:none">A 班</a> 溝通 → <strong>B 班</strong> 設計 → <a href="https://claudetc.leevent.xyz" style="color:var(--accent);text-decoration:none">台中小聚</a> 實戰</p>
+      <p>Claude 應用講座系列 | <a href="https://leevent.xyz" style="color:var(--accent);text-decoration:none">A 班</a>（溝通框架）→ <strong>B 班</strong>（Skill & MCP）→ <a href="https://claudetc.leevent.xyz" style="color:var(--accent);text-decoration:none">隱藏班</a>（Claude Code）</p>
       <div class="footer-links">
         <a href="/">首頁</a>
         <a href="/skill/">Skill 工坊</a>
