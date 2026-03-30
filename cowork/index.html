@@ -2,177 +2,163 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cowork 協作模式 — Claude 應用講座 B 班</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cowork 協作模式 — 從聊天夥伴到並肩同事 — B 班教學資源</title>
+  <meta name="description" content="Cowork 實戰教學：Chat vs Cowork vs Code 差異 → Skills + Connectors + Plugins 三大元件 → 官方 Plugin 安裝 → 自建 Plugin → Skill × MCP × Cowork 三合一工作流。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bclass.leevent.xyz/cowork/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cowork 協作模式 — 從聊天夥伴到並肩同事">
+  <meta property="og:description" content="3 小時講座教學資源：Skill 是腦、MCP 是手、Cowork 是場——三合一打造完整 AI 工作系統。">
+  <meta property="og:url" content="https://bclass.leevent.xyz/cowork/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shared.css">
   <style>
-    /* Hero */
-    .cowork-hero { background: linear-gradient(135deg,#1E1A15 0%,#2D2520 50%,#3A2E26 100%); color:var(--text-on-dark); padding:80px 24px 60px; text-align:center; }
-    .cowork-hero .overline { color:var(--accent-purple); font-size:.82rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
-    .cowork-hero h1 { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:900; margin-bottom:12px; }
-    .cowork-hero h1 .hl { color:var(--accent-purple); }
-    .cowork-hero .sub { font-size:1rem; color:rgba(245,237,229,.7); max-width:600px; margin:0 auto; line-height:1.7; }
-
-    /* Stat Bar */
-    .stat-bar { display:flex; flex-wrap:wrap; justify-content:center; gap:20px 36px; padding:18px 24px; background:var(--bg-alt); border-bottom:1px solid var(--border); }
+    /* ── Stat Bar ── */
+    .stat-bar { display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:32px 24px;background:var(--bg-card);border-bottom:1px solid var(--border); }
     .stat-item { text-align:center; }
-    .stat-num { font-size:1.3rem; font-weight:900; color:var(--accent-purple); }
-    .stat-label { font-size:.75rem; color:var(--text-muted); margin-top:2px; }
+    .stat-num { font-size:1.8rem;font-weight:900;color:var(--accent-purple); }
+    .stat-label { font-size:.82rem;color:var(--text-sec);margin-top:4px; }
 
-    /* Sections */
-    .section { padding:56px 24px; }
-    .section-alt { background:var(--bg-alt); }
-    .container { max-width:900px; margin:0 auto; }
-    .section-header { text-align:center; margin-bottom:36px; }
-    .section-header .overline { font-size:.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent-purple); margin-bottom:6px; }
-    .section-header h2 { font-size:1.5rem; font-weight:900; margin-bottom:8px; }
-    .section-header p { font-size:.92rem; color:var(--text-sec); max-width:560px; margin:0 auto; }
+    /* ── Mode Compare ── */
+    .mode-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:780px;margin:0 auto; }
+    .mode-card { background:var(--bg-card);border-radius:var(--radius);padding:28px 20px;border:1px solid var(--border);text-align:center;transition:var(--transition); }
+    .mode-card.active { border-color:var(--accent-purple);box-shadow:0 0 0 2px rgba(139,107,181,.2); }
+    .mode-icon { font-size:2.2rem;margin-bottom:12px; }
+    .mode-card h3 { font-size:1.05rem;font-weight:700;margin-bottom:6px; }
+    .mode-card p { font-size:.88rem;color:var(--text-sec);line-height:1.6; }
+    .mode-badge { display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700; }
+    .mode-badge.beginner { background:rgba(107,175,123,.12);color:var(--accent-green); }
+    .mode-badge.everyone { background:rgba(139,107,181,.12);color:var(--accent-purple); }
+    .mode-badge.dev { background:rgba(74,127,187,.12);color:var(--accent-blue); }
 
-    /* Mode Compare */
-    .mode-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:780px; margin:0 auto; }
-    .mode-card { background:var(--bg-card); border-radius:var(--radius); padding:24px 20px; border:1px solid var(--border); text-align:center; transition:var(--transition); }
-    .mode-card.active { border-color:var(--accent-purple); box-shadow:0 0 0 2px rgba(139,107,181,.2); }
-    .mode-icon { font-size:2rem; margin-bottom:10px; }
-    .mode-card h3 { font-size:1rem; font-weight:700; margin-bottom:6px; }
-    .mode-card p { font-size:.82rem; color:var(--text-sec); line-height:1.5; }
-    .mode-badge { display:inline-block; margin-top:10px; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:700; }
-    .mode-badge.beginner { background:rgba(107,175,123,.12); color:var(--accent-green); }
-    .mode-badge.everyone { background:rgba(139,107,181,.12); color:var(--accent-purple); }
-    .mode-badge.dev { background:rgba(74,127,187,.12); color:var(--accent-blue); }
+    /* ── Pillar Cards ── */
+    .pillar-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+    .pillar-card { background:var(--bg-card);border-radius:var(--radius);padding:28px 24px;border:1px solid var(--border);position:relative; }
+    .pillar-num { position:absolute;top:16px;right:18px;font-size:.75rem;font-weight:700;color:var(--text-muted); }
+    .pillar-icon { font-size:2rem;margin-bottom:12px; }
+    .pillar-card h3 { font-size:1.05rem;font-weight:700;margin-bottom:8px; }
+    .pillar-card p { font-size:.9rem;color:var(--text-sec);line-height:1.6; }
 
-    /* Three Pillars */
-    .pillar-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .pillar-card { background:var(--bg-card); border-radius:var(--radius); padding:24px 20px; border:1px solid var(--border); position:relative; }
-    .pillar-num { position:absolute; top:16px; right:18px; font-size:.72rem; font-weight:700; color:var(--text-muted); }
-    .pillar-icon { font-size:1.8rem; margin-bottom:10px; }
-    .pillar-card h3 { font-size:1rem; font-weight:700; margin-bottom:6px; }
-    .pillar-card p { font-size:.84rem; color:var(--text-sec); line-height:1.6; }
+    /* ── Setup Steps ── */
+    .setup-steps { display:flex;flex-direction:column;gap:20px;max-width:720px;margin:0 auto; }
+    .setup-step { display:flex;gap:18px;align-items:flex-start;background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border); }
+    .step-num { width:40px;height:40px;border-radius:50%;background:var(--accent-purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0; }
+    .step-content h3 { font-size:1rem;font-weight:700;margin-bottom:6px; }
+    .step-content p { font-size:.9rem;color:var(--text-sec);line-height:1.6; }
+    .step-img { margin-top:10px;padding:12px 16px;background:var(--bg-alt);border-radius:var(--radius-xs);font-size:.85rem;color:var(--text-sec);border:1px dashed var(--border);text-align:center; }
 
-    /* Setup Steps */
-    .setup-steps { display:flex; flex-direction:column; gap:20px; max-width:700px; margin:0 auto; }
-    .setup-step { display:flex; gap:16px; align-items:flex-start; background:var(--bg-card); border-radius:var(--radius); padding:24px; border:1px solid var(--border); }
-    .step-num { width:40px; height:40px; border-radius:50%; background:var(--accent-purple); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem; flex-shrink:0; }
-    .step-content h3 { font-size:.95rem; font-weight:700; margin-bottom:4px; }
-    .step-content p { font-size:.85rem; color:var(--text-sec); line-height:1.6; }
-    .step-img { margin-top:8px; padding:12px; background:var(--bg-alt); border-radius:var(--radius-xs); font-size:.82rem; color:var(--text-sec); border:1px dashed var(--border); text-align:center; }
-
-    /* Plugin Grid */
-    .plugin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
-    .plugin-card { background:var(--bg-card); border-radius:var(--radius-sm); padding:20px; border:1px solid var(--border); cursor:pointer; transition:var(--transition); }
-    .plugin-card:hover { border-color:var(--accent-purple); transform:translateY(-2px); box-shadow:0 4px 16px var(--shadow); }
+    /* ── Plugin Grid ── */
+    .plugin-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+    .plugin-card { background:var(--bg-card);border-radius:var(--radius-sm);padding:20px;border:1px solid var(--border);cursor:pointer;transition:var(--transition); }
+    .plugin-card:hover { border-color:var(--accent-purple);transform:translateY(-2px);box-shadow:0 4px 16px var(--shadow); }
     .plugin-card.expanded .plugin-details { display:block; }
-    .plugin-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
-    .plugin-emoji { font-size:1.4rem; }
-    .plugin-card h3 { font-size:.92rem; font-weight:700; }
-    .plugin-card > p { font-size:.82rem; color:var(--text-sec); line-height:1.5; }
-    .plugin-tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:.7rem; font-weight:600; margin-top:8px; }
-    .plugin-tag.recommended { background:rgba(139,107,181,.12); color:var(--accent-purple); }
-    .plugin-tag.optional { background:rgba(107,175,123,.08); color:var(--accent-green); }
-    .plugin-tag.advanced { background:rgba(74,127,187,.08); color:var(--accent-blue); }
-    .plugin-details { display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:.82rem; color:var(--text-sec); line-height:1.6; }
-    .plugin-connector { display:inline-block; padding:2px 8px; background:var(--bg-alt); border-radius:12px; font-size:.72rem; margin:2px; font-weight:500; }
+    .plugin-head { display:flex;align-items:center;gap:10px;margin-bottom:8px; }
+    .plugin-emoji { font-size:1.5rem; }
+    .plugin-card h3 { font-size:.95rem;font-weight:700; }
+    .plugin-card > p { font-size:.85rem;color:var(--text-sec);line-height:1.5; }
+    .plugin-tag { display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700;margin-top:10px; }
+    .plugin-tag.recommended { background:rgba(139,107,181,.12);color:var(--accent-purple); }
+    .plugin-tag.optional { background:rgba(107,175,123,.08);color:var(--accent-green); }
+    .plugin-tag.advanced { background:rgba(74,127,187,.08);color:var(--accent-blue); }
+    .plugin-details { display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.85rem;color:var(--text-sec);line-height:1.6; }
+    .plugin-connector { display:inline-block;padding:3px 10px;background:var(--bg-alt);border-radius:999px;font-size:.75rem;margin:3px;font-weight:500; }
 
-    /* Hands-On */
-    .handson-card { background:var(--bg-card); border-radius:var(--radius); padding:28px; border:1px solid var(--border); margin-bottom:20px; }
-    .handson-card h3 { font-size:1.05rem; font-weight:700; margin-bottom:12px; }
-    .handson-flow { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:12px 0; }
-    .handson-chip { padding:6px 14px; border-radius:20px; font-size:.82rem; font-weight:600; }
-    .handson-chip.action { background:rgba(139,107,181,.1); color:var(--accent-purple); }
-    .handson-chip.result { background:rgba(107,175,123,.1); color:var(--accent-green); }
-    .handson-arrow { color:var(--text-muted); font-size:.8rem; }
-    .handson-prompt { background:var(--bg-alt); border-radius:var(--radius-xs); padding:14px 18px; margin-top:12px; font-size:.88rem; border-left:3px solid var(--accent-purple); }
-    .handson-prompt .label { font-weight:700; color:var(--accent-purple); font-size:.78rem; margin-bottom:4px; }
+    /* ── Hands-On ── */
+    .handson-card { background:var(--bg-card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px; }
+    .handson-card h3 { font-size:1.1rem;font-weight:700;margin-bottom:12px; }
+    .handson-flow { display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:14px 0; }
+    .handson-chip { padding:6px 16px;border-radius:999px;font-size:.85rem;font-weight:600; }
+    .handson-chip.action { background:rgba(139,107,181,.1);color:var(--accent-purple); }
+    .handson-chip.result { background:rgba(107,175,123,.1);color:var(--accent-green); }
+    .handson-arrow { color:var(--text-muted);font-size:.85rem; }
+    .handson-prompt { background:var(--bg-alt);border-radius:var(--radius-xs);padding:16px 20px;margin-top:14px;font-size:.9rem;border-left:3px solid var(--accent-purple); }
+    .handson-prompt .label { font-weight:700;color:var(--accent-purple);font-size:.82rem;margin-bottom:6px; }
 
-    /* Plugin Build */
-    .build-structure { background:var(--bg-alt); border-radius:var(--radius-xs); padding:18px; font-family:'Courier New',monospace; font-size:.82rem; line-height:1.8; }
-    .build-structure .folder { color:var(--accent-purple); font-weight:700; }
-    .build-structure .file { color:var(--text-sec); }
-    .build-structure .desc { color:var(--text-muted); font-style:italic; }
+    /* ── Plugin Build Structure ── */
+    .build-structure { background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:20px 24px;font-family:'Cascadia Code','Fira Code',monospace;font-size:.85rem;line-height:1.8;overflow-x:auto; }
+    .build-structure .folder { color:#cba6f7;font-weight:700; }
+    .build-structure .file { color:#89b4fa; }
+    .build-structure .desc { color:#6c7086;font-style:italic; }
 
-    /* Three-in-One */
-    .trio-flow { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin:24px 0; }
-    .trio-node { background:var(--bg-card); border-radius:var(--radius); padding:20px 24px; border:2px solid var(--border); text-align:center; min-width:140px; transition:var(--transition); }
+    /* ── Three-in-One ── */
+    .trio-flow { display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:28px 0; }
+    .trio-node { background:var(--bg-card);border-radius:var(--radius);padding:24px 28px;border:2px solid var(--border);text-align:center;min-width:150px;transition:var(--transition); }
     .trio-node:hover { transform:scale(1.05); }
     .trio-node.skill { border-color:var(--accent); }
     .trio-node.mcp { border-color:var(--accent-blue); }
     .trio-node.cowork { border-color:var(--accent-purple); }
-    .trio-node .trio-icon { font-size:1.6rem; margin-bottom:6px; }
-    .trio-node h4 { font-size:.9rem; font-weight:700; }
-    .trio-node p { font-size:.75rem; color:var(--text-sec); }
-    .trio-connector { font-size:1.2rem; color:var(--text-muted); }
+    .trio-node .trio-icon { font-size:1.8rem;margin-bottom:8px; }
+    .trio-node h4 { font-size:1rem;font-weight:700; }
+    .trio-node p { font-size:.82rem;color:var(--text-sec); }
+    .trio-connector { font-size:1.4rem;color:var(--text-muted); }
 
-    .trio-demo { background:var(--bg-card); border-radius:var(--radius); padding:28px; border:1px solid var(--border); margin-top:24px; }
-    .trio-demo h3 { font-size:1.05rem; font-weight:700; margin-bottom:16px; }
-    .trio-timeline { position:relative; padding-left:32px; }
-    .trio-timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(var(--accent),var(--accent-blue),var(--accent-purple)); border-radius:2px; }
-    .trio-step { position:relative; margin-bottom:20px; }
+    .trio-demo { background:var(--bg-card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:24px; }
+    .trio-demo h3 { font-size:1.1rem;font-weight:700;margin-bottom:16px; }
+    .trio-timeline { position:relative;padding-left:36px; }
+    .trio-timeline::before { content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent-blue),var(--accent-purple));border-radius:2px; }
+    .trio-step { position:relative;margin-bottom:20px; }
     .trio-step:last-child { margin-bottom:0; }
-    .trio-dot { position:absolute; left:-26px; top:4px; width:12px; height:12px; border-radius:50%; }
+    .trio-dot { position:absolute;left:-28px;top:4px;width:14px;height:14px;border-radius:50%; }
     .trio-dot.skill-dot { background:var(--accent); }
     .trio-dot.mcp-dot { background:var(--accent-blue); }
     .trio-dot.cowork-dot { background:var(--accent-purple); }
-    .trio-step h4 { font-size:.88rem; font-weight:700; margin-bottom:2px; }
-    .trio-step p { font-size:.82rem; color:var(--text-sec); line-height:1.5; }
-    .trio-step .trio-tag { display:inline-block; padding:1px 8px; border-radius:10px; font-size:.7rem; font-weight:600; margin-left:6px; }
-    .trio-tag.skill-tag { background:rgba(212,118,78,.1); color:var(--accent); }
-    .trio-tag.mcp-tag { background:rgba(74,127,187,.1); color:var(--accent-blue); }
-    .trio-tag.cowork-tag { background:rgba(139,107,181,.1); color:var(--accent-purple); }
+    .trio-step h4 { font-size:.92rem;font-weight:700;margin-bottom:4px; }
+    .trio-step p { font-size:.88rem;color:var(--text-sec);line-height:1.6; }
+    .trio-tag { display:inline-block;padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:700;margin-left:6px; }
+    .trio-tag.skill-tag { background:rgba(212,118,78,.1);color:var(--accent); }
+    .trio-tag.mcp-tag { background:rgba(74,127,187,.1);color:var(--accent-blue); }
+    .trio-tag.cowork-tag { background:rgba(139,107,181,.1);color:var(--accent-purple); }
 
-    /* CTA */
-    .cta-section { text-align:center; padding:48px 24px; }
-    .cta-btn { display:inline-block; padding:14px 32px; border-radius:var(--radius-sm); font-weight:700; font-size:.95rem; text-decoration:none; transition:var(--transition); margin:6px; }
-    .cta-primary { background:var(--accent-purple); color:#fff; }
-    .cta-primary:hover { background:#7A5CA8; transform:translateY(-2px); }
-    .cta-secondary { background:var(--bg-card); color:var(--text); border:1px solid var(--border); }
-    .cta-secondary:hover { border-color:var(--accent-purple); transform:translateY(-2px); }
-
-    /* Responsive */
+    /* ── Responsive ── */
     @media(max-width:768px) {
-      .mode-grid,.pillar-grid { grid-template-columns:1fr; }
+      .stat-bar { gap:24px; } .stat-num { font-size:1.4rem; }
+      .mode-grid,.pillar-grid,.plugin-grid { grid-template-columns:1fr; }
       .trio-flow { flex-direction:column; }
       .trio-connector { transform:rotate(90deg); }
     }
-
-    /* Animations */
-    .fade-in { opacity:0; transform:translateY(16px); transition:opacity .6s,transform .6s; }
-    .fade-in.visible { opacity:1; transform:translateY(0); }
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,248,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between">
-    <a href="/" style="text-decoration:none;font-weight:700;color:var(--text);font-size:.92rem">← B 班講座</a>
-    <div style="display:flex;gap:18px;font-size:.82rem">
-      <a href="/skill/" style="text-decoration:none;color:var(--text-sec)">Skill</a>
-      <a href="/mcp/" style="text-decoration:none;color:var(--text-sec)">MCP</a>
-      <a href="/cowork/" style="text-decoration:none;color:var(--accent-purple);font-weight:700">Cowork</a>
-      <a href="/canvas/" style="text-decoration:none;color:var(--text-sec)">Canvas</a>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand"><span>🧩</span> B 班 | Skill & MCP</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <div class="nav-links">
+        <a href="/">首頁</a>
+        <a href="/skill/">Skill 工坊</a>
+        <a href="/mcp/">MCP 指南</a>
+        <a href="/cowork/" class="active">Cowork</a>
+        <a href="/canvas/">系統畫布</a>
+        <a href="/resources/">延伸學習</a>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="cowork-hero">
-    <div class="overline">🤝 AI 協作場域</div>
-    <h1>Claude <span class="hl">Cowork</span> 實戰教學</h1>
-    <p class="sub">從「對話夥伴」升級成「並肩工作的同事」。<br>Skill 是腦、MCP 是手、Cowork 就是你們一起工作的<span style="color:var(--accent-purple);font-weight:700">場</span>。</p>
-  </header>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge" style="background:rgba(139,107,181,.1);color:var(--accent-purple)">🤝 AI 協作場域</div>
+      <h1>Claude <span class="highlight" style="color:var(--accent-purple)">Cowork</span> 實戰教學</h1>
+      <p class="subtitle">從「對話夥伴」升級成「並肩工作的同事」。<br>Skill 是腦、MCP 是手、Cowork 就是你們一起工作的場。</p>
+    </div>
+  </section>
 
-  <!-- Stat Bar -->
-  <div class="stat-bar">
+  <div class="stat-bar fade-in">
     <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">官方 Plugins</div></div>
     <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">核心元件</div></div>
     <div class="stat-item"><div class="stat-num">$20</div><div class="stat-label">Pro 方案即可用</div></div>
     <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">自訂 Plugin</div></div>
   </div>
 
+  <div class="breadcrumb"><a href="/">首頁</a> <span class="sep">›</span> <span>Cowork 協作模式</span></div>
+
   <!-- Section 1: What is Cowork -->
   <section class="section" id="what">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Concept</div>
+        <div class="overline" style="color:var(--accent-purple)">Concept</div>
         <h2>Cowork 是什麼？</h2>
         <p>Claude 桌面版的三種模式 — 你已經會用 Chat，現在升級到 Cowork</p>
       </div>
@@ -198,21 +184,20 @@
         </div>
       </div>
 
-      <!-- Key Differences -->
-      <div style="max-width:700px;margin:32px auto 0" class="fade-in">
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border)">
-          <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px">Cowork vs Chat 的三大差異</h3>
-          <div style="display:flex;flex-direction:column;gap:14px;font-size:.88rem">
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <span style="font-size:1.1rem;flex-shrink:0">📋</span>
+      <div style="max-width:720px;margin:32px auto 0" class="fade-in">
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:28px;border:1px solid var(--border)">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Cowork vs Chat 的三大差異</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;font-size:.92rem">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span style="font-size:1.2rem;flex-shrink:0">📋</span>
               <div><span style="font-weight:700">「新任務」取代「新聊天」</span><br><span style="color:var(--text-sec)">按鈕從 New Chat 變成 New Task — 你不是來閒聊的，你是來完成一件待辦事項的</span></div>
             </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <span style="font-size:1.1rem;flex-shrink:0">📁</span>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span style="font-size:1.2rem;flex-shrink:0">📁</span>
               <div><span style="font-weight:700">「資料夾」為工作空間</span><br><span style="color:var(--text-sec)">不用逐一上傳檔案，直接指定資料夾，AI 能自由瀏覽、讀取、新建、編輯其中所有檔案</span></div>
             </div>
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <span style="font-size:1.1rem;flex-shrink:0">🧠</span>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span style="font-size:1.2rem;flex-shrink:0">🧠</span>
               <div><span style="font-weight:700">主動追問 + 計畫模式</span><br><span style="color:var(--text-sec)">AI 不再像「過度熱切的實習生」埋頭猛衝，而是先提問、確認假設、再行動</span></div>
             </div>
           </div>
@@ -225,7 +210,7 @@
   <section class="section section-alt" id="pillars">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Architecture</div>
+        <div class="overline" style="color:var(--accent-purple)">Architecture</div>
         <h2>Cowork 三大元件</h2>
         <p>Skills + Connectors + Plugins = 你的 AI 工作流引擎</p>
       </div>
@@ -251,7 +236,7 @@
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:20px;font-size:.82rem;color:var(--text-muted)" class="fade-in">
+      <div style="text-align:center;margin-top:20px;font-size:.88rem;color:var(--text-muted)" class="fade-in">
         Skill = 你在 B 班學的那個 Skill ｜ Connector ≈ MCP 一鍵版 ｜ Plugin = 打包好的全套工具箱
       </div>
     </div>
@@ -261,7 +246,7 @@
   <section class="section" id="setup">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Setup Guide</div>
+        <div class="overline" style="color:var(--accent-purple)">Setup Guide</div>
         <h2>5 分鐘設定 Cowork</h2>
         <p>打開 Claude Desktop → 切到 Cowork Tab → 開始使用</p>
       </div>
@@ -293,7 +278,7 @@
           <div class="step-num">4</div>
           <div class="step-content">
             <h3>連接外部服務（Connectors）</h3>
-            <p>在 Plugin 設定中連接你常用的服務：Google Drive、Notion、Slack 等。步驟與 MCP Level A 一鍵授權相同。</p>
+            <p>在 Plugin 設定中連接你常用的服務：Google Drive、Notion、Slack 等。步驟與 <a href="/mcp/" style="color:var(--accent-blue)">MCP Level A 一鍵授權</a>相同。</p>
           </div>
         </div>
         <div class="setup-step">
@@ -312,13 +297,12 @@
   <section class="section section-alt" id="plugins">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Plugin Library</div>
+        <div class="overline" style="color:var(--accent-purple)">Plugin Library</div>
         <h2>Anthropic 官方 Plugins</h2>
         <p>11 個即裝即用的工作流套件，涵蓋主要知識工作領域</p>
       </div>
 
-      <div class="plugin-grid fade-in" id="plugin-list">
-        <!-- Productivity -->
+      <div class="plugin-grid fade-in">
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">📋</span><h3>Productivity</h3></div>
           <p>管理任務、行事曆、每日工作流程，減少重複性工作</p>
@@ -327,7 +311,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Notion</span><span class="plugin-connector">Asana</span><span class="plugin-connector">Linear</span><span class="plugin-connector">Jira</span><span class="plugin-connector">Monday</span><span class="plugin-connector">ClickUp</span><span class="plugin-connector">Microsoft 365</span>
           </div>
         </div>
-        <!-- Marketing -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">📣</span><h3>Marketing</h3></div>
           <p>撰寫內容、規劃行銷活動、維護品牌語氣、追蹤成效</p>
@@ -336,7 +319,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Canva</span><span class="plugin-connector">Figma</span><span class="plugin-connector">HubSpot</span><span class="plugin-connector">Amplitude</span><span class="plugin-connector">Notion</span><span class="plugin-connector">Ahrefs</span><span class="plugin-connector">Klaviyo</span>
           </div>
         </div>
-        <!-- Sales -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">💰</span><h3>Sales</h3></div>
           <p>研究潛在客戶、準備提案、管理 Pipeline、撰寫開發信</p>
@@ -345,7 +327,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">HubSpot</span><span class="plugin-connector">Close</span><span class="plugin-connector">Clay</span><span class="plugin-connector">ZoomInfo</span><span class="plugin-connector">Notion</span><span class="plugin-connector">Fireflies</span>
           </div>
         </div>
-        <!-- Customer Support -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">🎧</span><h3>Customer Support</h3></div>
           <p>分類工單、起草回覆、整理 FAQ、建立知識庫文章</p>
@@ -354,7 +335,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Intercom</span><span class="plugin-connector">HubSpot</span><span class="plugin-connector">Guru</span><span class="plugin-connector">Jira</span><span class="plugin-connector">Notion</span>
           </div>
         </div>
-        <!-- Product Management -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">🧩</span><h3>Product Management</h3></div>
           <p>撰寫 PRD、規劃 Roadmap、整理用戶研究、更新 Stakeholder</p>
@@ -363,7 +343,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Linear</span><span class="plugin-connector">Asana</span><span class="plugin-connector">Jira</span><span class="plugin-connector">Notion</span><span class="plugin-connector">Figma</span><span class="plugin-connector">Amplitude</span><span class="plugin-connector">Intercom</span>
           </div>
         </div>
-        <!-- Data -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">📊</span><h3>Data & Analytics</h3></div>
           <p>查詢資料庫、視覺化圖表、統計分析、建 Dashboard</p>
@@ -372,7 +351,6 @@
             Connectors：<span class="plugin-connector">Snowflake</span><span class="plugin-connector">Databricks</span><span class="plugin-connector">BigQuery</span><span class="plugin-connector">Hex</span><span class="plugin-connector">Amplitude</span><span class="plugin-connector">Jira</span>
           </div>
         </div>
-        <!-- Finance -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">💹</span><h3>Finance</h3></div>
           <p>準備日記帳、對帳、產生報表、差異分析、管理結帳</p>
@@ -381,7 +359,6 @@
             Connectors：<span class="plugin-connector">Snowflake</span><span class="plugin-connector">Databricks</span><span class="plugin-connector">BigQuery</span><span class="plugin-connector">Slack</span><span class="plugin-connector">Microsoft 365</span>
           </div>
         </div>
-        <!-- Legal -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">⚖️</span><h3>Legal</h3></div>
           <p>審閱合約、分類 NDA、法規遵循查核、風險評估</p>
@@ -390,7 +367,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Box</span><span class="plugin-connector">Egnyte</span><span class="plugin-connector">Jira</span><span class="plugin-connector">Microsoft 365</span>
           </div>
         </div>
-        <!-- Enterprise Search -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">🔍</span><h3>Enterprise Search</h3></div>
           <p>跨 Email、Chat、文件、Wiki 的統一搜尋</p>
@@ -399,7 +375,6 @@
             Connectors：<span class="plugin-connector">Slack</span><span class="plugin-connector">Notion</span><span class="plugin-connector">Guru</span><span class="plugin-connector">Jira</span><span class="plugin-connector">Asana</span><span class="plugin-connector">Microsoft 365</span>
           </div>
         </div>
-        <!-- Bio Research -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">🧬</span><h3>Bio Research</h3></div>
           <p>文獻搜尋、基因體分析、藥物靶點優先排序</p>
@@ -408,7 +383,6 @@
             Connectors：<span class="plugin-connector">PubMed</span><span class="plugin-connector">BioRender</span><span class="plugin-connector">bioRxiv</span><span class="plugin-connector">ClinicalTrials.gov</span><span class="plugin-connector">Benchling</span>
           </div>
         </div>
-        <!-- Plugin Create -->
         <div class="plugin-card" onclick="this.classList.toggle('expanded')">
           <div class="plugin-head"><span class="plugin-emoji">🔧</span><h3>Plugin Create</h3></div>
           <p>用 AI 從零建立自訂 Plugin，或修改官方模板</p>
@@ -419,7 +393,7 @@
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:20px;font-size:.82rem;color:var(--text-muted)" class="fade-in">
+      <div style="text-align:center;margin-top:20px;font-size:.88rem;color:var(--text-muted)" class="fade-in">
         點擊卡片展開 Connectors 詳情 ｜ 完整原始碼：<a href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" style="color:var(--accent-purple)">GitHub</a>
       </div>
     </div>
@@ -429,12 +403,11 @@
   <section class="section" id="handson">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Hands-On</div>
+        <div class="overline" style="color:var(--accent-purple)">Hands-On</div>
         <h2>實作練習：三個上手場景</h2>
         <p>安裝完 Plugin → 實際操作 → 體驗 AI 協作的差異</p>
       </div>
 
-      <!-- Scenario 1 -->
       <div class="handson-card fade-in">
         <h3>場景一：用 Productivity Plugin 管理一週工作</h3>
         <div class="handson-flow">
@@ -450,12 +423,11 @@
           <div class="label">試試這個 prompt：</div>
           「幫我整理這個資料夾裡所有的待辦事項和會議筆記，產出一份下週的工作計畫。按優先級排序，標出需要準備的資料。」
         </div>
-        <div style="margin-top:10px;font-size:.82rem;color:var(--text-sec)">
+        <div style="margin-top:12px;font-size:.85rem;color:var(--text-sec)">
           ✨ Cowork 會自動：掃描資料夾 → 識別待辦 → 追問優先級 → 產出 Word/Markdown 文件
         </div>
       </div>
 
-      <!-- Scenario 2 -->
       <div class="handson-card fade-in">
         <h3>場景二：用 Marketing Plugin 批量產出社群內容</h3>
         <div class="handson-flow">
@@ -471,12 +443,11 @@
           <div class="label">試試這個 prompt：</div>
           「根據我資料夾裡的品牌指南和最近 3 篇部落格文章，幫我產出 5 篇 Threads 貼文草稿。語氣要像跟朋友聊天，每篇 200 字以內。」
         </div>
-        <div style="margin-top:10px;font-size:.82rem;color:var(--text-sec)">
+        <div style="margin-top:12px;font-size:.85rem;color:var(--text-sec)">
           ✨ Cowork 會自動：讀品牌指南 → 分析文章風格 → 追問目標受眾 → 批量產出 → 存成檔案
         </div>
       </div>
 
-      <!-- Scenario 3 -->
       <div class="handson-card fade-in">
         <h3>場景三：用 Plugin Create 打造你的第一個自訂 Plugin</h3>
         <div class="handson-flow">
@@ -492,7 +463,7 @@
           <div class="label">試試這個 prompt：</div>
           「我每次寫完部落格文章，需要做 4 件事：取標題、寫 SEO 摘要、產生 URL slug、產生配圖提示詞。幫我建一個 Plugin 自動化這個流程。」
         </div>
-        <div style="margin-top:10px;font-size:.82rem;color:var(--text-sec)">
+        <div style="margin-top:12px;font-size:.85rem;color:var(--text-sec)">
           ✨ Plugin Create 會引導你：定義步驟 → 選擇 Connectors → 建立 Orchestrator → 測試 → 完成
         </div>
       </div>
@@ -503,12 +474,12 @@
   <section class="section section-alt" id="build">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Build</div>
+        <div class="overline" style="color:var(--accent-purple)">Build</div>
         <h2>Plugin 的四個組成部分</h2>
         <p>理解結構，才能客製化自己的工作流</p>
       </div>
 
-      <div style="max-width:600px;margin:0 auto" class="fade-in">
+      <div style="max-width:620px;margin:0 auto" class="fade-in">
         <div class="build-structure">
           <span class="folder">📦 my-blog-publisher/</span><br>
           ├── <span class="file">README.md</span> <span class="desc">← 說明書（像 GitHub 的 README）</span><br>
@@ -521,8 +492,8 @@
           └── <span class="file">plugin.json</span> <span class="desc">← 中繼資料（名稱、版本、描述）</span>
         </div>
 
-        <div style="margin-top:16px;padding:14px;background:rgba(139,107,181,.06);border-radius:var(--radius-xs);font-size:.84rem;line-height:1.7;border:1px solid rgba(139,107,181,.12)">
-          <div style="font-weight:700;margin-bottom:4px">💡 關鍵概念：Orchestrator</div>
+        <div style="margin-top:20px;padding:16px;background:rgba(139,107,181,.06);border-radius:var(--radius-xs);font-size:.88rem;line-height:1.7;border:1px solid rgba(139,107,181,.12)">
+          <div style="font-weight:700;margin-bottom:6px">💡 關鍵概念：Orchestrator</div>
           <div style="color:var(--text-sec)">
             Orchestrator 是 Plugin 的「大腦」。它定義：<br>
             ・每個步驟的執行順序<br>
@@ -532,8 +503,8 @@
           </div>
         </div>
 
-        <div style="margin-top:12px;padding:14px;background:rgba(212,118,78,.06);border-radius:var(--radius-xs);font-size:.84rem;line-height:1.7;border:1px solid rgba(212,118,78,.12)">
-          <div style="font-weight:700;margin-bottom:4px">⚠️ 注意：Plugin 目前只能在 Cowork Tab 觸發</div>
+        <div style="margin-top:14px;padding:16px;background:rgba(212,118,78,.06);border-radius:var(--radius-xs);font-size:.88rem;line-height:1.7;border:1px solid rgba(212,118,78,.12)">
+          <div style="font-weight:700;margin-bottom:6px">⚠️ 注意：Plugin 目前只能在 Cowork Tab 觸發</div>
           <div style="color:var(--text-sec)">
             Skills 可以在一般 Chat 和 Cowork 中使用，但 Plugin（多 Skill 串聯）只能在 Cowork 中執行。
           </div>
@@ -546,7 +517,7 @@
   <section class="section" id="trio">
     <div class="container">
       <div class="section-header fade-in">
-        <div class="overline">Integration</div>
+        <div class="overline" style="color:var(--accent-purple)">Integration</div>
         <h2>三合一：Skill × MCP × Cowork</h2>
         <p>腦 × 手 × 場 — 三者結合才是完整的 AI 工作系統</p>
       </div>
@@ -571,11 +542,10 @@
         </div>
       </div>
 
-      <!-- Demo 1: Content Publishing -->
+      <!-- Demo 1 -->
       <div class="trio-demo fade-in">
         <h3>🎯 實戰範例：一篇文章的完整發布流程</h3>
-        <p style="font-size:.85rem;color:var(--text-sec);margin-bottom:20px">在 Cowork 中一句話啟動，自動串聯 Skill 和 MCP 完成所有步驟</p>
-
+        <p style="font-size:.88rem;color:var(--text-sec);margin-bottom:20px">在 Cowork 中一句話啟動，自動串聯 Skill 和 MCP 完成所有步驟</p>
         <div class="trio-timeline">
           <div class="trio-step">
             <div class="trio-dot cowork-dot"></div>
@@ -610,11 +580,10 @@
         </div>
       </div>
 
-      <!-- Demo 2: Weekly Review -->
+      <!-- Demo 2 -->
       <div class="trio-demo fade-in" style="margin-top:20px">
         <h3>🎯 實戰範例：AI 自動化週報</h3>
-        <p style="font-size:.85rem;color:var(--text-sec);margin-bottom:20px">每週五下午用一句話觸發完整的週報產出流程</p>
-
+        <p style="font-size:.88rem;color:var(--text-sec);margin-bottom:20px">每週五下午用一句話觸發完整的週報產出流程</p>
         <div class="trio-timeline">
           <div class="trio-step">
             <div class="trio-dot cowork-dot"></div>
@@ -645,10 +614,10 @@
       </div>
 
       <!-- Mental Model -->
-      <div style="max-width:700px;margin:28px auto 0;text-align:center" class="fade-in">
-        <div style="background:linear-gradient(135deg,rgba(212,118,78,.06),rgba(74,127,187,.06),rgba(139,107,181,.06));border-radius:var(--radius);padding:28px;border:1px solid var(--border)">
-          <div style="font-size:1.2rem;font-weight:900;margin-bottom:8px">心智模型</div>
-          <div style="font-size:.92rem;color:var(--text-sec);line-height:1.8">
+      <div style="max-width:720px;margin:28px auto 0;text-align:center" class="fade-in">
+        <div style="background:linear-gradient(135deg,rgba(212,118,78,.06),rgba(74,127,187,.06),rgba(139,107,181,.06));border-radius:var(--radius);padding:32px;border:1px solid var(--border)">
+          <div style="font-size:1.3rem;font-weight:900;margin-bottom:10px">心智模型</div>
+          <div style="font-size:.95rem;color:var(--text-sec);line-height:1.8">
             <span style="color:var(--accent);font-weight:700">Skill</span> 教 AI「怎麼思考這個任務」<br>
             <span style="color:var(--accent-blue);font-weight:700">MCP</span> 讓 AI「能碰到你的工具」<br>
             <span style="color:var(--accent-purple);font-weight:700">Cowork</span> 給 AI「一張桌子坐下來工作」<br><br>
@@ -660,21 +629,32 @@
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="section section-alt" style="text-align:center">
     <div class="container fade-in">
-      <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:8px">學完三大核心，最後一步：系統設計</h2>
-      <p style="color:var(--text-sec);margin-bottom:24px;font-size:.92rem">到 Canvas 把你的 Skill、MCP、Cowork 組合成完整的 AI 工作系統</p>
-      <a href="/canvas/" class="cta-btn cta-primary">前往系統設計 Canvas →</a>
-      <a href="/mcp/" class="cta-btn cta-secondary">← 回顧 MCP 串接</a>
+      <h2 style="font-size:1.6rem;font-weight:900;margin-bottom:10px">學完三大核心，最後一步：系統設計</h2>
+      <p style="color:var(--text-sec);margin-bottom:28px;font-size:1rem">到 Canvas 把你的 Skill、MCP、Cowork 組合成完整的 AI 工作系統</p>
+      <a href="/canvas/" class="btn btn-primary" style="background:var(--accent-purple);box-shadow:0 4px 16px rgba(139,107,181,.3)">前往系統設計 Canvas →</a>
+      <a href="/mcp/" class="btn btn-secondary" style="border-color:var(--accent-blue);color:var(--accent-blue)">← 回顧 MCP 串接</a>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer style="text-align:center;padding:24px;font-size:.75rem;color:var(--text-muted);border-top:1px solid var(--border)">
+  <footer class="footer">
     Claude 應用講座 B 班 — bclass.leevent.xyz ｜ Made with Claude
+    <div class="footer-links">
+      <a href="/skill/">Skill 工坊</a>
+      <a href="/mcp/">MCP 指南</a>
+      <a href="/cowork/">Cowork</a>
+      <a href="/canvas/">系統畫布</a>
+      <a href="/resources/">延伸學習</a>
+    </div>
   </footer>
 
   <script>
+    // Scroll nav shadow
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+    });
     // Scroll animations
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
