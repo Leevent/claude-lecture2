@@ -78,7 +78,7 @@
     .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
     /* ── Feature Cards ── */
-    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .features-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
     .feature-card {
       background: var(--bg-card); border-radius: var(--radius); padding: 28px;
       border: 1px solid var(--border); transition: var(--transition);
@@ -215,6 +215,7 @@
         <a href="/" class="active">首頁</a>
         <a href="/skill/">Skill 工坊</a>
         <a href="/mcp/">MCP 指南</a>
+        <a href="/cowork/">Cowork</a>
         <a href="/canvas/">系統畫布</a>
         <a href="/resources/">延伸學習</a>
       </div>
@@ -225,11 +226,12 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-badge">🧩 B 班教學資源</div>
-      <h1>用 <span class="highlight">Skill</span> 封裝你的工作 SOP<br>用 <span class="highlight">MCP</span> 串接你的世界</h1>
-      <p class="subtitle">從「一個人用 Claude」進化到「Claude 幫你管一整個工作系統」。<br>Skill 設計工坊、MCP 串接指南、成熟度模型——互動式學習工具，隨時可用。</p>
+      <h1>用 <span class="highlight">Skill</span> 封裝你的工作 SOP<br>用 <span class="highlight">MCP</span> 串接你的世界<br>用 <span class="highlight" style="color:var(--accent-purple)">Cowork</span> 並肩協作</h1>
+      <p class="subtitle">從「一個人用 Claude」進化到「Claude 幫你管一整個工作系統」。<br>Skill × MCP × Cowork 三合一——互動式學習工具，隨時可用。</p>
       <div class="hero-actions">
         <a href="/skill/" class="btn btn-primary">開始設計你的 Skill →</a>
         <a href="/mcp/" class="btn btn-secondary">探索 MCP 串接</a>
+        <a href="/cowork/" class="btn btn-secondary" style="border-color:rgba(139,107,181,.3);color:var(--accent-purple)">體驗 Cowork →</a>
       </div>
     </div>
   </section>
@@ -242,7 +244,7 @@
         <h2>這堂課帶你從使用者升級為設計者</h2>
         <p>四大核心模組，每一個都有互動工具，點擊直接體驗</p>
       </div>
-      <div class="features-grid fade-in">
+      <div class="features-grid fade-in" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
         <a href="/skill/" class="feature-card">
           <div class="feature-icon skill">🧩</div>
           <h3>Skill 設計</h3>
@@ -255,10 +257,16 @@
           <p>讓 Claude 連上 Google Calendar、Notion、試算表，直接操作你的日常工具</p>
           <span class="card-link">查看串接指南 →</span>
         </a>
+        <a href="/cowork/" class="feature-card">
+          <div class="feature-icon prompt">🤝</div>
+          <h3>Cowork 協作</h3>
+          <p>讓 Claude 從「聊天夥伴」升級成「並肩工作的同事」，Plugin 即裝即用</p>
+          <span class="card-link">進入 Cowork 指南 →</span>
+        </a>
         <a href="/canvas/" class="feature-card">
           <div class="feature-icon system">⚙️</div>
           <h3>工作系統設計</h3>
-          <p>Projects × Skills × MCP 的三角關係，打造你的 AI 工作流系統</p>
+          <p>Skill × MCP × Cowork 三合一，打造你的 AI 工作流系統</p>
           <span class="card-link">開始設計畫布 →</span>
         </a>
         <a href="/resources/" class="feature-card">
@@ -277,7 +285,7 @@
       <div class="section-header fade-in">
         <div class="overline">Course Map</div>
         <h2>課程地圖</h2>
-        <p>五個 Part 的學習旅程，點擊展開詳細內容</p>
+        <p>六個 Part 的學習旅程，點擊展開詳細內容</p>
       </div>
       <div class="course-map fade-in">
         <div class="course-map-track">
@@ -340,14 +348,32 @@
           </div>
 
           <div class="map-node">
-            <div class="map-marker" style="background: var(--accent-green);">P4</div>
+            <div class="map-marker" style="background: var(--accent-purple);">P4</div>
             <div class="map-card" onclick="toggleMap(this)">
-              <h3>系統設計</h3>
-              <div class="part-label">Part 4 — 串起來的力量</div>
+              <h3>Cowork 協作</h3>
+              <div class="part-label">Part 4 — AI 的工作場域</div>
               <span class="map-toggle">展開 ▾</span>
               <div class="details">
                 <ul>
-                  <li>Projects × Skills × MCP 三角關係</li>
+                  <li>Chat vs Cowork vs Code 三種模式差異</li>
+                  <li>Skills + Connectors + Plugins 三大元件</li>
+                  <li>安裝官方 Plugin（Productivity / Marketing）</li>
+                  <li>用 Plugin Create 打造自訂 Plugin</li>
+                  <li>三合一實戰：Skill × MCP × Cowork 完整工作流</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-node">
+            <div class="map-marker" style="background: var(--accent-green);">P5</div>
+            <div class="map-card" onclick="toggleMap(this)">
+              <h3>系統設計</h3>
+              <div class="part-label">Part 5 — 串起來的力量</div>
+              <span class="map-toggle">展開 ▾</span>
+              <div class="details">
+                <ul>
+                  <li>Skill × MCP × Cowork 三角關係</li>
                   <li>從「使用者」到「AI 工作流設計師」</li>
                   <li>真實案例：我的 AI 工作系統</li>
                   <li>AI 工作系統設計畫布</li>
@@ -358,7 +384,7 @@
           </div>
 
           <div class="map-node">
-            <div class="map-marker" style="background: var(--accent-purple);">P5</div>
+            <div class="map-marker" style="background: rgba(107,175,123,.7);">P6</div>
             <div class="map-card" onclick="toggleMap(this)">
               <h3>Prompt 進階</h3>
               <div class="part-label">Part 5 — 收尾 + Q&A</div>
