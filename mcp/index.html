@@ -15,11 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shared.css">
   <style>
-    /* ── Stat Bar ── */
-    .stat-bar { display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:32px 24px;background:var(--bg-card);border-bottom:1px solid var(--border); }
-    .stat-item { text-align:center; }
-    .stat-num { font-size:1.8rem;font-weight:900;color:var(--accent); }
-    .stat-label { font-size:.82rem;color:var(--text-sec);margin-top:4px; }
+    /* stat-bar base is in shared.css; accent color already matches default */
 
     /* ── Concept ── */
     .concept-grid { display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:720px;margin:0 auto; }
@@ -156,7 +152,7 @@
 
     /* ── Responsive ── */
     @media(max-width:768px) {
-      .stat-bar { gap:24px; } .stat-num { font-size:1.4rem; }
+      /* stat-bar responsive in shared.css */
       .concept-grid,.level-grid,.case-grid,.wf-grid { grid-template-columns:1fr; }
       .oneclick-grid { grid-template-columns:1fr; }
       .search-results { grid-template-columns:1fr; }
@@ -592,11 +588,12 @@
   <!-- ═══ CTA ═══ -->
   <section class="section section-alt">
     <div class="container" style="text-align:center">
-      <h2 style="font-size:1.5rem;font-weight:900;margin-bottom:16px">Skill + MCP = 你的 AI 工作系統</h2>
-      <p style="color:var(--text-sec);margin-bottom:24px">用系統畫布把它們串起來，設計完整工作流</p>
+      <h2 style="font-size:1.5rem;font-weight:900;margin-bottom:16px">Skill + MCP + Cowork = 完整 AI 工作系統</h2>
+      <p style="color:var(--text-sec);margin-bottom:24px">MCP 讓 AI 摸到工具，Cowork 讓 AI 坐下來工作</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <a href="/skill/" class="btn btn-secondary btn-sm">← 設計 Skill</a>
-        <a href="/canvas/" class="btn btn-primary btn-sm">前往系統設計畫布 →</a>
+        <a href="/cowork/" class="btn btn-primary btn-sm" style="background:var(--accent-purple);box-shadow:0 4px 16px rgba(139,107,181,.3)">前往 Cowork 協作 →</a>
+        <a href="/canvas/" class="btn btn-secondary btn-sm">系統設計畫布 →</a>
       </div>
     </div>
   </section>

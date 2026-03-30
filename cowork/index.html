@@ -15,11 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shared.css">
   <style>
-    /* ── Stat Bar ── */
-    .stat-bar { display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:32px 24px;background:var(--bg-card);border-bottom:1px solid var(--border); }
-    .stat-item { text-align:center; }
-    .stat-num { font-size:1.8rem;font-weight:900;color:var(--accent-purple); }
-    .stat-label { font-size:.82rem;color:var(--text-sec);margin-top:4px; }
+    /* stat-bar base is in shared.css; override accent color for Cowork */
+    .stat-num { color:var(--accent-purple); }
 
     /* ── Mode Compare ── */
     .mode-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:780px;margin:0 auto; }
