@@ -411,10 +411,16 @@
         `<div style="margin-top: 16px; padding: 16px; background: rgba(107,175,123,0.08); border-radius: var(--radius-xs); border-left: 3px solid var(--accent-green);">
           <div style="font-weight: 700; margin-bottom: 8px; font-size: 0.95rem;">✅ 你的 Skill 已產出！下一步：</div>
           <div style="font-size: 0.88rem; color: var(--text-sec); line-height: 1.7;">
-            1. 複製上方文字，貼到 Claude Project 的 Custom Instructions 中<br>
+            1. 複製上方文字，貼到 Claude 的對應位置（見下方說明）<br>
             2. 在對話中輸入觸發條件，測試 Skill 是否如預期運作<br>
             3. 根據產出品質調整紅線規則和輸出格式<br>
             4. 參考下方 <a href="#maturity" style="color: var(--accent);">5 級成熟度模型</a>，逐步升級你的 Skill
+          </div>
+          <div style="margin-top:12px;padding:12px;background:rgba(74,127,187,.06);border-radius:var(--radius-xs);border-left:3px solid var(--accent-blue);font-size:.84rem;line-height:1.7;color:var(--text-sec)">
+            <div style="font-weight:700;color:var(--text);margin-bottom:4px">📌 Skill 要貼在哪裡？</div>
+            <div><span style="font-weight:600">Claude.ai 網頁版</span> → 左側 Projects → 選一個 Project → Project Instructions 區塊，貼上即可</div>
+            <div><span style="font-weight:600">Claude Desktop 桌面版</span> → 同上，Projects → Custom Instructions</div>
+            <div><span style="font-weight:600">Claude Code（進階）</span> → 存為 <code style="background:var(--bg-alt);padding:1px 5px;border-radius:3px">.claude/commands/skill-name.md</code> 檔案，用 <code style="background:var(--bg-alt);padding:1px 5px;border-radius:3px">/skill-name</code> 觸發</div>
           </div>
         </div>`;
     }

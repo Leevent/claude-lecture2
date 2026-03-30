@@ -299,18 +299,61 @@
         </div>
 
         <div class="oneclick-card" onclick="this.classList.toggle('expanded')">
-          <div class="oneclick-icon">📊</div>
-          <h3>Google Sheets</h3>
-          <p>讓 Claude 操作試算表，分析資料、產生報表</p>
+          <div class="oneclick-icon">💬</div>
+          <h3>Slack</h3>
+          <p>讓 Claude 搜尋頻道歷史、發送訊息、整理對話重點</p>
           <span class="oc-hint">點擊查看步驟 →</span>
           <div class="oneclick-steps">
-            <div class="oc-step"><div class="oc-num">1</div><div>Settings → Integrations → Google Sheets</div></div>
-            <div class="oc-step"><div class="oc-num">2</div><div>點擊 Connect，Google 帳號授權</div></div>
-            <div class="oc-step"><div class="oc-num">3</div><div>測試：問 Claude「幫我分析這張表的銷售趨勢」</div></div>
-            <div class="oc-note">⚙️ 若官方整合不支援你的需求，可改用 Level B 手動設定</div>
+            <div class="oc-step"><div class="oc-num">1</div><div>開啟 Claude 桌面版 Settings → Integrations</div></div>
+            <div class="oc-step"><div class="oc-num">2</div><div>找到 Slack，點擊 Connect</div></div>
+            <div class="oc-step"><div class="oc-num">3</div><div>Slack 工作區管理員授權（選擇要分享的頻道）</div></div>
+            <div class="oc-step"><div class="oc-num">4</div><div>測試：問 Claude「幫我整理 #general 頻道今天的重點訊息」</div></div>
+            <div class="oc-note">🔒 僅存取你授權的頻道，需要 Slack 工作區管理員權限</div>
           </div>
         </div>
 
+      </div>
+
+      <!-- Other Official Partners + Google Sheets Note -->
+      <div style="margin-top:20px;padding:20px;background:rgba(107,175,123,.06);border-radius:var(--radius);border:1px solid rgba(107,175,123,.15);text-align:center" class="fade-in">
+        <div style="font-weight:700;font-size:.95rem;margin-bottom:10px">其他官方一鍵授權夥伴（同樣步驟：Settings → Integrations → Connect）</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+          <span class="level-tool">Asana</span>
+          <span class="level-tool">Canva</span>
+          <span class="level-tool">Figma</span>
+          <span class="level-tool">Atlassian (Jira)</span>
+          <span class="level-tool">Box</span>
+          <span class="level-tool">monday.com</span>
+          <span class="level-tool">Salesforce</span>
+          <span class="level-tool">Clay</span>
+          <span class="level-tool">Amplitude</span>
+          <span class="level-tool">Hex</span>
+        </div>
+        <div style="font-size:.82rem;color:var(--accent);margin-top:10px;font-weight:600">💡 Google Sheets 目前需要 Level B 手動設定 config.json — 往下看教學</div>
+      </div>
+
+      <!-- Prompt Examples After Setup -->
+      <div style="max-width:720px;margin:28px auto 0;background:var(--bg-card);border-radius:var(--radius);padding:24px;border:1px solid var(--border)" class="fade-in">
+        <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:14px">🎯 串接完成後，試試這些 prompt</h3>
+        <div style="font-size:.88rem;color:var(--text-sec);line-height:1.8">
+          <div style="margin-bottom:14px">
+            <div style="font-weight:600;color:var(--text);margin-bottom:4px">📅 Google Calendar</div>
+            <div style="padding-left:12px">「我明天有什麼行程？」</div>
+            <div style="padding-left:12px">「幫我找下週三 14:00-17:00 之間的空檔」</div>
+            <div style="padding-left:12px">「建立一個下週五 10:00 的會議，主題是 Q2 行銷策略」</div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-weight:600;color:var(--text);margin-bottom:4px">📝 Notion</div>
+            <div style="padding-left:12px">「幫我在 Notion 建一個會議紀錄，標題是今天的週會」</div>
+            <div style="padding-left:12px">「搜尋我的 Notion 裡有沒有關於 MCP 的筆記」</div>
+            <div style="padding-left:12px">「把這段摘要加到我的 Notion 專案頁面」</div>
+          </div>
+          <div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:4px">💬 Slack</div>
+            <div style="padding-left:12px">「幫我整理 #marketing 頻道今天的重點訊息」</div>
+            <div style="padding-left:12px">「在 #general 發一則訊息通知大家下週會議改期」</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -362,6 +405,10 @@
           <div class="config-tip warn">
             <span class="config-tip-icon">⚠️</span>
             <span>路徑請改成你自己的資料夾。只授權需要的目錄，不要給根目錄。</span>
+          </div>
+          <div class="config-tip info">
+            <span class="config-tip-icon">💡</span>
+            <span><code>npx</code> = Node.js 套件執行器（適用大多數 MCP Server）。<code>uvx</code> = Python 套件執行器（少數 Server 使用）。<code>docker</code> = 容器化執行（最隔離但需安裝 Docker）。<br>不確定用哪個？照 Server 文件的範例複製即可。</span>
           </div>
         </div>
 
@@ -470,7 +517,7 @@
           <div class="wf-desc">從會議紀錄到影片企畫，一句話觸發完整製作前期。</div>
           <div class="wf-flow">
             <span class="wf-chip skill">Skill: 影音企畫器</span><span class="wf-arrow">→</span>
-            <span class="wf-chip mcp">Granola</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Calendar</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Notion</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Canva</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Sheets</span>
@@ -481,10 +528,10 @@
           <div class="wf-desc">關鍵字研究 → 撰稿 → 團隊審核 → 自動發布。</div>
           <div class="wf-flow">
             <span class="wf-chip skill">Skill: 內容產製器</span><span class="wf-arrow">→</span>
-            <span class="wf-chip mcp">Ahrefs</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Brave Search</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Notion</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Slack</span><span class="wf-arrow">→</span>
-            <span class="wf-chip mcp">WordPress</span>
+            <span class="wf-chip mcp">Filesystem</span>
           </div>
         </div>
         <div class="wf-card">
@@ -494,7 +541,7 @@
             <span class="wf-chip skill">Skill: 素材批量器</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Figma</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Canva</span><span class="wf-arrow">→</span>
-            <span class="wf-chip mcp">Drive</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Google Drive</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Notion</span>
           </div>
         </div>
@@ -504,7 +551,7 @@
           <div class="wf-flow">
             <span class="wf-chip skill">Skill: 廣告分析師</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Sheets</span><span class="wf-arrow">→</span>
-            <span class="wf-chip mcp">PostHog</span><span class="wf-arrow">→</span>
+            <span class="wf-chip mcp">Fetch</span><span class="wf-arrow">→</span>
             <span class="wf-chip mcp">Slack</span>
           </div>
         </div>
@@ -517,7 +564,7 @@
     <div class="container">
       <div class="section-header fade-in"><div class="overline">Security Awareness</div><h2>🛡️ 安全提醒</h2></div>
       <div class="security-banner fade-in">
-        <h3>⚠️ 43% 被測試的第三方 MCP Server 存在安全漏洞</h3>
+        <h3>⚠️ 43% 被測試的第三方 MCP Server 存在安全漏洞 <span style="font-weight:400;font-size:.75rem;color:var(--text-muted)">（來源：Invariant Labs, 2026）</span></h3>
         <p>安裝前請注意：</p>
         <ul>
           <li>優先使用 Anthropic 官方合作夥伴（一鍵授權那 11 個最安全）</li>

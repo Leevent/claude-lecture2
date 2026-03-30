@@ -249,6 +249,7 @@
         </div>
 
         <div class="canvas-actions">
+          <button class="btn-canvas-action" onclick="loadExampleCanvas()">📋 載入範例</button>
           <button class="btn-canvas-action" onclick="resetCanvas()">🗑️ 清空重來</button>
           <button class="btn-canvas-action" onclick="exportCanvas()">📋 複製文字版</button>
         </div>
@@ -370,6 +371,27 @@
       });
       text += '## 串接邏輯\nProject 提供背景 → Skill 執行流程 → MCP 連接工具\n';
       navigator.clipboard.writeText(text).then(() => alert('已複製到剪貼簿！'));
+    }
+
+    function loadExampleCanvas() {
+      if (!confirm('載入範例會覆蓋目前內容，確定嗎？')) return;
+      const example = {
+        'projects-list': ['社群經營', '客戶提案', '會議管理', '內容行銷'],
+        'skills-list': ['社群貼文產出器', '提案摘要生成', '會議紀錄整理', '週報自動撰寫', 'EDM 文案產出'],
+        'mcp-list': ['Google Calendar', 'Notion', 'Slack', 'Canva', 'Google Sheets']
+      };
+      ['projects-list', 'skills-list', 'mcp-list'].forEach(id => {
+        const list = document.getElementById(id);
+        list.innerHTML = '';
+        example[id].forEach(val => {
+          const item = document.createElement('div');
+          item.className = 'canvas-item';
+          item.innerHTML = `${escapeHtml(val)} <button class="canvas-remove" onclick="removeItem(this)">×</button>`;
+          list.appendChild(item);
+        });
+      });
+      saveCanvas();
+      updateCounts();
     }
 
     loadCanvas();
