@@ -438,7 +438,7 @@
       "stars": null,
       "url": "https://github.com/modelcontextprotocol/servers-archived",
       "maintained_by": "Anthropic (Archived)",
-      "config_example": "{\n  \"mcpServers\": {\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic-ai/mcp-server-brave-search\"],\n      \"env\": {\n        \"BRAVE_API_KEY\": \"YOUR_API_KEY\"\n      }\n    }\n  }\n}",
+      "config_example": "{\n  \"mcpServers\": {\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-brave-search\"],\n      \"env\": {\n        \"BRAVE_API_KEY\": \"YOUR_API_KEY\"\n      }\n    }\n  }\n}",
       "teach_priority": "recommended",
       "use_cases": ["網路搜尋", "資料研究", "即時資訊查詢"]
     },
